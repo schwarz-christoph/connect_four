@@ -3,41 +3,36 @@ import edu.hm.se2.connect_four.csgles.datastore.Player;
 import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
 
 /**
- * @author Christoph Schwarz, Georg Lang, Enno Scholz
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
  * @version 04-01-2021
  */
 
 public interface FullPlayer {
 
     /**
-     *
-     * @return
+     * @return The ID of this player.
      */
     PlayerID getID();
 
     /**
-     *
-     * @param player
-     * @return
+     * @return If the player used the bomb joker.
      */
-    boolean getUsedBombJoker(Player player);
+    boolean getUsedBombJoker();
 
     /**
-     *
-     * @param player
+     * Consume the bomb joker of this player.
      */
-    void useBombJoker(Player player);
+    void useBombJoker();
 
     /**
-     *
-     * @param player
-     * @return
+     * @return If the player used the delete joker.
      */
-    boolean getUsedDeleteJoker(Player player);
+    boolean getUsedDeleteJoker();
 
     /**
-     *
-     * @param player
+     * Consume the delete Joker of this Player.
      */
-    void useDeleteJoker(Player player);
+    void useDeleteJoker();
 }
