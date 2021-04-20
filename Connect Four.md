@@ -62,7 +62,13 @@ Arbeitsgruppe:
 
 ### Datenbasis
 
+
 - `datastore` -- erlaubt lesenden Zugriff auf alle Daten.
+  - `datastore.Observable` -- Bietet Registrierungsmöglichkeiten und teilt Änderungen mit.
+    - `void` Observable.register() -- Methode zum registrieren für Änderungen.
+    - `void` Observable.notifyObservers() -- Teilt den registrierten Observern Änderungen mit.
+  - `datastore.Observer` -- Ruft update Methoden der View auf.
+    - `void` Observer.update() -- Methode zum Updaten der View.
   - `datastore.Game` -- das Spiel.
     - `Board` Game.getBoard()
     - `Player` Game.getActivePlayer() -- wer dran ist.
@@ -90,13 +96,13 @@ Arbeitsgruppe:
     - `int` Game.getPlayerCount()
     - `void` FullGame.setActivePlayer()
     - `void` FullGame.setWinner()
-    - `boolean` FullGame.setIsStarted()
-    - `int` FullGame.setPlayerCount()
+    - `void` FullGame.setIsStarted()
+    - `void` FullGame.setPlayerCount()
   - `datastore.mutable.FullBoard` -- das Spielfeld.
     - `List<Field>` FullBoard.getFields() -- alle belegten Felder.
-    - `void` FullBoard.toggleStone() -- place new stone or delete Stone
+    - `void` FullBoard.toggleStone() -- Stein platzieren oder löschen.
     - `Field` FullBoard.getField()
-    - `List<Field>` FullBoard.setHighlight() -- Felder mit Indikator.
+    - `void` FullBoard.setHighlight() -- Felder mit Indikator.
   - `datastore.mutable.FullPlayer` -- Repräsentiert einen Spieler.
     - `PlayerID` FullPlayer.getID()
     - `boolean` FullPlayer.getUsedBombJoker()
