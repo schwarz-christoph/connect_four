@@ -3,6 +3,7 @@ package edu.hm.se2.connect_four.csgles.logic;
 import java.util.List;
 
 /**
+ * A game manager.
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
@@ -11,6 +12,7 @@ import java.util.List;
 
 public interface GameManager {
 
+    @SuppressWarnings("PMD.CommentRequired")
     List<Move> getMoves();
 
     /**

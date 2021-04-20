@@ -3,6 +3,7 @@ package edu.hm.se2.connect_four.csgles.datastore;
 import java.util.List;
 
 /**
+ * A board with highlight and fields.
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
@@ -11,7 +12,8 @@ import java.util.List;
 
 public interface Board {
 
+    @SuppressWarnings("PMD.CommentRequired")
     List<Field> getFields();
-    Field getField(int xCoordinate, int yCooardinate);
+    @SuppressWarnings("PMD.CommentRequired")
     List<Field> getHighlight();
 }

@@ -62,7 +62,6 @@ Arbeitsgruppe:
 
 ### Datenbasis
 
-
 - `datastore` -- erlaubt lesenden Zugriff auf alle Daten.
   - `datastore.Observable` -- Bietet Registrierungsmöglichkeiten und teilt Änderungen mit.
     - `void` Observable.register() -- Methode zum registrieren für Änderungen.
@@ -73,20 +72,19 @@ Arbeitsgruppe:
     - `Board` Game.getBoard()
     - `Player` Game.getActivePlayer() -- wer dran ist.
     - `Player` Game.getWinner()
-    - `bool` Game.getIsStarted()
+    - `bool` Game.isStarted()
     - `int` Game.getPlayerCount()
   - `datastore.Board` -- das Spielfeld.
     - `List<Field>` Board.getFields() -- alle belegten Felder.
-    - `Field` Board.getField()
     - `List<Field>` Board.getHighlight() -- Felder mit Indikator.
   - `datastore.Field` -- einzelnes Feld.
-    - `int` Field.getCoordinateX()
-    - `int` Field.getCoordinateY()
+    - `int` Field.xCoordinate()
+    - `int` Field.yCoordinate()
     - `Player` Field.owner() -- wer das Feld belegt.
   - `datastore.Player` -- Repräsentiert einen Spieler.
     - `PlayerID` Player.getID()
-    - `boolean` Player.getUsedBombJoker()
-    - `boolean` Player.getUsedDeleteJoker()
+    - `boolean` Player.isBombJokerUsed()
+    - `boolean` Player.isDeleteJokerUsed()
 - `datastore.mutable` -- erlaubt schreibenden Zugriff auf alle Daten.
   - `datastore.mutable.FullGame` -- das Spiel.
     - `Board` FullGame.getBoard()
@@ -100,8 +98,8 @@ Arbeitsgruppe:
     - `void` FullGame.setPlayerCount()
   - `datastore.mutable.FullBoard` -- das Spielfeld.
     - `List<Field>` FullBoard.getFields() -- alle belegten Felder.
-    - `void` FullBoard.toggleStone() -- Stein platzieren oder löschen.
-    - `Field` FullBoard.getField()
+    - `void` FullBoard.placeStone() -- Stein platzieren.
+    - `void` FullBoard.removeStone() -- Stein löschen.
     - `void` FullBoard.setHighlight() -- Felder mit Indikator.
   - `datastore.mutable.FullPlayer` -- Repräsentiert einen Spieler.
     - `PlayerID` FullPlayer.getID()

@@ -1,6 +1,7 @@
 package edu.hm.se2.connect_four.csgles.control;
 
 /**
+ * A joystick.
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
