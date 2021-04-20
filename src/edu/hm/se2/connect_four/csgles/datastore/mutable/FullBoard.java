@@ -14,9 +14,6 @@ import java.util.List;
 
 public interface FullBoard {
 
-    /**
-     * @return All fields of this board as a list.
-     */
     List<Field> getFields();
 
     /**
@@ -26,21 +23,6 @@ public interface FullBoard {
      * @param yCooardinate y coordinate of the field.
      */
     void toggleStone(Player player, int xCoordinate, int yCooardinate);
-
-
-    /**
-     * A single field of the board, specified by x and y coordinates.
-     * @param xCoordinate x coordinate of the field.
-     * @param yCooardinate y coordinate of the field.
-     * @return Returns the specified field.
-     */
     Field getField(int xCoordinate, int yCooardinate);
-
-    /**
-     * Toggle the highlight of the specified field.
-     * @param xCoordinate x coordinate of the field.
-     * @param yCooardinate y coordinate of the field.
-     * @return ???
-     */
-    List<Field> setHighlight(int xCoordinate, int yCooardinate);
+    void setHighlight(int xCoordinate, int yCooardinate);
 }

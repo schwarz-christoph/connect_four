@@ -1,7 +1,7 @@
 package edu.hm.se2.connect_four.csgles.datastore;
 
 /**
- * All player ID´s
+ * All player ID´s.
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)

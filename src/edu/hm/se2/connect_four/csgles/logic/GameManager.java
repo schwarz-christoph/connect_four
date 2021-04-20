@@ -11,9 +11,6 @@ import java.util.List;
 
 public interface GameManager {
 
-    /**
-     * @return The possible moves.
-     */
     List<Move> getMoves();
 
     /**

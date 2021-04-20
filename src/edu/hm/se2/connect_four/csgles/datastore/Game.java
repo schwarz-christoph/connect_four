@@ -8,28 +8,10 @@ package edu.hm.se2.connect_four.csgles.datastore;
  */
 
 public interface Game {
-    /**
-     * @return The board of the game.
-     */
+
     Board getBoard();
-
-    /**
-     * @return All active players.
-     */
     Player getActivePlayer();
-
-    /**
-     * @return The winner of the game.
-     */
     Player getWinner();
-
-    /**
-     * @return If the game has started.
-     */
     boolean getIsStarted();
-
-    /**
-     * @return The amount of non-machine players.
-     */
     int getPLayerCount();
 }
