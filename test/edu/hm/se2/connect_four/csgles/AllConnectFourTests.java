@@ -8,6 +8,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({AbstractConnectFourObservable.class, FullConnectFourBoardTest.class, FullConnectFourGameTest.class, FullConnectFourPlayerTest.class})
+@Suite.SuiteClasses({FullConnectFourBoardTest.class, FullConnectFourGameTest.class, FullConnectFourPlayerTest.class})
 public class AllConnectFourTests {
 }

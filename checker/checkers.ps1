@@ -22,7 +22,7 @@ $TEST_FQCN = "hm.se2.connect_four.csgles.AllConnectFourTests"
 
 # Geben Sie Hier den FQCN ihren Produktionsklassen an
 # Beispiel: = "edu.hm.HelloWorld"
-#$TARGET_FQCN = "edu.hm.se2.connect_four.csgles."
+$TARGET_FQCN = "edu.hm.se2.connect_four.csgles"
 
 # -------- END CONFIGURATION --------
 
