@@ -1,8 +1,8 @@
 package edu.hm.se2.connect_four.csgles.datastore.mutable;
 
 import edu.hm.se2.connect_four.csgles.datastore.Field;
-import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-public class FullConnectFourBoard implements FullBoard {
+public class FullConnectFourBoard extends AbstractConnectFourObservable implements FullBoard {
 
     /**
      * A list of occupied fields.
@@ -25,19 +25,19 @@ public class FullConnectFourBoard implements FullBoard {
      */
     private List<Field> highlight;
 
-    public FullConnectFourBoard(PlayerID none, FullConnectFourBoard fullConnectFourBoard, int i) {
-        this.allOccupiedFields = Collections.emptyList();
-        this.highlight = Collections.emptyList();
+    private FullConnectFourBoard() {
+        this.allOccupiedFields = new ArrayList<>();
+        this.highlight = new ArrayList<>();
     }
 
     @Override
     public void placeStone(Field field) {
-        allOccupiedFields.remove(field);
+        allOccupiedFields.add(field);
     }
 
     @Override
     public void removeStone(Field field) {
-        allOccupiedFields.add(field);
+        allOccupiedFields.remove(field);
     }
 
     @Override
@@ -53,5 +53,9 @@ public class FullConnectFourBoard implements FullBoard {
     @Override
     public List<Field> getHighlight() {
         return Collections.unmodifiableList(highlight);
+    }
+
+    public static FullBoard make(){
+        return new FullConnectFourBoard();
     }
 }

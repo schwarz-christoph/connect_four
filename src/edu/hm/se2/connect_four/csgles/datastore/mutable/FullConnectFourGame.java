@@ -11,7 +11,7 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
  * @version 04-01-2021
  */
 
-public class FullConnectFourGame implements FullGame{
+public class FullConnectFourGame extends AbstractConnectFourObservable implements FullGame{
 
     /**
      * A list of occupied fields.
@@ -39,11 +39,11 @@ public class FullConnectFourGame implements FullGame{
     private boolean startedGame;
 
 
-    public FullConnectFourGame(PlayerID startingPlayer, Board board, int playerCount) {
+    public FullConnectFourGame(PlayerID startingPlayer, Board board) {
         this.board = board;
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
-        this.humanPlayers = playerCount;
+        this.humanPlayers = 1; //Default value for one player
 
     }
 
@@ -88,5 +88,9 @@ public class FullConnectFourGame implements FullGame{
     @Override
     public int getPLayerCount() {
         return humanPlayers;
+    }
+
+    public static FullGame make(PlayerID startingPlayer, Board board){
+        return new FullConnectFourGame(startingPlayer, board);
     }
 }

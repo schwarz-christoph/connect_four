@@ -10,7 +10,7 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
  * @version 04-01-2021
  */
 
-public class FullConnectFourPlayer implements FullPlayer {
+public class FullConnectFourPlayer extends AbstractConnectFourObservable implements FullPlayer {
 
     /**
      * Whether the bomb joker has been used or not.
@@ -59,5 +59,9 @@ public class FullConnectFourPlayer implements FullPlayer {
     @Override
     public boolean isDeleteJokerUsed() {
         return isDeleteJokerAvailable;
+    }
+
+    public static FullPlayer make(PlayerID identifier){
+        return new FullConnectFourPlayer(identifier);
     }
 }

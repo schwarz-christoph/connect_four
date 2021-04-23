@@ -14,5 +14,5 @@ public interface Field {
     @SuppressWarnings("PMD.CommentRequired")
     int yCoordinate();
     @SuppressWarnings("PMD.CommentRequired")
-    Player owner();
+    PlayerID owner();
 }
