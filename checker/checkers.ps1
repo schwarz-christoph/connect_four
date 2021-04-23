@@ -2,27 +2,27 @@
 
 # Geben Sie Hier den Pfad zu ihrem Quellcode Verzeichnis an.
 # Beispiel: = "C:\Users\xyz\demoProject\src"
-$sourceDir = ""
+$sourceDir = "..\src"
 
 # Geben Sie Hier den Pfad zu ihrem Test-Quellcode Verzeichnis an.
 # Beispiel: = "C:\Users\xyz\demoProject\test"
-$testDir = ""
+$testDir = "..\test"
 
 # Geben Sie Hier den Pfad zu ihren Testklassen (.class Endung) an.
 # Beispiel: = "C:\Users\xyz\demoProject\out\test\demoProject"
-$testClasses = ""
+$testClasses = "..\out\test"
 
 # Geben Sie Hier den Pfad zu ihren Produktionsklassen (.class Endung) an.
 # Beispiel: = "C:\Users\xyz\demoProject\out\production\demoProject"
-$classes = ""
+$classes = "..\out\production"
 
 # Geben Sie Hier den FQCN ihren Testklassen an
 # Beispiel: = "edu.hm.HelloWorldTest"
-$TEST_FQCN = ""
+$TEST_FQCN = "hm.se2.connect_four.csgles.AllConnectFourTests"
 
 # Geben Sie Hier den FQCN ihren Produktionsklassen an
 # Beispiel: = "edu.hm.HelloWorld"
-$TARGET_FQCN = ""
+#$TARGET_FQCN = "edu.hm.se2.connect_four.csgles."
 
 # -------- END CONFIGURATION --------
 
