@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE module PUBLIC "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+          "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+  R. Schiedermeier Lab Classes Checkstyle configuration
+  http://sol.cs.hm.edu/rs
+-->
+<module name="Checker">
+    <!-- Files excluded from anaylsis
+    -->
+    <module name="BeforeExecutionExclusionFileFilter">
+      <property name="fileNamePattern" value="module\-info\.java$"/>
+    </module>
+    
+    <!-- Checks that a package-info.java file exists for each package.     -->
+    <!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
+    <!-- <module name="JavadocPackage"/> -->
+
+    <!-- Checks whether files end with a new line.                        -->
+    <!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
+    <module name="NewlineAtEndOfFile">
+        <property name="severity" value="ignore" />
+    </module>
+
+    <!-- Checks that property files contain the same keys.         -->
+    <!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
+    <module name="Translation" />
+
+    <!-- Checks for Size Violations.                    -->
+    <!-- See http://checkstyle.sf.net/config_sizes.html -->
+    <module name="FileLength">
+        <property name="max" value="1000"/>
+    </module>
+    <module name="LineLength">
+        <property name="max" value="256" />
+    </module>
+
+    <!-- rejects audit events for Check errors according to a suppressions XML document in a file -->
+    <!--
+    <module name="SuppressionFilter">
+        <property name="file" value="checkstyle-suppressions.xml"/>
+    </module>
+    -->
+    
+    <!-- Erlaubt @SuppressWarnings("checkstyle:MagicNumber") 
+        statt Kommentar
+    -->
+    <module name="SuppressWarningsFilter"/>
+    
+    <!-- Checks for whitespace                               -->
+    <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+    <!-- <module name="FileTabCharacter"/> -->
+    <!-- Miscellaneous other checks.                   -->
+    <!-- See http://checkstyle.sf.net/config_misc.html -->
+    <!--
+    <module name="RegexpSingleline">
+        <property name="format" value="\s+$" />
+        <property name="minimum" value="0" />
+        <property name="maximum" value="0" />
+        <property name="message" value="Line has trailing spaces." />
+    </module>
+    -->
+    <!--
+    Dieser Check ist nicht gut:
+    Er erfasst auch Kommentare und prtestiert gegen einheitliche Kommentarkoepfe.
+    <module name="StrictDuplicateCode">
+        <property name="min" value="12" />
+    </module>
+    -->
+    <module name="TreeWalker">
+        <!-- Checks for Javadoc comments.                     -->
+        <!-- See http://checkstyle.sf.net/config_javadoc.html -->
+        <module name="JavadocMethod">
+            <!--
+            Nicht merh erlaubt in 8.32
+            <property name="allowUndeclaredRTE" value="true" />
+            <property name="allowThrowsTagsForSubclasses" value="true" />
+            <property name="suppressLoadErrors" value="true" />
+            -->
+        </module>
+        <module name="JavadocType" />
+        <module name="JavadocVariable">
+            <!-- Default -->
+            <!-- property name="tokens" value="ENUM_CONSTANT_DEF" / -->
+            <!-- Das sollte den Check stilllegen, tut es aber nicht. -->
+            <!-- property name="tokens" value="" / -->
+            <!-- Das hier funktioniert allerdings.
+                Der Wert ist nicht dokumentiert, taucht aber im Sourcecode auf.
+            -->
+            <property name="tokens" value="VARIABLE_DEF" />
+        </module>
+        <module name="JavadocStyle">
+            <property name="checkEmptyJavadoc" value="true" />
+        </module>
+
+        <!-- Checks for Naming Conventions.                  -->
+        <!-- See http://checkstyle.sf.net/config_naming.html -->
+        <module name="ConstantName"></module>
+        <module name="LocalFinalVariableName" />
+        <!-- RS 20202-04-28: __ erlaubt, unused Lambda-Parameter -->
+        <module name="LocalVariableName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*|__" />
+        </module>
+        <module name="MemberName" />
+        <module name="MethodName" />
+        <module name="PackageName">
+            <property name="format" value="^[a-z][a-z0-9]*(\.[a-z][a-z0-9_]*)*$" />
+        </module>
+        <module name="ParameterName">
+            <property name="format" value="^[a-z][a-zA-Z0-9]*|__" />
+        </module>
+        <module name="StaticVariableName" />
+        <module name="TypeName" />
+        <module name="AbstractClassName">
+            <property name="format" value="^Abstract.+$|^.+Factory$|^Base.+$" />
+        </module>
+
+        <!-- Checks for Headers                                -->
+        <!-- See http://checkstyle.sf.net/config_header.html   -->
+        <!-- <module name="Header">                            -->
+        <!-- The follow property value demonstrates the ability     -->
+        <!-- to have access to ANT properties. In this case it uses -->
+        <!-- the ${basedir} property to allow Checkstyle to be run  -->
+        <!-- from any directory within a project. See property      -->
+        <!-- expansion,                                             -->
+        <!-- http://checkstyle.sf.net/config.html#properties        -->
+        <!-- <property                                              -->
+        <!--     name="headerFile"                                  -->
+        <!--     value="${basedir}/java.header"/>                   -->
+        <!-- </module> -->
+        <!-- Following interprets the header file as regular expressions. -->
+        <!-- <module name="RegexpHeader"/>
+                                     -->
+        <!-- Checks for imports                              -->
+        <!-- See http://checkstyle.sf.net/config_import.html -->
+        <module name="AvoidStarImport">
+            <property name="allowStaticMemberImports" value="true"/>
+        </module>
+        <module name="IllegalImport" />
+        <!-- defaults to sun.* packages -->
+        <module name="RedundantImport" />
+        <module name="UnusedImports" />
+
+        <!-- Checks for Size Violations.                    -->
+        <!-- See http://checkstyle.sf.net/config_sizes.html -->
+        <module name="MethodLength">
+            <property name="countEmpty" value="false" />
+            <property name="max" value="100" />
+        </module>
+        <module name="ParameterNumber" />
+        <module name="MethodCount">
+            <property name="maxTotal" value="20" />
+        </module>
+
+        <!-- Checks for whitespace                               -->
+        <!-- See http://checkstyle.sf.net/config_whitespace.html -->
+        <!--
+        <module name="EmptyForIteratorPad"/>
+        <module name="GenericWhitespace" />
+        <module name="MethodParamPad" />
+        <module name="NoWhitespaceAfter" />
+        <module name="NoWhitespaceBefore" />
+        <module name="OperatorWrap" />
+        <module name="ParenPad"/>
+        <module name="TypecastParenPad" />
+        <module name="WhitespaceAfter"/>
+        <module name="WhitespaceAround"/> 
+        -->
+
+        <!-- Modifier Checks                                    -->
+        <!-- See http://checkstyle.sf.net/config_modifiers.html -->
+        <module name="ModifierOrder" />
+        <module name="RedundantModifier" />
+
+        <!-- Checks for blocks. You know, those {}'s         -->
+        <!-- See http://checkstyle.sf.net/config_blocks.html -->
+        <module name="AvoidNestedBlocks" />
+        <!-- <module name="EmptyBlock"/> -->
+        <!-- <module name="LeftCurly"/> -->
+        <!-- <module name="NeedBraces"/> -->
+        <!-- <module name="RightCurly"/> -->
+
+        <!-- Checks for common coding problems               -->
+        <!-- See http://checkstyle.sf.net/config_coding.html -->
+        <!-- <module name="AvoidInlineConditionals"/> -->
+        <!--
+        Nicht mehr in 5.6?
+        module name="DoubleCheckedLocking" />
+        -->
+        <!-- MY FAVOURITE -->
+        <module name="EmptyStatement" />
+        <module name="EqualsAvoidNull" />
+        <module name="EqualsHashCode" />
+        <module name="FinalLocalVariable" />
+        <!--module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true" />
+            <property name="ignoreSetter" value="true" />
+            <property name="setterCanReturnItsClass" value="true" />
+        </module-->
+        <module name="IllegalInstantiation" />
+        <module name="InnerAssignment" />
+        <module name="MagicNumber">
+            <property name="ignoreNumbers" value="-1, 0, 1, 2, 10, 100, 1000"/>
+            <property name="ignoreAnnotation" value="true"/>
+            <property name="ignoreFieldDeclaration" value="true"/>
+            <property name="ignoreHashCodeMethod" value="true"/>
+        </module>
+        <!-- module name="MissingSwitchDefault" / -->
+        <module name="ModifiedControlVariable" />
+        <!-- RS 2015-03-12 removed in 6.2:
+            <module name="RedundantThrows" /> -->
+        <module name="SimplifyBooleanExpression" />
+        <module name="SimplifyBooleanReturn" />
+        <module name="StringLiteralEquality" />
+        <module name="NestedIfDepth">
+            <property name="max" value="2" />
+        </module>
+        <module name="NestedForDepth">
+            <property name="max" value="2" />
+        </module>
+        <module name="NestedTryDepth" />
+        <module name="IllegalCatch" />
+        <module name="IllegalThrows" />
+        <module name="IllegalType">
+            <property name="illegalClassNames" value="java.util.ArrayList, java.util.LinkedList, java.util.HashSet, java.util.HashMap, java.util.LinkedHashMap, java.util.LinkedHashSet"/>
+            <!-- property name="format" value="^(.*[\\.])?(Interface|Abstract|Class).*$"/ -->
+        </module>
+        <!-- <module name="PackageDeclaration"/> -->
+        <module name="DeclarationOrder" />
+        <module name="ParameterAssignment" />
+        <module name="DefaultComesLast" />
+        <module name="FallThrough" />
+        <module name="MultipleStringLiterals">
+            <property name="allowedDuplicates" value="2" />
+        </module>
+        <module name="MultipleVariableDeclarations" />
+        <module name="UnnecessaryParentheses" />
+        <!-- RS 2015-05-10 replaced by better check
+        <module name="ReturnCount"/>
+        <module name="edu.hm.cs.rs.checkstyle.ShallowReturnCheck"/>
+        -->
+        <module name="OneStatementPerLine"/>
+
+        <!-- Checks for class design                         -->
+        <!-- See http://checkstyle.sf.net/config_design.html -->
+        <!-- <module name="DesignForExtension"/> -->
+        <module name="FinalClass" />
+        <!-- module name="HideUtilityClassConstructor" / -->
+        <module name="InterfaceIsType" />
+        <module name="VisibilityModifier" />
+        <module name="MutableException" />
+
+        <!-- Miscellaneous other checks.                   -->
+        <!-- See http://checkstyle.sf.net/config_misc.html -->
+        <module name="ArrayTypeStyle" />
+        <!-- module name="FinalParameters" / -->
+        <module name="FinalLocalVariable" />
+        <module name="TodoComment" />
+        <module name="UpperEll" />
+        <module name="OuterTypeFilename" />
+        <module name="JavaNCSS" />
+        <module name="NPathComplexity" />
+        <module name="CyclomaticComplexity" />
+        <module name="ClassFanOutComplexity" />
+        <module name="ClassDataAbstractionCoupling">
+            <property name="max" value="13" />
+        </module>
+        <module name="BooleanExpressionComplexity" />
+        <module name="DescendantToken">
+            <property name="tokens" value="EQUAL,NOT_EQUAL" />
+            <property name="limitedTokens" value="STRING_LITERAL" />
+            <property name="maximumNumber" value="0" />
+            <property name="maximumDepth" value="1" />
+        </module>
+        <module name="DescendantToken">
+            <property name="tokens" value="FOR_CONDITION" />
+            <property name="limitedTokens" value="EXPR" />
+            <property name="minimumNumber" value="1" />
+        </module>
+        <module name="DescendantToken">
+            <property name="tokens" value="LITERAL_FINALLY,LITERAL_CATCH" />
+            <property name="limitedTokens" value="LITERAL_RETURN" />
+            <property name="maximumNumber" value="0" />
+        </module>
+        <module name="DescendantToken">
+            <property name="tokens" value="LITERAL_SWITCH" />
+            <property name="limitedTokens" value="LITERAL_CASE" />
+            <property name="maximumDepth" value="2" />
+            <property name="maximumNumber" value="10" />
+        </module>
+        <module name="DescendantToken">
+            <property name="tokens" value="METHOD_DEF" />
+            <property name="limitedTokens" value="VARIABLE_DEF" />
+            <property name="maximumDepth" value="2" />
+            <property name="maximumNumber" value="10" />
+        </module>
+        <!-- constants in interfaces useful for static factory methods
+        <module name="DescendantToken">
+            <property name="tokens" value="INTERFACE_DEF" />
+            <property name="limitedTokens" value="VARIABLE_DEF" />
+            <property name="maximumDepth" value="2" />
+            <property name="maximumNumber" value="0" />
+        </module>
+        -->
+        <module name="DescendantToken">
+            <property name="tokens" value="CLASS_DEF" />
+            <property name="limitedTokens" value="VARIABLE_DEF" />
+            <property name="maximumDepth" value="2" />
+            <property name="maximumNumber" value="10" />
+        </module>
+        <!-- Nicht mehr noetig
+            ersetzt durch SuppressWarningsFilter, SuppressWarningsHolder
+        <module name="SuppressionCommentFilter">
+            <property name="offCommentFormat" value="CHECKSTYLE\:OFF ([\w\|]+)"/>
+            <property name="onCommentFormat" value="CHECKSTYLE\:ON ([\w\|]+)"/>
+            <property name="checkFormat" value="$1"/>
+        </module>
+        -->
+        <module name="SuppressWarningsHolder"/>
+    </module>
+</module>

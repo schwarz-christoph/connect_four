@@ -1,0 +1,523 @@
+<?xml version="1.0"?>
+
+<ruleset name="R. Schiedermeier Lab Classes">
+    <description>
+        Ruleset for lab classes
+        R. Schiedermeier, http://sol.cs.hm.edu/rs
+    </description>
+
+    <rule ref="category/java/errorprone.xml">
+        <!-- kann sinnvoll sein -->
+        <exclude name="NullAssignment"/>
+        <!-- bleibt an normalem Code haengen -->
+        <exclude name="DataflowAnomalyAnalysis"/>
+        <!-- uebertrieben -->
+        <exclude name="UseLocaleWithCaseConversions"/>
+        <!-- Sinnvoll als Collection-Literale -->
+        <exclude name="NonStaticInitializer"/>
+        <exclude name="SimpleDateFormatNeedsLocale"/>
+        <exclude name="AvoidDuplicateLiterals"/>
+        <exclude name="BeanMembersShouldSerialize"/>
+        <!--
+        PMD 6.22.0: NPE bei records
+        PMD 6.28.0: WARNING: 
+            Exception applying rule ConstructorCallsOverridableMethod on file /tmp/smoketest/pmd-2020-10-10-04-33-19/Java14.java, continuing with next rule
+            java.lang.IndexOutOfBoundsException: Index -1 out of bounds for length 0
+        -->
+        <exclude name="ConstructorCallsOverridableMethod"/>
+        <exclude name="MoreThanOneLogger"/>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml">
+        <!-- ok um Scope zu minimieren -->
+        <exclude name="AvoidFinalLocalVariable"/>
+        <!-- ungeeignet fuer equals -->
+        <exclude name="OnlyOneReturn"/>
+        <!-- verhindert package-scoping, aber das ist ok -->
+        <exclude name="DefaultPackage"/>
+        <exclude name="CommentDefaultAccessModifier"/>
+        <!-- unnoetiger Code -->
+        <exclude name="CallSuperInConstructor"/>
+        <!-- automatisch definierter Default-Ctor reicht aus -->
+        <exclude name="AtLeastOneConstructor"/>
+        <exclude name="EmptyMethodInAbstractClassShouldBeAbstract"/>
+        <exclude name="AbstractNaming"/>
+        <exclude name="MethodArgumentCouldBeFinal"/>
+        
+        <exclude name="WhileLoopsMustUseBraces"/>
+        <exclude name="ForLoopsMustUseBraces"/>
+        <exclude name="IfElseStmtsMustUseBraces"/>
+        <exclude name="IfStmtsMustUseBraces"/>
+        <exclude name="ControlStatementBraces"/>
+
+    </rule>
+
+
+    <rule ref="category/java/multithreading.xml">
+        <!-- unnoetig fuer nicht-parallele Anwendungen -->
+        <exclude name="UseConcurrentHashMap"/>
+        <!-- in parallelen Anwendungen ok -->
+        <exclude name="AvoidUsingVolatile"/>
+        <exclude name="AvoidSynchronizedAtMethodLevel"/>
+        <exclude name="DoNotUseThreads"/>
+    </rule>
+
+    <rule ref="category/java/design.xml">
+        <exclude name="UseUtilityClass"/>
+        <exclude name="LawOfDemeter"/>
+    </rule>
+    
+    <rule ref="category/java/performance.xml">
+        <!-- NullPointerException mit Java 15 -->
+        <exclude name="InefficientStringBuffering"/>
+        <exclude name="AvoidInstantiatingObjectsInLoops"/>
+        <exclude name="UseStringBufferForStringAppends"/>
+        <exclude name="UseArrayListInsteadOfVector"/>
+        <exclude name="UseIndexOfChar"/>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml">
+        <!-- eben nicht! -->
+        <exclude name="PositionLiteralsFirstInComparisons"/>
+        <!-- nicht immer sinnvoll -->
+        <exclude name="PreserveStackTrace"/>
+        <!-- Gelegentlich sinnvoll -->
+        <exclude name="ConstantsInInterface"/>
+        <!-- nervig -->
+        <exclude name="AbstractClassWithoutAbstractMethod"/>
+        <exclude name="SystemPrintln"/>
+        <exclude name="JUnitAssertionsShouldIncludeMessage"/>
+    </rule>
+
+    <!-- ................................................................................ -->
+    <rule ref="category/java/errorprone.xml/AssignmentInOperand">
+        <properties>
+            <property name="allowIncrementDecrement" value="true"/>
+        </properties>
+    </rule>
+
+    <!-- Vector ausnehmen:
+        "Avoid using implementation types like 'Vector'; use the interface instead"
+    -->
+    <rule ref="category/java/bestpractices.xml/LooseCoupling">
+        <properties>
+            <property name="violationSuppressRegex" value=".+'(Vector|TreeMap|TreeSet)'.+"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/design.xml/NcssCount">
+        <properties>
+            <property name="methodReportLevel" value="24"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/bestpractices.xml/JUnitTestContainsTooManyAsserts">
+        <properties>
+            <property name="maximumAsserts" value="3"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions">
+        <properties>
+            <property name="utilityClassPattern" value="[A-Z][a-zA-Z0-9]*"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/FieldNamingConventions">
+        <properties>
+            <property name="enumConstantPattern" value="[A-Z][A-Za-z_0-9]*"/>
+        </properties>
+    </rule>
+    
+    <rule ref="category/java/errorprone.xml/AvoidLiteralsInIfCondition">
+        <properties>
+            <property name="ignoreMagicNumbers" value="-1,0,1,2" />
+        </properties>
+    </rule>
+    
+    <!-- das ist ueberdreht -->
+    <!-- rule ref="category/java/errorprone.xml/AvoidDuplicateLiterals">
+        <properties>
+            <property name="skipAnnotations" value="true"/>
+        </properties>
+    </rule -->
+
+    <rule ref="category/java/design.xml/LoosePackageCoupling">
+        <!--
+        Problem in pmd-5.0.0.jar/rulesets/java/coupling.xml:
+        Removed misconfigured rule: LoosePackageCoupling  cause: No packages or classes specified
+        Oct 13, 2012 5:25:06 AM net.sourceforge.pmd.PMD removeBrokenRules
+        WARNING: Removed misconfigured rule: LoosePackageCoupling  cause: No packages or classes specified
+        -->
+        <properties>
+            <property name="packages">
+                <value>not.existing.dummy</value>
+            </property>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/design.xml/SimplifyBooleanReturns">
+        <properties>
+            <property name="violationSuppressXPath">
+                <value><![CDATA[//MethodDeclaration/MethodDeclarator[@Image='equals']
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    
+    <!-- Javadoc einzelner Enumelemente ist nicht noetig. -->
+    <rule ref="category/java/documentation.xml/CommentRequired">
+        <properties>
+            <property name="enumCommentRequirement" value="Ignored" />
+        </properties>
+    </rule>
+
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock">
+        <properties>
+            <property name="allowCommentedBlocks" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="category/java/codestyle.xml/TooManyStaticImports">
+        <properties>
+            <property name="maximumStaticImports" value="8"/>
+        </properties>
+    </rule>
+
+    <!-- Default zu kurz -->
+    <rule ref="category/java/codestyle.xml/LongVariable">
+        <properties>
+            <property name="minimum" value="25"/>
+        </properties>
+    </rule>
+
+    <!-- 2013-04-20: Default 5, reduziert auf 3 -->
+    <rule ref="category/java/codestyle.xml/ShortClassName"
+        message="A Classname should have at least 3 characters">
+        <properties>
+            <property name="minimum" value="3" />
+        </properties>
+    </rule>
+    
+    <!-- primitive Variablen x, y, z sind ok -->
+    <!-- 
+    PMD 6.28.0: WARNING: Use of deprecated attribute 'VariableDeclaratorId/@Image' by XPath rule 'ShortVariable' (in ruleset 'Code Style'), please use @Name instead
+        Vorerst still gelegt
+    <rule ref="category/java/codestyle.xml/ShortVariable">
+        <properties>
+            <property name="xpath">
+                <value><![CDATA[
+                    //VariableDeclaratorId[
+                        not ((@Image = 'x' or @Image = 'y' or @Image = 'z')
+                             and (../Type/PrimitiveType or ../../Type/PrimitiveType))
+                        and string-length(@Image) < 3]
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    -->
+    
+    <!-- False positiv: klassifiziert eigenen Typ Vector als java.util.Vector -->
+    <rule ref="category/java/performance.xml/UseArrayListInsteadOfVector">
+        <properties>
+            <property name="xpath">
+                <value><![CDATA[
+                    //CompilationUnit[count(ImportDeclaration/Name[@Image='java.util.Vector']) > 0]
+                    //AllocationExpression/ClassOrInterfaceType[@Image='Vector' or @Image='java.util.Vector']
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    
+    <!-- False positiv: Schleifenvariable in foreach-Schleife muss nicht final sein -->
+    <rule ref="category/java/codestyle.xml/LocalVariableCouldBeFinal">
+        <properties>
+            <property name="violationSuppressXPath">
+                <value><![CDATA[
+                    //ForStatement/LocalVariableDeclaration/VariableDeclarator
+                    ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+    
+    <!-- RS 2016-05-08: Wenn es eine unbenutzte lokale Variable gibt, dann muss diese unused* heissen
+    -->
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable">
+        <properties>
+            <property name="violationSuppressRegex" value=".+'unused.*'.+"/>
+        </properties>
+    </rule>
+
+    <!-- .................................................................................. -->
+    <!-- RS 2015-11-21: Ausdruecke maximal 5 Operatoren;
+        unares Minus zaehlt nicht mit
+    -->
+    <rule name="ExpressionTooComplex"
+        message="Simplify expression by introducing temporary variables or helper methods"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //Expression[count(.//AssignmentOperator) +
+                         count(.//ConditionalExpression) +
+                         count(.//ConditionalOrExpression) +
+                         count(.//ConditionalAndExpression) +
+                         count(.//InclusiveOrExpression) +
+                         count(.//ExclusiveOrExpression) +
+                         count(.//AndExpression) +
+                         count(.//EqualityExpression) +
+                         count(.//InstanceOfExpression) +
+                         count(.//RelationalExpression) +
+                         count(.//ShiftExpression) +
+                         count(.//AdditiveExpression) +
+                         count(.//MultiplicativeExpression) +
+                         count(.//UnaryExpression[not(@Image = '-')]) +
+                         count(.//PreIncrementExpression) +
+                         count(.//PreDecrementExpression) +
+                         count(.//UnaryExpressionNotPlusMinus) +
+                         count(.//PostfixExpression) +
+                         count(.//CastExpression) > 5]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-21: Increment und Decrement nur als Statements oder isolierte Ausdruecke,
+        nicht als Teilausdruecke;
+        Wenn in der Elternknotenliste steht "or (name() = 'Expression')",
+        dann darf x++ auch nicht hinter einem return stehen oder so.
+        Das ist etwas arg streng, daher zulassen.
+    -->
+    <rule name="AvoidIncrementAsSubExpression"
+        message="Avoid increment and decrement operators in subexpressions"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //.[(name() = 'ConditionalExpression')
+                or (name() = 'AssignmentOperator')
+                or (name() = 'UnaryExpressionNotPlusMinus')
+                or (name() = 'CastExpression')
+                or (name() = 'UnaryExpression')
+                or (name() = 'MultiplicativeExpression')
+                or (name() = 'AdditiveExpression')
+                or (name() = 'ShiftExpression')
+            ]/*[(name() = 'PreIncrementExpression')
+                or (name() = 'PreDecrementExpression')
+                or (name() = 'PostfixExpression')]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-21: Variablen einzeln definieren -->
+    <rule name="AvoidDefinitionLists"
+        message="Use a separate definition for each variable"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //LocalVariableDeclaration[count(./VariableDeclarator) > 1]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-21: Objektvariablen sind entweder private oder static+final -->
+    <rule name="FieldIsNeitherPrivateNorStaticAndFinal"
+        message="Define fields either private or static and final"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //FieldDeclaration[not(@Private='true' or (@Static='true' and @Final='true'))]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-21: Klassenvariablen muessen final sein -->
+    <rule name="ClassVariableMustBeFinal"
+        message="Define static fields final"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //FieldDeclaration[@Static='true' and @Final='false']
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-26: return begrenzen; Verboten ist ...
+        2 oder mehr in einem Lambda-Ausdruck
+        return in while, for, do/while
+        return tiefer als direkt unter einem if
+    -->
+    <rule name="ExitLambdaAtEnd"
+        message="Exit lambda at the end"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //LambdaExpression[count(.//ReturnStatement) > 1]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-26: return begrenzen; Verboten ist ...
+        2 oder mehr in einem Lambda-Ausdruck
+        return in while, for, do/while
+        return tiefer als direkt unter einem if
+    -->
+    <rule name="DontReturnFromLoop"
+        message="Do not return from loop"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //WhileStatement[.//ReturnStatement]
+            | //ForStatement[.//ReturnStatement]
+            | //DoStatement[.//ReturnStatement]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2015-11-26: return begrenzen; Verboten ist ...
+        2 oder mehr in einem Lambda-Ausdruck
+        return in while, for, do/while
+        return tiefer als direkt unter einem if
+    -->
+    <rule name="DontReturnFromNestedBlock"
+        message="Do not return from nested block"
+        language="java"
+        class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+        <![CDATA[
+            //MethodDeclaration[*[*[*[*[*[*[.//ReturnStatement]]]]]]]
+        ]]>
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2016-11-13: kein continue
+    -->
+    <rule name="AvoidContinue"
+         message="Don't shortcut loops with continue"
+         language="java"
+         class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+                    //ContinueStatement
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2016-11-13: kein break in Schleifen, abgesehen von foreach;
+        Die Regel ist noch etwas zu grob:
+        Sie blockiert auch zulaessige break in switch und foreach-Schleifen,
+        die in andere Schleifen geschachtelt sind.
+        XPath kommt hier seine Grenzen.
+    -->
+    <rule name="AvoidBreak"
+         message="Don't break out of loops"
+         language="java"
+         class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+                    //WhileStatement[.//BreakStatement]
+                    | //DoStatement[.//BreakStatement]
+                    | //ForStatement[./ForInit and .//BreakStatement]
+
+                </value>
+            </property>
+        </properties>
+    </rule>
+
+    <!-- RS 2016-11-13: Nichtssagende Wortteile
+        Syntax der Regexe in match: http://www.regular-expressions.info/xpath.html
+    -->
+    <rule name="FindBetterNames"
+         message="Find better name and name parts"
+         language="java"
+         class="net.sourceforge.pmd.lang.rule.XPathRule">
+        <description>
+        </description>
+        <properties>
+            <property name="xpath">
+                <value>
+                    //VariableDeclaratorId[pmd:matches(@VariableName, 
+                        '^[Tt]e?mp.*', 
+                        '^[Hh]e?lp.*', 
+                        '^[Mm]isc.*',
+                        '.*[Tt]e?mp$', 
+                        '.*[Hh]e?lp$', 
+                        '.*[Mm]isc$'
+                        )]
+                    | //MethodDeclaratorId[pmd:matches(@MethodName, 
+                        '^[Tt]e?mp.*', 
+                        '^[Hh]e?lp.*', 
+                        '^[Mm]isc.*',
+                        '.*[Tt]e?mp$', 
+                        '.*[Hh]e?lp$', 
+                        '.*[Mm]isc$'
+                        )]
+                </value>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
+
