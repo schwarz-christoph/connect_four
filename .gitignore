@@ -2,4 +2,6 @@
 .idea/*
 Connect Four.md
 Connect_Four.iml
-/report/*
+checker/reports/*
+checker/checkers.ps1
+out/*

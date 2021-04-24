@@ -1,6 +1,5 @@
 package edu.hm.se2.connect_four.csgles;
 
-import edu.hm.se2.connect_four.csgles.datastore.mutable.AbstractConnectFourObservable;
 import edu.hm.se2.connect_four.csgles.datastore.mutable.FullConnectFourBoardTest;
 import edu.hm.se2.connect_four.csgles.datastore.mutable.FullConnectFourGameTest;
 import edu.hm.se2.connect_four.csgles.datastore.mutable.FullConnectFourPlayerTest;
