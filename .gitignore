@@ -5,3 +5,4 @@ Connect_Four.iml
 checker/reports/*
 checker/checkers.ps1
 /out/
+/checker/checkers.ps1
