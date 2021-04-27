@@ -22,7 +22,7 @@ public class ConnectFourFieldTest {
         //arrange
         final int x = 1;
         final int wantY = 2;
-        final Field subjectUnderTestField = new ConnectFourField(x,wantY,PlayerID.PLAYER_1);
+        final Field subjectUnderTestField = new ConnectFourField(x, wantY, PlayerID.PLAYER_1);
 
         //act
         final int haveY = subjectUnderTestField.yCoordinate();

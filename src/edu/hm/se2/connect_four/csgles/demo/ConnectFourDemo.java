@@ -8,10 +8,10 @@ import java.util.List;
 
 public class ConnectFourDemo {
     public static void main(String... args) {
-        FullBoard board = FullConnectFourBoard.make();
-        FullPlayer playerOne = FullConnectFourPlayer.make(PlayerID.PLAYER_1);
-        FullPlayer playerTwo = FullConnectFourPlayer.make(PlayerID.PLAYER_2);
-        FullGame game = FullConnectFourGame.make(PlayerID.PLAYER_1, board);
+        FullBoard board = Factory.makeBoard();
+        FullPlayer playerOne = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer playerTwo = Factory.makePlayer(PlayerID.PLAYER_2);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         printGame(game, board);
 
         game.setPlayerCount(2);
@@ -19,13 +19,13 @@ public class ConnectFourDemo {
 
         game.setIsStarted(true);
         List<Field> highlightPlayer1 = new ArrayList<>(List.of(
-            ConnectFourField.make(3, 0, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 1, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 2, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 3, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 4, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 5, PlayerID.PLAYER_1),
-            ConnectFourField.make(3, 6, PlayerID.PLAYER_1)
+                Factory.makeField(3, 0, PlayerID.PLAYER_1),
+                Factory.makeField(3, 1, PlayerID.PLAYER_1),
+                Factory.makeField(3, 2, PlayerID.PLAYER_1),
+                Factory.makeField(3, 3, PlayerID.PLAYER_1),
+                Factory.makeField(3, 4, PlayerID.PLAYER_1),
+                Factory.makeField(3, 5, PlayerID.PLAYER_1),
+                Factory.makeField(3, 6, PlayerID.PLAYER_1)
         ));
         board.setHighlight(highlightPlayer1);
         printGame(game, board);
@@ -46,7 +46,7 @@ public class ConnectFourDemo {
     }
 
     private static void printGame(Game game, Board board) {
-        if(game.isStarted()) {
+        if (game.isStarted()) {
             printMatrix(game, board);
         } else {
             printPlayerSelect(game);
@@ -59,20 +59,20 @@ public class ConnectFourDemo {
         //Headline stays the same in this use case
         System.out.println(
                 "+========+\n" +
-                "|OC RY CO|");
-        for(int y = 6; y >= 0; y--) {
+                        "|OC RY CO|");
+        for (int y = 6; y >= 0; y--) {
             System.out.print('|');
-            for(int x = 7; x >= 0; x--) {
+            for (int x = 7; x >= 0; x--) {
                 PlayerID occupyingPlayer = isFieldOccupied(allFields, x, y);
                 char symbolToPrint;
-                switch(occupyingPlayer) {
+                switch (occupyingPlayer) {
                     case PLAYER_1 -> symbolToPrint = 'G';
                     case PLAYER_2 -> symbolToPrint = 'B';
                     default -> symbolToPrint = ' ';
                 }
-                if(symbolToPrint == ' ') {
+                if (symbolToPrint == ' ') {
                     PlayerID highlightPlayer = isFieldOccupied(board.getHighlight(), x, y);
-                    switch(highlightPlayer) {
+                    switch (highlightPlayer) {
                         case PLAYER_1 -> symbolToPrint = 'g';
                         case PLAYER_2 -> symbolToPrint = 'b';
                         default -> symbolToPrint = ' ';
@@ -82,13 +82,13 @@ public class ConnectFourDemo {
             }
             System.out.print("|\n");
         }
-        System.out.println( "+========+\n" );
+        System.out.println("+========+\n");
     }
 
     private static PlayerID isFieldOccupied(List<Field> allFields, int x, int y) {
         PlayerID occupyingPlayer = PlayerID.NONE;
-        for(Field field : allFields) {
-            if(field.xCoordinate() == x && field.yCoordinate() == y) {
+        for (Field field : allFields) {
+            if (field.xCoordinate() == x && field.yCoordinate() == y) {
                 occupyingPlayer = field.owner();
             }
         }
@@ -96,32 +96,36 @@ public class ConnectFourDemo {
     }
 
     private static void printPlayerSelect(Game game) {
-        if(game.getPLayerCount() == 1) {
+        if (game.getPLayerCount() == 1) {
             System.out.println("Use case: Player select screen with 1 player.");
             System.out.println(
-                    "+========+\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "|GGGG    |\n" +
-                    "+========+\n");
+                    """
+                    +========+
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    |GGGG    |
+                    +========+
+                    """);
         } else {
             System.out.println("Use case: Player select screen with 2 players.");
             System.out.println(
-                    "+========+\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "|GGGGBBBB|\n" +
-                    "+========+\n");
+                    """
+                    +========+
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    |GGGGBBBB|
+                    +========+
+                    """);
         }
     }
 }

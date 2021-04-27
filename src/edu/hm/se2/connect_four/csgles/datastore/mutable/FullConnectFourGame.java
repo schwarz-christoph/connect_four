@@ -5,6 +5,7 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
 
 /**
  * A full connect four game.
+ *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
@@ -40,8 +41,9 @@ public class FullConnectFourGame extends AbstractConnectFourObservable implement
 
     /**
      * Make a Game.
+     *
      * @param startingPlayer Player who starts.
-     * @param board The Board of the Game.
+     * @param board          The Board of the Game.
      */
     public FullConnectFourGame(PlayerID startingPlayer, Board board) {
         this.board = board;
@@ -72,7 +74,9 @@ public class FullConnectFourGame extends AbstractConnectFourObservable implement
     }
 
     @Override
-    public Board getBoard() { return board; }
+    public Board getBoard() {
+        return board;
+    }
 
     @Override
     public PlayerID getActivePlayer() {

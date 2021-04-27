@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * A board with highlight and fields.
+ *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
@@ -14,6 +15,7 @@ public interface Board {
 
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getFields();
+
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getHighlight();
 }

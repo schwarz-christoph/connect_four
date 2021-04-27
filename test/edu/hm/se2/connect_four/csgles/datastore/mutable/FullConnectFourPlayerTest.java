@@ -18,7 +18,7 @@ public class FullConnectFourPlayerTest {
     @Test
     public void useBombJokerTest() {
         //arrange
-        final FullPlayer player = FullConnectFourPlayer.make(PlayerID.PLAYER_1);
+        final FullPlayer player = Factory.makePlayer(PlayerID.PLAYER_1);
 
         //act
         player.useBombJoker();
@@ -42,7 +42,7 @@ public class FullConnectFourPlayerTest {
     @Test
     public void deleteJokerNotUsedTest() {
         //arrange
-        final FullPlayer player = FullConnectFourPlayer.make(PlayerID.PLAYER_1);
+        final FullPlayer player = Factory.makePlayer(PlayerID.PLAYER_1);
 
         //assert
         assertFalse(player.isDeleteJokerUsed());

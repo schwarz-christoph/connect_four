@@ -4,6 +4,7 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
 
 /**
  * A full player.
+ *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
@@ -29,6 +30,7 @@ public class FullConnectFourPlayer extends AbstractConnectFourObservable impleme
 
     /**
      * The constructor for the Player.
+     *
      * @param identifier The player ID.
      */
     public FullConnectFourPlayer(PlayerID identifier) {

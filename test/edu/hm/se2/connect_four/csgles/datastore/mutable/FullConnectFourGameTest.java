@@ -12,8 +12,7 @@ public class FullConnectFourGameTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
-    final FullBoard board = FullConnectFourBoard.make();
-    final FullGame subjectUnderTestGame = FullConnectFourGame.make(PlayerID.PLAYER_1, board);
+    final FullGame subjectUnderTestGame = Factory.makeGame(PlayerID.PLAYER_1);
 
     @Test
     public void setActivePlayerTest() {

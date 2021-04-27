@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * An abstract observable with methods to register and notify registered observers.
+ *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
