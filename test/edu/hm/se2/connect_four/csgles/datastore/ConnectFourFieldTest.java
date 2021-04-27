@@ -11,23 +11,38 @@ public class ConnectFourFieldTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
-    Field subjectUnderTestField = new ConnectFourField(1,2,PlayerID.PLAYER_1);
-
     @Test
     public void xCoordinate() {
         //assert
-        assertEquals(1, subjectUnderTestField.xCoordinate());
+        assertEquals(wantX, haveX);
     }
 
     @Test
     public void yCoordinate() {
+        //arrange
+        final int x = 1;
+        final int wantY = 2;
+        final Field subjectUnderTestField = new ConnectFourField(x,wantY,PlayerID.PLAYER_1);
+
+        //act
+        final int haveY = subjectUnderTestField.yCoordinate();
+
         //assert
-        assertEquals(2, subjectUnderTestField.yCoordinate());
+        assertEquals(wantY, haveY);
     }
 
     @Test
     public void owner() {
+        //arrange
+        final int x = 1;
+        final int y = 2;
+        final PlayerID wantID = PlayerID.PLAYER_1;
+        final Field subjectUnderTestField = new ConnectFourField(x, y, wantID);
+
+        //act
+        final PlayerID haveID = subjectUnderTestField.owner();
+
         //assert
-        assertEquals(PlayerID.PLAYER_1, subjectUnderTestField.owner());
+        assertEquals(wantID, haveID);
     }
 }
