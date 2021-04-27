@@ -19,13 +19,16 @@ public class FullConnectFourBoard extends AbstractConnectFourObservable implemen
     /**
      * A list of occupied fields.
      */
-    private List<Field> allOccupiedFields;
+    private final List<Field> allOccupiedFields;
     /**
      * A list of currently highlighted fields.
      */
     private List<Field> highlight;
 
-    private FullConnectFourBoard() {
+    /**
+     * Make a Board without fields and without highlight.
+     */
+    public FullConnectFourBoard() {
         this.allOccupiedFields = new ArrayList<>();
         this.highlight = new ArrayList<>();
     }
@@ -53,9 +56,5 @@ public class FullConnectFourBoard extends AbstractConnectFourObservable implemen
     @Override
     public List<Field> getHighlight() {
         return Collections.unmodifiableList(highlight);
-    }
-
-    public static FullBoard make(){
-        return new FullConnectFourBoard();
     }
 }

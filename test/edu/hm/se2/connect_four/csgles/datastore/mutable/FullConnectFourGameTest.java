@@ -12,8 +12,8 @@ public class FullConnectFourGameTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
-    FullBoard board = FullConnectFourBoard.make();
-    FullGame subjectUnderTestGame = new FullConnectFourGame(PlayerID.PLAYER_1, board);
+    final FullBoard board = FullConnectFourBoard.make();
+    final FullGame subjectUnderTestGame = FullConnectFourGame.make(PlayerID.PLAYER_1, board);
 
     @Test
     public void setActivePlayerTest() {
@@ -50,9 +50,19 @@ public class FullConnectFourGameTest {
     }
 
     @Test
+    public void setIsNotStartedTest() {
+        //arrange
+        final boolean want = false;
+        subjectUnderTestGame.setIsStarted(want);
+
+        //assert
+        assertEquals(want, subjectUnderTestGame.isStarted());
+    }
+
+    @Test
     public void setPlayerCountTest() {
         //arrange;
-        int want = 1;
+        final int want = 1;
 
         //act
         subjectUnderTestGame.setPlayerCount(1);

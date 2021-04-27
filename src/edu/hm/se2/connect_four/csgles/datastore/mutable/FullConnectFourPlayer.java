@@ -60,8 +60,4 @@ public class FullConnectFourPlayer extends AbstractConnectFourObservable impleme
     public boolean isDeleteJokerUsed() {
         return isDeleteJokerAvailable;
     }
-
-    public static FullPlayer make(PlayerID identifier){
-        return new FullConnectFourPlayer(identifier);
-    }
 }

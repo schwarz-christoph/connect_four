@@ -22,7 +22,7 @@ public abstract class AbstractConnectFourObservable implements Observable {
     /**
      * A list of observers used to notify them.
      */
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
     /**
      * The constructor of the observable
