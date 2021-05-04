@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+    Findbugs reports all bug instances except those matching the filters listed below.
+    R. Schiedermeier, http://sol.cs.hm.edu/rs
+-->
+<FindBugsFilter>
+    <!-- Strings koennen auch ohne Locale sinnvoll in Uppercase oder Lowercase konvertiert werden,
+        wenn sie bloss ASCII enthalten
+    -->
+    <Match>
+        <Bug pattern="DM_CONVERT_CASE" />
+    </Match>
+    <!--
+    <Match>
+        <Bug pattern="TESTING" />
+    </Match>
+    -->
+    <!-- In Multi-threaded Servern passt das ARM nicht immer -->
+    <Match>
+        <Bug pattern="OS_OPEN_STREAM" />
+    </Match>
+    <Match>
+        <Bug pattern="OBL_UNSATISFIED_OBLIGATION" />
+    </Match>
+    <Match>
+        <Bug pattern="OS_OPEN_STREAM_EXCEPTION_PATH" />
+    </Match>
+    <!-- wait muss im MVC- und Subsumption-Architekturmuster nicht unbedingt 
+        in einer Schleife oder unter einer Bedingung stehen
+    -->
+    <Match>
+        <Bug pattern="WA_NOT_IN_LOOP" />
+    </Match>
+    <Match>
+        <Bug pattern="UW_UNCOND_WAIT" />
+    </Match>
+    <!-- Bei Netzwerksockets ist die Angabe eines Encoding nicht zwangslaeufig noetig,
+        wenn auf anderen Wegen ASCII sichergestellt ist.
+    -->
+    <Match>
+        <Bug pattern="DM_DEFAULT_ENCODING" />
+    </Match>
+    <!--
+    Die beiden folgenden Warnungen loest der Code aus,
+    den der Java-8-Compiler aus Lambda-Ausdruecken generiert.
+    -->
+    <!-- SB haelt Lambda-Ausdruecke fuer innere Klassen und will sie auslagern -->
+    <Match>
+        <Bug pattern="SIC_INNER_SHOULD_BE_STATIC_ANON" />
+    </Match>
+    <!-- Der Compiler generiert aus Lambda-Ausdruecken private Methoden, 
+        die niemand explizit aufruft 
+    -->
+    <Match>
+        <Bug pattern="UPM_UNCALLED_PRIVATE_METHOD" />
+    </Match>
+    <!-- Generiertes equals von Records
+        gefixed in 4.2.3
+    <Match>
+        <Bug pattern="EQ_UNUSUAL" />
+    </Match>
+    -->
+    <!-- Switch-Statements brauchen kein Default
+    -->
+    <Match>
+        <Bug pattern="SF_SWITCH_NO_DEFAULT" />
+    </Match>
+    <!-- Siehe http://findbugs.sourceforge.net/manual/filter.html, Punkt 11.
+        Der Regex auf dieser Seite ist m.E. falsch.
+        Der folgende Matcher ignoriert alle Klassen, deren Name auf "Test" endet.
+    -->
+    <Match>
+        <Class name="~.*Test" />
+        <Not>
+            <Bug code="IJU" /> <!-- 'IJU' is the code for bugs related to JUnit test code -->
+        </Not>
+    </Match>
+</FindBugsFilter>
