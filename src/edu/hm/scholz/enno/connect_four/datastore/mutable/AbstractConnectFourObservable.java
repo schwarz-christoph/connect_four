@@ -1,10 +1,10 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.Board;
-import edu.hm.se2.connect_four.csgles.datastore.Game;
-import edu.hm.se2.connect_four.csgles.datastore.Observable;
-import edu.hm.se2.connect_four.csgles.datastore.Observer;
-import edu.hm.se2.connect_four.csgles.datastore.Player;
+import edu.hm.scholz.enno.connect_four.datastore.Observable;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.Observer;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
 
 import java.util.Collections;
 import java.util.List;
