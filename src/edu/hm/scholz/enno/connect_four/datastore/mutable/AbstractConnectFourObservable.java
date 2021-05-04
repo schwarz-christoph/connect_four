@@ -18,7 +18,7 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-public abstract class AbstractConnectFourObservable implements Observable {
+abstract class AbstractConnectFourObservable implements Observable {
 
     /**
      * A list of observers used to notify them.
