@@ -1,9 +1,7 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
-
-import edu.hm.se2.connect_four.csgles.datastore.Player;
+package edu.hm.scholz.enno.connect_four.datastore;
 
 /**
- * A modifiable player.
+ * A Player with ID and joker usage.
  *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
@@ -11,11 +9,14 @@ import edu.hm.se2.connect_four.csgles.datastore.Player;
  * @version 04-01-2021
  */
 
-public interface FullPlayer extends Player {
+public interface Player {
 
     @SuppressWarnings("PMD.CommentRequired")
-    void useBombJoker();
+    PlayerID getIdentifier();
 
     @SuppressWarnings("PMD.CommentRequired")
-    void useDeleteJoker();
+    boolean isBombJokerUsed();
+
+    @SuppressWarnings("PMD.CommentRequired")
+    boolean isDeleteJokerUsed();
 }

@@ -1,9 +1,9 @@
-package edu.hm.se2.connect_four.csgles.datastore;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import java.util.List;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
 
 /**
- * A board with highlight and fields.
+ * A modifiable player.
  *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
@@ -11,11 +11,11 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-public interface Board {
+public interface FullPlayer extends Player {
 
     @SuppressWarnings("PMD.CommentRequired")
-    List<Field> getFields();
+    void useBombJoker();
 
     @SuppressWarnings("PMD.CommentRequired")
-    List<Field> getHighlight();
+    void useDeleteJoker();
 }

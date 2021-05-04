@@ -1,7 +1,9 @@
-package edu.hm.se2.connect_four.csgles.datastore;
+package edu.hm.scholz.enno.connect_four.datastore;
+
+import java.util.List;
 
 /**
- * A Player with ID and joker usage.
+ * A board with highlight and fields.
  *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
@@ -9,14 +11,11 @@ package edu.hm.se2.connect_four.csgles.datastore;
  * @version 04-01-2021
  */
 
-public interface Player {
+public interface Board {
 
     @SuppressWarnings("PMD.CommentRequired")
-    PlayerID getIdentifier();
+    List<Field> getFields();
 
     @SuppressWarnings("PMD.CommentRequired")
-    boolean isBombJokerUsed();
-
-    @SuppressWarnings("PMD.CommentRequired")
-    boolean isDeleteJokerUsed();
+    List<Field> getHighlight();
 }

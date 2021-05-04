@@ -1,4 +1,4 @@
-package edu.hm.se2.connect_four.csgles.datastore;
+package edu.hm.scholz.enno.connect_four.datastore;
 
 /**
  * All player IDs.

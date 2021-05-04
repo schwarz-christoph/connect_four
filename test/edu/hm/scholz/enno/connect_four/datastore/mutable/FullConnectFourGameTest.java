@@ -1,6 +1,8 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -17,7 +19,7 @@ public class FullConnectFourGameTest {
     @Test
     public void setActivePlayerTest() {
         //arrange
-        PlayerID want = PlayerID.PLAYER_2;
+        final PlayerID want = PlayerID.PLAYER_2;
 
         //act
         subjectUnderTestGame.setActivePlayer(PlayerID.PLAYER_2);
@@ -29,7 +31,7 @@ public class FullConnectFourGameTest {
     @Test
     public void setWinnerTest() {
         //arrange
-        PlayerID want = PlayerID.PLAYER_2;
+        final PlayerID want = PlayerID.PLAYER_2;
 
         //act
         subjectUnderTestGame.setWinner(PlayerID.PLAYER_2);
@@ -41,8 +43,8 @@ public class FullConnectFourGameTest {
     @Test
     public void setIsStartedTest() {
         //arrange
-        boolean want = true;
-        subjectUnderTestGame.setIsStarted(true);
+        final boolean want = true;
+        subjectUnderTestGame.setIsStarted(want);
 
         //assert
         assertEquals(want, subjectUnderTestGame.isStarted());
@@ -72,8 +74,10 @@ public class FullConnectFourGameTest {
 
     @Test
     public void getBoardTest() {
-
+        //arrange
+        final Board board = Factory.makeBoard();
+        final Game game = Factory.makeGame(PlayerID.PLAYER_1, board);
         //assert
-        assertEquals(board, subjectUnderTestGame.getBoard());
+        assertEquals(board, game.getBoard());
     }
 }

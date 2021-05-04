@@ -1,7 +1,7 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.Board;
-import edu.hm.se2.connect_four.csgles.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
 
 import java.util.List;
 
