@@ -6,3 +6,4 @@ checker/reports/*
 checker/checkers.ps1
 /out
 /checker/checkers.ps1
+/report/
