@@ -26,9 +26,9 @@ abstract class AbstractConnectFourObservable implements Observable {
     private final List<Observer> observers;
 
     /**
-     * The constructor of the observable
+     * The constructor of the observable.
      */
-    public AbstractConnectFourObservable() {
+    AbstractConnectFourObservable() {
         this.observers = Collections.emptyList();
     }
 
