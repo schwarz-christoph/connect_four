@@ -45,7 +45,7 @@ public class FullConnectFourGame extends AbstractConnectFourObservable implement
      * @param startingPlayer Player who starts.
      * @param board          The Board of the Game.
      */
-    public FullConnectFourGame(PlayerID startingPlayer, Board board) {
+    FullConnectFourGame(PlayerID startingPlayer, Board board) {
         this.board = board;
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
