@@ -1,20 +1,21 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * A full board
+ * A full board.
+ *
  * @author Christoph Schwarz (schwarz4@hm.edu)
  * @author Georg Lang (glang@hm.edu)
  * @author Enno Scholz (enno.scholz@hm.edu)
  * @version 04-01-2021
  */
 
-public class FullConnectFourBoard extends AbstractConnectFourObservable implements FullBoard {
+final class FullConnectFourBoard  extends AbstractConnectFourObservable implements FullBoard {
 
     /**
      * A list of occupied fields.
@@ -28,7 +29,7 @@ public class FullConnectFourBoard extends AbstractConnectFourObservable implemen
     /**
      * Make a Board without fields and without highlight.
      */
-    public FullConnectFourBoard() {
+    FullConnectFourBoard() {
         this.allOccupiedFields = new ArrayList<>();
         this.highlight = new ArrayList<>();
     }

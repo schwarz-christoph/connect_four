@@ -1,7 +1,13 @@
-package edu.hm.se2.connect_four.csgles.demo;
+package edu.hm.scholz.enno.connect_four.demo;
 
-import edu.hm.se2.connect_four.csgles.datastore.*;
-import edu.hm.se2.connect_four.csgles.datastore.mutable.*;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +36,16 @@ public class ConnectFourDemo {
         board.setHighlight(highlightPlayer1);
         printGame(game, board);
 
-        Field field_30 = ConnectFourField.make(3, 0, PlayerID.PLAYER_1);
+        Field field_30 = Factory.makeField(3, 0, PlayerID.PLAYER_1);
         board.placeStone(field_30);
         List<Field> highlightPlayer2 = new ArrayList<>(List.of(
-                ConnectFourField.make(3, 0, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 1, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 2, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 3, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 4, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 5, PlayerID.PLAYER_2),
-                ConnectFourField.make(3, 6, PlayerID.PLAYER_2)
+                Factory.makeField(3, 0, PlayerID.PLAYER_2),
+                Factory.makeField(3, 1, PlayerID.PLAYER_2),
+                Factory.makeField(3, 2, PlayerID.PLAYER_2),
+                Factory.makeField(3, 3, PlayerID.PLAYER_2),
+                Factory.makeField(3, 4, PlayerID.PLAYER_2),
+                Factory.makeField(3, 5, PlayerID.PLAYER_2),
+                Factory.makeField(3, 6, PlayerID.PLAYER_2)
         ));
         board.setHighlight(highlightPlayer2);
         printGame(game, board);

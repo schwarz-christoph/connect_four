@@ -1,8 +1,7 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.Game;
-import edu.hm.se2.connect_four.csgles.datastore.Player;
-import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
 
 /**
  * A modifiable connect four game.

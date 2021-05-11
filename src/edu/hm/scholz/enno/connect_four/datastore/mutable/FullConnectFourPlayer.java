@@ -1,6 +1,6 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 
 /**
  * A full player.
@@ -11,17 +11,17 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
  * @version 04-01-2021
  */
 
-public class FullConnectFourPlayer extends AbstractConnectFourObservable implements FullPlayer {
+final class FullConnectFourPlayer extends AbstractConnectFourObservable implements FullPlayer {
 
     /**
      * Whether the bomb joker has been used or not.
      */
-    private boolean isBombJokerAvailable;
+    private boolean bombJokerUsed;
 
     /**
      * Whether the delete joker has been used or not.
      */
-    private boolean isDeleteJokerAvailable;
+    private boolean deleteJokerUsed;
 
     /**
      * The ID of the Player.
@@ -33,19 +33,19 @@ public class FullConnectFourPlayer extends AbstractConnectFourObservable impleme
      *
      * @param identifier The player ID.
      */
-    public FullConnectFourPlayer(PlayerID identifier) {
+    FullConnectFourPlayer(PlayerID identifier) {
         this.identifier = identifier;
-        this.isBombJokerAvailable = false;
+        this.bombJokerUsed = false;
     }
 
     @Override
     public void useBombJoker() {
-        isBombJokerAvailable = false;
+        bombJokerUsed = true;
     }
 
     @Override
     public void useDeleteJoker() {
-        isDeleteJokerAvailable = false;
+        deleteJokerUsed = true;
     }
 
     @Override
@@ -55,11 +55,11 @@ public class FullConnectFourPlayer extends AbstractConnectFourObservable impleme
 
     @Override
     public boolean isBombJokerUsed() {
-        return isBombJokerAvailable;
+        return bombJokerUsed;
     }
 
     @Override
     public boolean isDeleteJokerUsed() {
-        return isDeleteJokerAvailable;
+        return deleteJokerUsed;
     }
 }

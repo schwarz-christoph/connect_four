@@ -1,7 +1,7 @@
-package edu.hm.se2.connect_four.csgles.datastore.mutable;
+package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.se2.connect_four.csgles.datastore.Board;
-import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 
 /**
  * A full connect four game.
@@ -12,12 +12,12 @@ import edu.hm.se2.connect_four.csgles.datastore.PlayerID;
  * @version 04-01-2021
  */
 
-public class FullConnectFourGame extends AbstractConnectFourObservable implements FullGame{
+final class FullConnectFourGame extends AbstractConnectFourObservable implements FullGame {
 
     /**
      * A list of occupied fields.
      */
-    private Board board;
+    private final Board board;
 
     /**
      * The player that makes the next move.
@@ -50,7 +50,6 @@ public class FullConnectFourGame extends AbstractConnectFourObservable implement
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
         this.humanPlayers = 1; //Default value for one player
-
     }
 
     @Override
@@ -96,15 +95,5 @@ public class FullConnectFourGame extends AbstractConnectFourObservable implement
     @Override
     public int getPLayerCount() {
         return humanPlayers;
-    }
-
-    /**
-     * Make a Game.
-     * @param startingPlayer Player who starts.
-     * @param board The Board of the Game.
-     * @return A FullConnectFourGame.
-     */
-    public static FullGame make(PlayerID startingPlayer, Board board){
-        return new FullConnectFourGame(startingPlayer, board);
     }
 }
