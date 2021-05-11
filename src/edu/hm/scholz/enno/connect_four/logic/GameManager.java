@@ -17,7 +17,7 @@ public interface GameManager {
     List<Move> getMoves();
 
     /**
-     * Executes the provided move.
+     * Executes the provided move, updates the datastore and notifies the observers.
      * @param move Move to execute.
      */
     void executeMove(Move move);
