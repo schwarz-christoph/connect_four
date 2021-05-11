@@ -1,4 +1,5 @@
-package edu.hm.se2.connect_four.csgles.logic;
+package edu.hm.scholz.enno.connect_four.logic;
+
 
 import java.util.List;
 
