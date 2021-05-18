@@ -42,6 +42,7 @@ public class ConnectFourManager implements GameManager {
         final List<Field> currentHighlight = game.getBoard().getHighlight();
         final Field target = currentHighlight.get(0);
 
+
     }
 
     private void createHighlight(Move move, Field targetHighlight) {
@@ -143,31 +144,26 @@ public class ConnectFourManager implements GameManager {
      * @return All possible Moves
      */
     private List<Move> menuSelection(Field target, PlayerID player) {
-        //TODO Comp ist 6
-        final List<Move> possibleMoves;
+        final List<Move> possibleMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
         final int targetXCord = target.xCoordinate();
-
-        final List<Move> confirmMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT, Move.DOWN));
-        final List<Move> noConfirmMove = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
 
         if(player == PlayerID.PLAYER_1) {
             //Player1
-            if(targetXCord > 5 || targetXCord == 3) {
-                //Empty field or Player2 joker menu
-                possibleMoves = noConfirmMove;
-            } else {
-                //Player1 is in their own Menu
-                possibleMoves = confirmMoves;
+            if(targetXCord < 2){
+                //Player1 in the Joker Menu
+                possibleMoves.add(Move.CONFIRM);
             }
         } else {
             //Player2
-            if(targetXCord < 3 || targetXCord == 5) {
-                //Empty field or Player1 joker menu
-                possibleMoves = noConfirmMove;
-            } else {
-                //Player2 is in their own Menu
-                possibleMoves = confirmMoves;
+            if(targetXCord > 5){
+                //Player2 in the Joker Menu
+                possibleMoves.add(Move.CONFIRM);
             }
+        }
+
+        if(targetXCord < 5 && targetXCord > 2){
+            //One of the Player in the Game-Menu
+            possibleMoves.add(Move.CONFIRM);
         }
         return possibleMoves;
     }
