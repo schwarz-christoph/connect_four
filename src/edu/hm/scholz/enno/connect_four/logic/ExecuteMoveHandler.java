@@ -85,6 +85,9 @@ class ExecuteMoveHandler {
      * @param game the game
      */
     private static void decideMatrix(Move move, List<Field> currentHighlight, FullGame game){
+
+        //TODO if Joker is selected Bool to change Highlight only in the Joker menu
+
         final Field targetField = currentHighlight.get(0);
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
