@@ -6,10 +6,12 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 //TODO can not get FullBoard out of FullGame
@@ -141,12 +143,57 @@ class ExecuteMoveHandler {
         board.setHighlight(newHighlight);
     }
 
-    private static void createBombJokerHighlight(Field targetHighlight) {
+    private static void createBombJokerHighlight(Field targetHighlight, FullGame game) {
+        List<Field> allHighlights = game.getBoard().getFields();
+        final List<Field> newHighlights;
 
+        newHighlights = allHighlights.stream()
+                //filter everything that not in the radius
+                .filter(field -> field.xCoordinate() < targetHighlight.xCoordinate() + 2)
+                .filter(field -> field.xCoordinate() > targetHighlight.xCoordinate() - 2)
+                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate() + 2)
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() - 2)
+                //filter corners away
+                .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
+                        Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
+                .collect(Collectors.toList());
+
+        //TODO: Typecast ersetzen
+        //TODO: Datastore updaten
+        FullBoard board = (FullBoard) game.getBoard();
+        board.setHighlight(newHighlights);
     }
 
-    private static void createDeleteJokerHighlight(Field targetHighlight) {
+    private static void createDeleteJokerHighlight(Field targetHighlight, FullGame game) {
+        List<Field> allHighlights = game.getBoard().getFields();
+        List<Field> newHighlights = null;
 
+        //selected whole column
+        if(targetHighlight.xCoordinate() > 8){
+            newHighlights = allHighlights.stream()
+                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                    .collect(Collectors.toList());
+
+        //TODO: Check if user is left (y < 0)?
+        //selected whole row
+        }else if(targetHighlight.yCoordinate() > 8) {
+            allHighlights = allHighlights.stream()
+                    .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
+                    .collect(Collectors.toList());
+        }
+        //select only a single field
+        else {
+            newHighlights = allHighlights.stream()
+                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                    .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
+                    .collect(Collectors.toList());
+        }
+
+
+        //TODO: Typecast ersetzen
+        //TODO: Datastore updaten
+        FullBoard board = (FullBoard) game.getBoard();
+        board.setHighlight(newHighlights);
     }
 
     private static void createBombJoker() {
@@ -160,7 +207,44 @@ class ExecuteMoveHandler {
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
         FullBoard board = (FullBoard) game.getBoard();
         List<Field> allFields = game.getBoard().getFields();
+        List<Field> newAllFields;
 
+
+        //TODO: Datastore updaten
+        //TODO: AllFields fehler beseitigen
+        //Remove all bombed fields
+        newAllFields = allFields.stream()
+                //filter everything thats not in the radius
+                .filter(field -> field.xCoordinate() < targetHighlight.xCoordinate() + 2)
+                .filter(field -> field.xCoordinate() > targetHighlight.xCoordinate() - 2)
+                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate() + 2)
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() - 2)
+                //filter corners away
+                .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
+                        Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
+                .map(allFields::remove)
+                .collect(Collectors.toList());
+
+        //Update everything directly above
+        newAllFields = newAllFields.stream()
+                .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() + 2)
+                .map(field -> Factory.makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner()))
+                .collect(Collectors.toList());
+
+        //Update everything adjacent on left and right
+        newAllFields = newAllFields.stream()
+                .filter(field -> Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) == 1 )
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() + 1)
+                .map(field -> Factory.makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner()))
+                .collect(Collectors.toList());
+
+        //Update everything on y Radius == 2
+        newAllFields = newAllFields.stream()
+                .filter(field -> Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) == 2 )
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
+                .map(field -> Factory.makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner()))
+                .collect(Collectors.toList());
 
     }
 
@@ -173,29 +257,56 @@ class ExecuteMoveHandler {
         //TODO remove TypeCast
         FullBoard board = (FullBoard) game.getBoard();
         List<Field> allFields = game.getBoard().getFields();
+        List<Field> newAllFields;
 
-        if(targetHighlight.owner() != PlayerID.NONE){
-            allFields.remove(targetHighlight);
+        //TODO: Datastore updaten
+        //TODO: Fehler fixen
+        //Selected a row
+        if(targetHighlight.xCoordinate() > 8 || targetHighlight.xCoordinate() < 0){
 
-            //Get all field that need to be updated
-            List<Field> fieldsToUpdate = allFields.stream()
-                    .filter(next -> next.xCoordinate() == targetHighlight.xCoordinate())
+            //Get all fields that need to be updated and make a new list with updated fields
+            List<Field> updatedFields = new ArrayList<>();
+            updatedFields = allFields.stream()
+                    .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
+                    .map(field -> updatedFields.add(Factory
+                            .makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner())))
                     .collect(Collectors.toList());
 
             //Remove all fields that are no longer up to date
-            allFields.stream()
-                    .filter(next -> next.xCoordinate() == targetHighlight.xCoordinate())
-                    .filter(next -> next.yCoordinate() > targetHighlight.yCoordinate())
-                    .map(next -> allFields.remove(next));
-
-            //Move Fields to new position
-            allFields.stream()
-                    .filter(n -> n.xCoordinate() == targetHighlight.xCoordinate())
-                    .map(n -> Factory.makeField(n.xCoordinate(), n.yCoordinate() - 1, n.owner()))
+            newAllFields = allFields.stream()
+                    .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
+                    .map(field -> allFields.remove(field))
                     .collect(Collectors.toList());
 
-            //add new field on top
-            allFields.add(Factory.makeField(targetHighlight.xCoordinate(), 7, PlayerID.NONE));
+            //Fill the matrix with the updated fields
+            newAllFields = Stream.concat(newAllFields.stream(), updatedFields.stream())
+                    .collect(Collectors.toList());
+        }
+        //Selected a column
+        else if(targetHighlight.yCoordinate() > 8)
+            newAllFields = allFields.stream()
+                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                    .map(field -> allFields.remove(field))
+                    .collect(Collectors.toList());
+        else {
+            List<Field> updatedFields = null;
+            allFields.remove(targetHighlight);
+
+            //Remove old fields
+            newAllFields = allFields.stream()
+                    .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
+                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                    .map(allFields::remove)
+                    .collect(Collectors.toList());
+
+            //update field to new position
+            updatedFields = allFields.stream()
+                    .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
+                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                    .map(field -> Factory.makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner()))
+                    .collect(Collectors.toList());
+
+            newAllFields = Stream.concat(newAllFields.stream(), updatedFields.stream()).collect(Collectors.toList());
         }
 
     }
