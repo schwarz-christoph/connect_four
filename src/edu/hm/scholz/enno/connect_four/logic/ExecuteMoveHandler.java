@@ -147,11 +147,11 @@ class ExecuteMoveHandler {
     }
 
     private static void createBombJoker() {
-        //TODO Bombjoker Joker is only awailable not use (can retun back)
+        //TODO Bombjoker Joker is only available not use only Highlight
     }
 
     private static void createDeleteJoker() {
-        //TODO Delete Joker is only awailable not use (can retun back)
+        //TODO Delete Joker is only available not use only Highlight
     }
 
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
