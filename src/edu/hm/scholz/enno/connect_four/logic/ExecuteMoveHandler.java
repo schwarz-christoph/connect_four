@@ -207,7 +207,7 @@ class ExecuteMoveHandler {
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
         FullBoard board = (FullBoard) game.getBoard();
         List<Field> allFields = game.getBoard().getFields();
-        List<Field> newAllFields;
+        List<Field> newAllFields = new ArrayList<>();
 
 
         //TODO: Datastore updaten
@@ -215,14 +215,13 @@ class ExecuteMoveHandler {
         //Remove all bombed fields
         newAllFields = allFields.stream()
                 //filter everything thats not in the radius
-                .filter(field -> field.xCoordinate() < targetHighlight.xCoordinate() + 2)
-                .filter(field -> field.xCoordinate() > targetHighlight.xCoordinate() - 2)
-                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate() + 2)
-                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() - 2)
+                .filter(field -> field.xCoordinate() > targetHighlight.xCoordinate() + 2)
+                .filter(field -> field.xCoordinate() < targetHighlight.xCoordinate() - 2)
+                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() + 2)
+                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate() - 2)
                 //filter corners away
                 .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
-                        Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
-                .map(allFields::remove)
+                        Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) > 3)
                 .collect(Collectors.toList());
 
         //Update everything directly above
@@ -268,14 +267,13 @@ class ExecuteMoveHandler {
             List<Field> updatedFields = new ArrayList<>();
             updatedFields = allFields.stream()
                     .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
-                    .map(field -> updatedFields.add(Factory
-                            .makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner())))
+                    .map(field -> Factory
+                            .makeField(field.xCoordinate(), field.yCoordinate() - 1, field.owner()))
                     .collect(Collectors.toList());
 
             //Remove all fields that are no longer up to date
             newAllFields = allFields.stream()
-                    .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
-                    .map(field -> allFields.remove(field))
+                    .filter(field -> field.yCoordinate() != targetHighlight.yCoordinate())
                     .collect(Collectors.toList());
 
             //Fill the matrix with the updated fields
@@ -285,8 +283,7 @@ class ExecuteMoveHandler {
         //Selected a column
         else if(targetHighlight.yCoordinate() > 8)
             newAllFields = allFields.stream()
-                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
-                    .map(field -> allFields.remove(field))
+                    .filter(field -> field.xCoordinate() != targetHighlight.xCoordinate())
                     .collect(Collectors.toList());
         else {
             List<Field> updatedFields = null;
@@ -295,8 +292,7 @@ class ExecuteMoveHandler {
             //Remove old fields
             newAllFields = allFields.stream()
                     .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
-                    .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
-                    .map(allFields::remove)
+                    .filter(field -> field.xCoordinate() != targetHighlight.xCoordinate())
                     .collect(Collectors.toList());
 
             //update field to new position
