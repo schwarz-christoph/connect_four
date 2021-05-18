@@ -1,7 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.datastore.Field;
-import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -148,11 +147,11 @@ class ExecuteMoveHandler {
     }
 
     private static void createBombJoker() {
-
+        //TODO Bombjoker Joker is only awailable not use (can retun back)
     }
 
     private static void createDeleteJoker() {
-
+        //TODO Delete Joker is only awailable not use (can retun back)
     }
 
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
