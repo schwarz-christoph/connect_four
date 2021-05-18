@@ -1,12 +1,16 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.datastore.*;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class ConnectFourManager implements GameManager {
@@ -40,53 +44,71 @@ public class ConnectFourManager implements GameManager {
     @Override
     public void executeMove(Move move) {
         final List<Field> currentHighlight = game.getBoard().getHighlight();
-        final Field target = currentHighlight.get(0);
-
-
-    }
-
-    private void createHighlight(Move move, Field targetHighlight) {
+        ExecuteMoveHandler.onEcexute(move, currentHighlight, game);
+        winGame(); // Proofs if the game is won
+        //TODO extend it until the nex player is ready to play
 
     }
 
-    private void createMenuHighlight(Move move, Field targetHighlight) {
+
+    private void winGame(){
+        //TODO remove TypeCast
+        FullBoard board = (FullBoard) game.getBoard();
+        List<Field> fields = board.getFields();
+
+        //Player 1 win the Game
+        List<Field> player1Fields = fields.stream()
+                .filter(n -> n.owner() == PlayerID.PLAYER_1)
+                .collect(Collectors.toList());
+
+        if(winGameAlgo(player1Fields))
+            game.setWinner(PlayerID.PLAYER_1);
+
+        //Player 2 win the Game
+        List<Field> player2Fields = fields.stream()
+                .filter(n -> n.owner() == PlayerID.PLAYER_2)
+                .collect(Collectors.toList());
+
+        if(winGameAlgo(player2Fields))
+            game.setWinner(PlayerID.PLAYER_2);
 
     }
 
-    private void createBombJokerHighlight(Move move, Field targetHighlight) {
+    private boolean winGameAlgo(List<Field> fields){
 
-    }
+        boolean result = false;
 
-    private void createDeleteJokerHighlight(Move move, Field targetHighlight) {
+        //Right
+        result = fields.stream()
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 1, n.yCoordinate(), n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 2, n.yCoordinate(), n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 3, n.yCoordinate(), n.owner())))
+                .noneMatch(Objects::nonNull);
 
-    }
+        //Up
+        result = fields.stream()
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate(), n.yCoordinate()+1, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate(), n.yCoordinate()+2, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate(), n.yCoordinate()+3, n.owner())))
+                .noneMatch(Objects::nonNull);
 
-    private void createBombJoker(Move move, Field targetHighlight) {
 
-    }
+        //Side ++
+        result = fields.stream()
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+1, n.yCoordinate()+1, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+2, n.yCoordinate()+2, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+3, n.yCoordinate()+3, n.owner())))
+                .noneMatch(Objects::nonNull);
 
-    private void createDeleteJoker(Move move, Field targetHighlight) {
+        //Side +-
+        result = fields.stream()
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+1, n.yCoordinate()-1, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+2, n.yCoordinate()-2, n.owner())))
+                .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+3, n.yCoordinate()-3, n.owner())))
+                .noneMatch(Objects::nonNull);
 
-    }
 
-    private void executeBombJoker(Move move, Field targetHighlight) {
-
-    }
-
-    private void executeDeleteJoker(Move move, Field targetHighlight) {
-
-    }
-
-    private void createStone(Move move, Field targetHighlight) {
-
-    }
-
-    private void restart() {
-
-    }
-
-    private void end() {
-
+        return result;
     }
 
     /**
