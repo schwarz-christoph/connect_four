@@ -12,6 +12,12 @@ public class FullConnectFourPlayerTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
+    @Test (expected = IllegalArgumentException.class)
+    public void createPlayerIdIsNull(){
+        //arrange, act
+        final FullPlayer player = Factory.makePlayer(null);
+    }
+
     @Test
     public void useBombJokerTest() {
         //arrange
