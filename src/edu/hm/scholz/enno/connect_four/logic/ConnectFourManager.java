@@ -6,6 +6,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+import javax.print.attribute.standard.PresentationDirection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +21,19 @@ public class ConnectFourManager implements GameManager {
     private final FullPlayer player2;
 
     public ConnectFourManager(FullGame game, FullPlayer player1, FullPlayer player2) {
+
+        if(game == null){
+            throw new NullPointerException("Game cant be null");
+        }
+
+        if(player1 == null || player2 == null){
+            throw new NullPointerException("Player cant be null");
+        }
+
+        if(player1.getIdentifier() == player2.getIdentifier()){
+            throw new IllegalArgumentException("Player must have diffrent IDs");
+        }
+
         this.game = game;
         this.player1 = player1;
         this.player2 = player2;
@@ -27,7 +41,7 @@ public class ConnectFourManager implements GameManager {
 
 
     @Override
-    public List<Move> getMoves() {
+    public List<Move> getMoves(PlayerID playerID) {
         final List<Move> possibleMoves;
         if (game.isStarted()) {
             if (game.getWinner() == PlayerID.NONE) {
@@ -42,12 +56,27 @@ public class ConnectFourManager implements GameManager {
     }
 
     @Override
-    public void executeMove(Move move) {
-        final List<Field> currentHighlight = game.getBoard().getHighlight();
-        ExecuteMoveHandler.onEcexute(move, currentHighlight, game);
-        winGame(); // Proofs if the game is won
-        //TODO extend it until the nex player is ready to play
+    public boolean executeMove(Move move, PlayerID playerID) {
 
+        final boolean result;
+
+        List<Move> allowedMoves = this.getMoves(playerID);
+        boolean allowed = allowedMoves.stream()
+                .anyMatch(n -> allowedMoves.equals(n));
+
+        if(allowed){
+            final List<Field> currentHighlight = game.getBoard().getHighlight();
+            ExecuteMoveHandler.onEcexute(move, currentHighlight, game);
+            winGame(); // Proofs if the game is won
+            //TODO extend it until the nex player is ready to play
+
+            result = true;
+        }else{
+            result = false;
+        }
+
+
+        return result;
     }
 
 
@@ -75,7 +104,6 @@ public class ConnectFourManager implements GameManager {
     }
 
     private boolean winGameAlgo(List<Field> fields){
-
         boolean result = false;
 
         //Right
@@ -106,7 +134,6 @@ public class ConnectFourManager implements GameManager {
                 .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+2, n.yCoordinate()-2, n.owner())))
                 .filter(n -> fields.contains(Factory.makeField(n.xCoordinate()+3, n.yCoordinate()-3, n.owner())))
                 .noneMatch(Objects::nonNull);
-
 
         return result;
     }

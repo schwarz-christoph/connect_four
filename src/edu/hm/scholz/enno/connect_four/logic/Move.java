@@ -10,4 +10,8 @@ package edu.hm.scholz.enno.connect_four.logic;
 
 public enum Move {
     UP, DOWN, LEFT, RIGHT, CONFIRM;
+
+    public static String getAllMovesString() {
+        return "UDLRC";
+    }
 }

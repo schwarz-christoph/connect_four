@@ -20,5 +20,5 @@ public interface GameManager {
      * Executes the provided move, updates the datastore and notifies the observers.
      * @param move Move to execute.
      */
-    void executeMove(Move move);
+    boolean executeMove(Move move, PlayerID playerID);
 }

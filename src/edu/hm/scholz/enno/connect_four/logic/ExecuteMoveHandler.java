@@ -9,7 +9,6 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -21,7 +20,6 @@ class ExecuteMoveHandler {
     static void onEcexute(Move move, List<Field> currentHighlight, FullGame game){
 
         final Field fieldSelected = currentHighlight.get(0);
-
         if(fieldSelected.yCoordinate() == 0){
             //In Menu
             decideMenu(move, currentHighlight, game);
