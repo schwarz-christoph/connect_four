@@ -34,11 +34,18 @@ abstract class AbstractConnectFourObservable implements Observable {
 
     @Override
     public void register(Observer observer) {
+        if(observer == null) {
+            throw new IllegalArgumentException("Observer can't be null.");
+        }
+
         observers.add(observer);
     }
 
     @Override
     public void notifyObservers(Game game) {
+        if(game == null) {
+            throw new IllegalArgumentException("Observable can't be null.");
+        }
         for(Observer observer : observers) {
             observer.updatePlayerSelect(game);
             observer.updateWinner(game);
@@ -47,6 +54,9 @@ abstract class AbstractConnectFourObservable implements Observable {
 
     @Override
     public void notifyObservers(Board board, Player player) {
+        if(board == null || player == null) {
+            throw new IllegalArgumentException("Observables can't be null.");
+        }
         for(Observer observer : observers) {
             observer.updateMatrix(board, player);
         }
@@ -54,6 +64,9 @@ abstract class AbstractConnectFourObservable implements Observable {
 
     @Override
     public void notifyObservers(Board board) {
+        if(board == null) {
+            throw new IllegalArgumentException("Observable can't be null.");
+        }
         for(Observer observer : observers) {
             observer.updateCursor(board);
         }

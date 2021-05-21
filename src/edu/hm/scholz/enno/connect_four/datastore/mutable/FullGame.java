@@ -16,12 +16,18 @@ public interface FullGame extends Game{
     @SuppressWarnings("PMD.CommentRequired")
     void setActivePlayer(PlayerID activePlayer);
 
-    @SuppressWarnings("PMD.CommentRequired")
+    /**
+     * Set the winner of the game.
+     * @param winner Winner of the game. Can't be null.
+     */
     void setWinner(PlayerID winner);
 
     @SuppressWarnings("PMD.CommentRequired")
     void setIsStarted(boolean isStarted);
 
-    @SuppressWarnings("PMD.CommentRequired")
+    /**
+     * Set the playerCount of the game.
+     * @param playerCount Amount of players. Needs to be between 1 and maxPlayerCount (specified in settings).
+     */
     void setPlayerCount(int playerCount);
 }

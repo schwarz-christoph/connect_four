@@ -15,7 +15,7 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-final class FullConnectFourBoard  extends AbstractConnectFourObservable implements FullBoard {
+final class FullConnectFourBoard extends AbstractConnectFourObservable implements FullBoard {
 
     /**
      * A list of occupied fields.

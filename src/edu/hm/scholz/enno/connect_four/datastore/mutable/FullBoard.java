@@ -15,10 +15,21 @@ import java.util.List;
 
 public interface FullBoard extends Board {
 
-    @SuppressWarnings("PMD.CommentRequired")
+    /**
+     * Place a stone in the game.
+     * @param field Where to place the stone. Can't be null.
+     */
     void placeStone(Field field);
-    @SuppressWarnings("PMD.CommentRequired")
+
+    /**
+     * Remove a stone from the game.
+     * @param field Has to be in the list of Stones and can't be null.
+     */
     void removeStone(Field field);
-    @SuppressWarnings("PMD.CommentRequired")
+
+    /**
+     * Set the highlight of the game.
+     * @param field Which fields to highlight. Can't be null.
+     */
     void setHighlight(List<Field> field);
 }

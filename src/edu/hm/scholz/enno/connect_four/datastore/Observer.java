@@ -14,29 +14,29 @@ public interface Observer {
     /**
      * Updates the cursor of the view.
      *
-     * @param board Reference to datastore object.
+     * @param board Reference to datastore object. Can't be null.
      */
     void updateCursor(Board board);
 
     /**
      * Updates the matrix of the view.
      *
-     * @param board  Reference to datastore object.
-     * @param player Reference to datastore object.
+     * @param board  Reference to datastore object. Can't be null.
+     * @param player Reference to datastore object. Can't be null.
      */
     void updateMatrix(Board board, Player player);
 
     /**
      * Updates the winner screen in the view.
      *
-     * @param game Reference to datastore object.
+     * @param game Reference to datastore object. Can't be null.
      */
     void updateWinner(Game game);
 
     /**
      * Updates the player select screen of the view.
      *
-     * @param game Reference to datastore object.
+     * @param game Reference to datastore object. Can't be null.
      */
     void updatePlayerSelect(Game game);
 }

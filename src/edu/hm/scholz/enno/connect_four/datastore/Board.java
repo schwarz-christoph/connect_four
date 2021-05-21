@@ -13,7 +13,7 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-public interface Board {
+public interface Board extends Observable {
 
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getFields();
