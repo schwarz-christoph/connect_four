@@ -147,12 +147,7 @@ class ExecuteMoveHandler {
         final List<Field> newHighlights;
 
         newHighlights = allHighlights.stream()
-                //filter everything that not in the radius
-                .filter(field -> field.xCoordinate() < targetHighlight.xCoordinate() + 2)
-                .filter(field -> field.xCoordinate() > targetHighlight.xCoordinate() - 2)
-                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate() + 2)
-                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate() - 2)
-                //filter corners away
+                //Filter everything thats in the radius
                 .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
                         Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
                 .collect(Collectors.toList());

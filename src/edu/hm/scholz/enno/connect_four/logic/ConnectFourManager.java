@@ -196,7 +196,7 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> playgroundSelection(Field target) {
         final List<Move> possibleMoves;
-        final Stream<Field> occupiedFields = game.getBoard().getFields().stream();
+        final Stream<Field> occupiedFields = board.getFields().stream();
 
         if (occupiedFields.anyMatch(field -> field.equals(target))) {
             possibleMoves = new ArrayList<>(Arrays.asList(Move.UP, Move.RIGHT, Move.LEFT));
