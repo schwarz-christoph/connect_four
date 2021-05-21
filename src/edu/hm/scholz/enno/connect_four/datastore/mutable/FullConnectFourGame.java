@@ -61,6 +61,10 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
         this.humanPlayers = 1; //Default value for one player
     }
 
+    /**
+     *
+     * @param activePlayer player to be set to active
+     */
     @Override
     public void setActivePlayer(PlayerID activePlayer) {
         if (activePlayer == null){
@@ -86,6 +90,10 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public void setPlayerCount(int playerCount) {
+        if(playerCount < 0 || playerCount > Settings.maxPlayerCount){
+            throw new IllegalArgumentException("Player Count must be between 1 and maxPlayerCount");
+        }
+
         humanPlayers = playerCount;
     }
 
