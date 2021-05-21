@@ -13,8 +13,10 @@ import java.util.List;
 
 public interface GameManager {
 
-    @SuppressWarnings("PMD.CommentRequired")
-    List<Move> getMoves();
+    /**
+     * @return List of all possible moves in the current turn.
+     */
+    List<Move> getMoves(PlayerID playerID);
 
     /**
      * Executes the provided move, updates the datastore and notifies the observers.
