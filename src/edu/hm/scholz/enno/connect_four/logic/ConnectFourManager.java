@@ -7,9 +7,11 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+import javax.print.attribute.standard.PresentationDirection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,6 +46,7 @@ public class ConnectFourManager implements GameManager {
         this.player2 = player2;
     }
 
+
     @Override
     public List<Move> getMoves(PlayerID playerID) {
         final List<Move> possibleMoves;
@@ -61,6 +64,7 @@ public class ConnectFourManager implements GameManager {
 
     @Override
     public boolean executeMove(Move move, PlayerID playerID) {
+
         final boolean result;
 
         final List<Move> allowedMoves = this.getMoves(playerID);
@@ -181,7 +185,7 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> getMovesInRegularGame() {
         final List<Move> possibleMoves;
-        final List<Field> highlight = board.getHighlight();
+        final List<Field> highlight = game.getBoard().getHighlight();
         final Field target = highlight.get(0);
 
         if (target.yCoordinate() == 0) {
@@ -202,7 +206,7 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> playgroundSelection(Field target) {
         final List<Move> possibleMoves;
-        final Stream<Field> occupiedFields = board.getFields().stream();
+        final Stream<Field> occupiedFields = game.getBoard().getFields().stream();
 
         if (occupiedFields.anyMatch(field -> field.equals(target))) {
             possibleMoves = new ArrayList<>(Arrays.asList(Move.UP, Move.RIGHT, Move.LEFT));
@@ -223,21 +227,21 @@ public class ConnectFourManager implements GameManager {
         final List<Move> possibleMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
         final int targetXCord = target.xCoordinate();
 
-        if (player == PlayerID.PLAYER_1) {
+        if(player == PlayerID.PLAYER_1) {
             //Player1
-            if (targetXCord < 2) {
+            if(targetXCord < 2){
                 //Player1 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         } else {
             //Player2
-            if (targetXCord > 5) {
+            if(targetXCord > 5){
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         }
 
-        if (targetXCord < 5 && targetXCord > 2) {
+        if(targetXCord < 5 && targetXCord > 2){
             //One of the Player in the Game-Menu
             possibleMoves.add(Move.CONFIRM);
         }
