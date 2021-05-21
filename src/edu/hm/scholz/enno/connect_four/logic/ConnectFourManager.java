@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.*;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -14,29 +15,34 @@ import java.util.stream.Stream;
 
 public class ConnectFourManager implements GameManager {
 
+    private final FullBoard board;
     private final FullGame game;
     private final FullPlayer player1;
     private final FullPlayer player2;
 
-    public ConnectFourManager(FullGame game, FullPlayer player1, FullPlayer player2) {
+    public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
-        if(game == null){
-            throw new NullPointerException("Game cant be null");
+        if (board == null) {
+            throw new NullPointerException("Board can't be null.");
         }
 
-        if(player1 == null || player2 == null){
-            throw new NullPointerException("Player cant be null");
+        if (game == null) {
+            throw new NullPointerException("Game can't be null.");
+        }
+
+        if (player1 == null || player2 == null) {
+            throw new NullPointerException("Player can't be null.");
         }
 
         if (player1.getIdentifier() == player2.getIdentifier()) {
             throw new IllegalArgumentException("Player must have different IDs.");
         }
 
+        this.board = board;
         this.game = game;
         this.player1 = player1;
         this.player2 = player2;
     }
-
 
     @Override
     public List<Move> getMoves(PlayerID playerID) {
@@ -55,24 +61,22 @@ public class ConnectFourManager implements GameManager {
 
     @Override
     public boolean executeMove(Move move, PlayerID playerID) {
-
         final boolean result;
 
         final List<Move> allowedMoves = this.getMoves(playerID);
         final boolean allowed = allowedMoves.stream()
                 .anyMatch(allowedMoves::equals);
 
-        if(allowed){
-            final List<Field> currentHighlight = game.getBoard().getHighlight();
+        if (allowed) {
+            final List<Field> currentHighlight = board.getHighlight();
             ExecuteMoveHandler.onEcexute(move, currentHighlight, game);
             setGameState(); // Checks if the game is won
             //TODO extend it until the next player is ready to play
 
             result = true;
-        }else{
+        } else {
             result = false;
         }
-
 
         return result;
     }
@@ -101,6 +105,8 @@ public class ConnectFourManager implements GameManager {
 
         if (player2Win) {
             game.setWinner(PlayerID.PLAYER_2);
+            game.setActivePlayer(PlayerID.NONE);
+        }
 
         if (player1Win && player2Win) {
             game.setWinner(PlayerID.NONE);
@@ -175,7 +181,7 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> getMovesInRegularGame() {
         final List<Move> possibleMoves;
-        final List<Field> highlight = game.getBoard().getHighlight();
+        final List<Field> highlight = board.getHighlight();
         final Field target = highlight.get(0);
 
         if (target.yCoordinate() == 0) {

@@ -75,20 +75,4 @@ public interface Factory {
         return new FullConnectFourPlayer(identifier);
     }
 
-    /**
-     * Make a Logic
-     *
-     * @param game the Game witch needs the rules
-     * @return the logic of the game with two independent players
-     */
-    static GameManager makeGameManager(FullGame game) {
-
-        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
-
-        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
-
-        return new ConnectFourManager(game, player1, player2);
-
-    }
-
 }

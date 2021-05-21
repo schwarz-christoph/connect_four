@@ -3,6 +3,8 @@ package edu.hm.scholz.enno.connect_four;
 import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
+import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.Move;
@@ -29,9 +31,10 @@ public class CannedMain {
     // Aendern Sie *nicht* die Struktur des Programms.
     public static void main(String... args) {
         // Das Spiel
-        final FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        final FullBoard board = Factory.makeBoard();
+        final FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         // Die Regeln
-        final GameManager rules = Factory.makeGameManager(game);
+        final GameManager rules = LogicFactory.makeGameManager(board, game);
 
         //TODO Implement the rest of Methode
         // View, die eine Textdarstellung produziert
