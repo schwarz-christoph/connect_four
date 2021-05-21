@@ -111,7 +111,7 @@ public class ConnectFourManager implements GameManager {
                 .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 1, n.yCoordinate(), n.owner())))
                 .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 2, n.yCoordinate(), n.owner())))
                 .filter(n -> fields.contains(Factory.makeField(n.xCoordinate() + 3, n.yCoordinate(), n.owner())))
-                .noneMatch(Objects::nonNull);
+                .findAny().isPresent();
 
         //Up
         result = fields.stream()
