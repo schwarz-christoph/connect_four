@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -41,10 +42,10 @@ class ExecuteMoveHandler {
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
         if(move == Move.RIGHT){
-            newXCoordinate = (targetFieldXCoordinate + 1)%7; // Calculate the new x coordinate for the new highlight in the menu
+            newXCoordinate = (targetFieldXCoordinate + 1)%(Settings.fieldSize-1); // Calculate the new x coordinate for the new highlight in the menu
             createHighlight(newXCoordinate, game);
         }else if(move == Move.LEFT){
-            newXCoordinate = (targetFieldXCoordinate - 1)%7; // Calculate the new x coordinate for the new highlight in the menu
+            newXCoordinate = (targetFieldXCoordinate - 1)%(Settings.fieldSize-1); // Calculate the new x coordinate for the new highlight in the menu
             createHighlight(newXCoordinate, game);
         }else if(move == Move.DOWN){
             createHighlight(targetFieldXCoordinate, game); // If the player goes from the menu in the matrix
@@ -92,10 +93,10 @@ class ExecuteMoveHandler {
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
         if(move == Move.RIGHT){
-            newXCoordinate = (targetFieldXCoordinate + 1)%7; // Calculate the new x coordinate for the new highlight
+            newXCoordinate = (targetFieldXCoordinate + 1)%(Settings.fieldSize-1); // Calculate the new x coordinate for the new highlight
             createHighlight(newXCoordinate, game);
         }else if(move == Move.LEFT){
-            newXCoordinate = (targetFieldXCoordinate - 1)%7; // Calculate the new x coordinate for the new highlight
+            newXCoordinate = (targetFieldXCoordinate - 1)%(Settings.fieldSize-1); // Calculate the new x coordinate for the new highlight
             createHighlight(newXCoordinate, game);
         }else if(move == Move.UP){
             createMenuHighlight(targetFieldXCoordinate, game); // If the player goes from the menu in the matrix
@@ -328,6 +329,6 @@ class ExecuteMoveHandler {
     }
 
     private static void end() {
-
+        System.exit(0);
     }
 }
