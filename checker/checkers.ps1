@@ -18,15 +18,15 @@ $classes = "C:\Users\Chris\OneDrive\Hochschule\2.Semester\Softwareentwicklung\Co
 
 # Geben Sie Hier den FQCN ihren Testklasse an. Am besten hier eine TestSuit benutzen dann funktioniert auch alles.
 # Beispiel: = "edu.hm.HelloWorldTest"
-$TEST_FQCN = "edu.hm.se2.connect_four.csgles.AllConnectFourTests"
+$TEST_FQCN = "edu.hm.scholz.enno.connect_four.AllConnectFourTests"
 
 # Geben Sie hier das Patern um alle Tests auszuschließen beim Mutation Testing.
 # Beispiel: = "hm.edu.**.*Test" würde alle Klassen die "Test" am Ende haben ausschließen.
-$TEST_LIST_FQCN = "edu.hm.se2.connect_four.csgles.**.*Test"
+$TEST_LIST_FQCN = "edu.hm.scholz.enno.connect_four.**.*Test"
 
 # Geben Sie Hier den FQCN aller Produktionsklassen an mit Matching
 # Beispiel: = "edu.hm.datastore.*" würde alle Klassen des DataStore im Mutation Testing einbeziehen.
-$TARGET_FQCN = "edu.hm.se2.connect_four.csgles.*"
+$TARGET_FQCN = "edu.hm.scholz.enno.connect_four.*"
 
 # -------- END CONFIGURATION --------
 
