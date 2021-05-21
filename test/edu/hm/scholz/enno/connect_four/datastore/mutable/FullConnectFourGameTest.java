@@ -16,6 +16,20 @@ public class FullConnectFourGameTest {
 
     final FullGame subjectUnderTestGame = Factory.makeGame(PlayerID.PLAYER_1);
 
+    @Test (expected = IllegalArgumentException.class)
+    public void createGameNullPlayerArgumentTest() {
+        //arrange, act
+        final Board board = Factory.makeBoard();
+        final Game game = Factory.makeGame(null, board);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void createGameeNullBoardTest() {
+        //arrange
+        final Game game = Factory.makeGame(PlayerID.PLAYER_1, null);
+    }
+
+
     @Test
     public void setActivePlayerTest() {
         //arrange
