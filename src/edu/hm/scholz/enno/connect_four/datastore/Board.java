@@ -1,5 +1,7 @@
 package edu.hm.scholz.enno.connect_four.datastore;
 
+import edu.hm.scholz.enno.connect_four.common.Settings;
+
 import java.util.List;
 
 /**
@@ -18,4 +20,5 @@ public interface Board {
 
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getHighlight();
+
 }

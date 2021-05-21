@@ -12,7 +12,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
  * @version 04-01-2021
  */
 
-public interface FullGame extends Game {
+public interface FullGame extends Game{
     @SuppressWarnings("PMD.CommentRequired")
     void setActivePlayer(PlayerID activePlayer);
 

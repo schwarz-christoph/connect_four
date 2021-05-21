@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
+import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 
@@ -46,6 +47,14 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
      * @param board          The Board of the Game.
      */
     FullConnectFourGame(PlayerID startingPlayer, Board board) {
+        if (board == null) {
+            throw new IllegalArgumentException("Board can't be null.");
+        }
+
+        if(startingPlayer == null){
+            throw new IllegalArgumentException("Player can't be null.");
+        }
+
         this.board = board;
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
@@ -54,11 +63,19 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public void setActivePlayer(PlayerID activePlayer) {
+        if (activePlayer == null){
+            throw new NullPointerException("activePlayer cant be null");
+        }
+
         currentPlayer = activePlayer;
     }
 
     @Override
     public void setWinner(PlayerID winner) {
+        if (winner == null){
+            throw new NullPointerException("winner cant be null");
+        }
+
         gameWinner = winner;
     }
 

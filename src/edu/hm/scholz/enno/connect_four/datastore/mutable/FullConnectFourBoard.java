@@ -36,6 +36,10 @@ final class FullConnectFourBoard  extends AbstractConnectFourObservable implemen
 
     @Override
     public void placeStone(Field field) {
+        if(field == null) {
+            throw new NullPointerException("Field cant be null");
+        }
+
         allOccupiedFields.add(field);
     }
 
@@ -46,6 +50,10 @@ final class FullConnectFourBoard  extends AbstractConnectFourObservable implemen
 
     @Override
     public void setHighlight(List<Field> fields) {
+        if(fields == null) {
+            throw new NullPointerException("Highlight cant be null");
+        }
+
         highlight = fields;
     }
 
