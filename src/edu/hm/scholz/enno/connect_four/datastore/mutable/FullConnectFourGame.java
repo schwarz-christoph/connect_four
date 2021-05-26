@@ -2,6 +2,7 @@ package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
 import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 
 /**
@@ -39,6 +40,11 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
      * The status of the game. Started or not started (in player select screen).
      */
     private boolean startedGame;
+
+    /**
+     * Status of joker usage. True when joker is being used, otherwise false.
+     */
+    private PlayerActiveJoker isJokerInUse;
 
     /**
      * Make a Game.
@@ -98,6 +104,11 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     }
 
     @Override
+    public void setActiveJoker(PlayerActiveJoker isJokerInUse) {
+        this.isJokerInUse = isJokerInUse;
+    }
+
+    @Override
     public Board getBoard() {
         return board;
     }
@@ -120,5 +131,10 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     @Override
     public int getPLayerCount() {
         return humanPlayers;
+    }
+
+    @Override
+    public PlayerActiveJoker getActiveJoker() {
+        return isJokerInUse;
     }
 }

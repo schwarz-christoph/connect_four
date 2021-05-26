@@ -27,4 +27,7 @@ public interface Game extends Observable {
 
     @SuppressWarnings("PMD.CommentRequired")
     int getPLayerCount();
+
+    @SuppressWarnings("PMD.CommentRequired")
+    PlayerActiveJoker getActiveJoker();
 }

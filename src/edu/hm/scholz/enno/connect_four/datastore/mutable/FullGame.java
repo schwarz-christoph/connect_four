@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 
@@ -30,4 +31,7 @@ public interface FullGame extends Game{
      * @param playerCount Amount of players. Needs to be between 1 and maxPlayerCount (specified in settings).
      */
     void setPlayerCount(int playerCount);
+
+    @SuppressWarnings("PMD.CommentRequired")
+    void setActiveJoker(PlayerActiveJoker activeJoker);
 }

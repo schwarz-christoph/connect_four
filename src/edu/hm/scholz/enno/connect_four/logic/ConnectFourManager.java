@@ -71,7 +71,7 @@ public class ConnectFourManager implements GameManager {
 
         if (allowed) {
             final List<Field> currentHighlight = board.getHighlight();
-            ExecuteMoveHandler.onEcexute(move, currentHighlight, game);
+            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board);
             setGameState(); // Checks if the game is won
             //TODO extend it until the next player is ready to play
 

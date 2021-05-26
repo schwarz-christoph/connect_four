@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -148,8 +149,14 @@ class ExecuteMoveHandler {
         board.setHighlight(newHighlight);
     }
 
-    private static void createBombJokerHighlight(Field targetHighlight, FullGame game) {
-        List<Field> allHighlights = game.getBoard().getFields();
+    /**
+     * Creates a new bomb joker highlight in the matrix.
+     *
+     * @param targetHighlight The selected field to create a bomb joker in
+     * @param board           The board.
+     */
+    private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
+        List<Field> allHighlights = board.getFields();
         final List<Field> newHighlights;
 
         newHighlights = allHighlights.stream()
@@ -158,14 +165,17 @@ class ExecuteMoveHandler {
                         Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
                 .collect(Collectors.toList());
 
-        //TODO: Typecast ersetzen
-        //TODO: Datastore updaten
-        FullBoard board = (FullBoard) game.getBoard();
         board.setHighlight(newHighlights);
     }
 
-    private static void createDeleteJokerHighlight(Field targetHighlight, FullGame game) {
-        List<Field> allHighlights = game.getBoard().getFields();
+    /**
+     * Creates a new delete joker highlight in the matrix.
+     *
+     * @param targetHighlight The selected field to create a delete joker in.
+     * @param board           The board.
+     */
+    private static void createDeleteJokerHighlight(Field targetHighlight, FullBoard board) {
+        List<Field> allHighlights = board.getFields();
         List<Field> newHighlights = null;
 
         //selected whole column
@@ -189,10 +199,6 @@ class ExecuteMoveHandler {
                     .collect(Collectors.toList());
         }
 
-
-        //TODO: Typecast ersetzen
-        //TODO: Datastore updaten
-        FullBoard board = (FullBoard) game.getBoard();
         board.setHighlight(newHighlights);
     }
 
