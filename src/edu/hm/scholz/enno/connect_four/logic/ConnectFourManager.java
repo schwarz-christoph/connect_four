@@ -7,11 +7,9 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
-import javax.print.attribute.standard.PresentationDirection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -235,6 +233,7 @@ public class ConnectFourManager implements GameManager {
             }
         } else {
             //Player2
+            //TODO edit because field can be bigger than 7 so player 2 menu goes from 5 to 7 but Fields can go form 0 to inf
             if(targetXCord > 5){
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
