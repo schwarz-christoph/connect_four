@@ -7,6 +7,7 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -378,7 +379,15 @@ class ExecuteMoveHandler {
         board.placeStone(Factory.makeField(lowestFiled.xCoordinate(), lowestFiled.yCoordinate(), game.getActivePlayer()));
     }
 
-    private static void restart() {
+    private static void restart(FullGame game, FullBoard board, FullPlayer player) {
+        game.setWinner(PlayerID.NONE);
+        game.setIsStarted(false);
+        game.setPlayerCount(1);
+        game.setActivePlayer(PlayerID.PLAYER_1);
+
+        board.setHighlight(new ArrayList<>());
+        //Removes all occupied fields from the list, resetting it to an empty list
+        board.getFields().stream().forEach(field -> board.removeStone(field));
 
     }
 
