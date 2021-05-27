@@ -9,9 +9,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -119,9 +117,22 @@ class ExecuteMoveHandler {
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
         } else if (move == Move.CONFIRM) {
-            //TODO what happens if the line is full
+            decideConfirmMatrix(currentHighlight, game);
+        }
+    }
+
+    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game){
+        //Higherst Field in the Row
+        Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
+
+        boolean isFull = currentHighlight.stream()
+                .filter(field -> field.xCoordinate() == targetField.xCoordinate())
+                .noneMatch(field -> field.yCoordinate() == targetField.yCoordinate());
+
+        if(!isFull) {
             createStone(currentHighlight, game); //Place a stone
         }
+
     }
 
     /**
