@@ -172,7 +172,10 @@ class ExecuteMoveHandler {
      */
     private static void createHighlight(int targetFieldXCoordinate, FullBoard board) {
         List<Field> newHighlight = new ArrayList<>();
-        IntStream.range(1, Settings.fieldSize)
+        //Start from 1 becuase on 0 is the Menu
+        //Ends on fieldSize -1 because the Field is fieldSize long but wie start with the Menu by 0
+
+        IntStream.range(1, Settings.fieldSize - 1)
                 .forEach(yCoordinate -> newHighlight.add(Factory.makeField(targetFieldXCoordinate, yCoordinate, PlayerID.NONE)));
 
         board.setHighlight(newHighlight);
