@@ -201,6 +201,7 @@ class ExecuteMoveHandler {
      */
     private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
         //TODO Edit because we only get occupied Fields as highlight, but not sure
+        //TODO Build a method that creates all Possible Fields and dann slect it with the Method from georg I think its the simplest way to get the radius correctly
 
         List<Field> allHighlights = board.getFields();
         final List<Field> newHighlights;
