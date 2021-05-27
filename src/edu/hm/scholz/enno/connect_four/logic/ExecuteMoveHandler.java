@@ -108,16 +108,40 @@ class ExecuteMoveHandler {
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
         if (move == Move.RIGHT) {
-            newXCoordinate = (targetFieldXCoordinate + 1) % Settings.fieldSize; // Calculate the new x coordinate for the new highlight
-            createHighlight(newXCoordinate, board);
+
+            createHighlight(fieldOverflowManager(1,0,targetField), board);
         } else if (move == Move.LEFT) {
-            newXCoordinate = (targetFieldXCoordinate - 1) % Settings.fieldSize; // Calculate the new x coordinate for the new highlight
-            createHighlight(newXCoordinate, board);
+            createHighlight(fieldOverflowManager(-1,0,targetField), board);
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
         } else if (move == Move.CONFIRM) {
             decideConfirmMatrix(currentHighlight, game);
         }
+    }
+
+    private static int fieldOverflowManager(int adderX, int adderY, Field targetField){
+        int newX;
+        int endOfLine;
+
+        if(adderX > 0){
+            endOfLine = 0;
+            newX = targetField.xCoordinate() + adderX;
+        }else{
+            //Because on 0 is the Menu which cant be accessed during the joker placement
+            endOfLine = 1;
+            newX = targetField.xCoordinate() + adderY;
+        }
+
+        if(newX < endOfLine){
+            //Only can be -1
+            //The left end
+            newX = Settings.fieldSize - 1;
+        }else if(newX >= Settings.fieldSize){
+            //The right end
+            newX = newX%Settings.fieldSize;
+        }
+
+        return newX;
     }
 
     /**
@@ -234,22 +258,20 @@ class ExecuteMoveHandler {
             final List<Field> highlight = game.getBoard().getHighlight();
             final Field targetField = highlight.get(0);
 
-            //TODO Overflow on the Y direction is not use correctly
-
             if (move == Move.CONFIRM) {
                 executeDeleteJoker(targetField, game);
             } else if (move == Move.UP) {
                 createDeleteJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        (targetField.yCoordinate() + 1) % Settings.fieldSize, targetField.owner()), board);
+                        fieldOverflowManager(0,1,targetField), targetField.owner()), board);
             } else if (move == Move.DOWN) {
                 createDeleteJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        (targetField.yCoordinate() - 1) % Settings.fieldSize, targetField.owner()), board);
+                        fieldOverflowManager(0,-1,targetField), targetField.owner()), board);
             } else if (move == Move.LEFT) {
-                createDeleteJokerHighlight(Factory.makeField((targetField.xCoordinate() - 1) % Settings.fieldSize,
+                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(-1,0,targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             } else {
                 //right
-                createDeleteJokerHighlight(Factory.makeField((targetField.xCoordinate() + 1) % Settings.fieldSize,
+                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(1,0,targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             }
         }
@@ -262,6 +284,7 @@ class ExecuteMoveHandler {
             game.setActiveJoker(PlayerActiveJoker.DELETE);
             createDeleteJokerHighlight(Factory.makeField(0, 0, PlayerID.NONE), board);
         } else {
+            //Joker currently in use
             final List<Field> highlight = game.getBoard().getHighlight();
             final Field targetField = highlight.get(0);
 
@@ -269,16 +292,16 @@ class ExecuteMoveHandler {
                 executeBombJoker(targetField, game);
             } else if (move == Move.UP) {
                 createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        (targetField.yCoordinate() + 1) % Settings.fieldSize, targetField.owner()), board);
+                        fieldOverflowManager(0,1,targetField), targetField.owner()), board);
             } else if (move == Move.DOWN) {
                 createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        (targetField.yCoordinate() - 1) % Settings.fieldSize, targetField.owner()), board);
+                        fieldOverflowManager(0,-1,targetField), targetField.owner()), board);
             } else if (move == Move.LEFT) {
-                createBombJokerHighlight(Factory.makeField((targetField.xCoordinate() - 1) % Settings.fieldSize,
+                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(-1,0,targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             } else {
                 //right
-                createBombJokerHighlight(Factory.makeField((targetField.xCoordinate() + 1) % Settings.fieldSize,
+                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(1,0,targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             }
         }
