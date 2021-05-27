@@ -385,7 +385,7 @@ class ExecuteMoveHandler {
         board.placeStone(Factory.makeField(lowestFiled.xCoordinate(), lowestFiled.yCoordinate(), game.getActivePlayer()));
     }
 
-    private static void restart(FullGame game, FullBoard board, FullPlayer player) {
+    private static void restart(FullGame game, FullBoard board) {
         game.setWinner(PlayerID.NONE);
         game.setIsStarted(false);
         game.setPlayerCount(1);
