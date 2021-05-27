@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 
 
 //TODO can not get FullBoard out of FullGame
-//TODO edit x overflow because -1%8 is -1 not 8!
 
 class ExecuteMoveHandler {
 
@@ -106,7 +105,6 @@ class ExecuteMoveHandler {
 
         final Field targetField = currentHighlight.get(0);
         final int targetFieldXCoordinate = targetField.xCoordinate();
-        final int newXCoordinate;
         if (move == Move.RIGHT) {
 
             createHighlight(fieldOverflowManager(1, 0, targetField), board);
@@ -202,9 +200,7 @@ class ExecuteMoveHandler {
     private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
 
         final List<Field> newHighlights;
-        newHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
-                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
-                .filter(field -> field.yCoordinate() != 0)
+        newHighlights = getAllFieldsOnBoard().stream()
                 //Filter everything thats in the radius
                 .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
                         Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
@@ -222,14 +218,14 @@ class ExecuteMoveHandler {
     private static void createDeleteJokerHighlight(Field targetHighlight, FullBoard board) {
         //TODO Edit because we only get occupied Fields as highlight, but not sure
 
-        List<Field> allHighlights = board.getFields();
+        List<Field> allHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                .filter(field -> field.yCoordinate() != 0).collect(Collectors.toList());
         List<Field> newHighlights;
 
         //selected whole column
         if (targetHighlight.xCoordinate() > 8) {
-            newHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
-                    .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
-                    .filter(field -> field.yCoordinate() != 0)
+            newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                     .collect(Collectors.toList());
 
@@ -318,10 +314,7 @@ class ExecuteMoveHandler {
 
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
         FullBoard board = (FullBoard) game.getBoard();
-        List<Field> allFields = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
-                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
-                .filter(field -> field.yCoordinate() != 0)
-                .collect(Collectors.toList());
+        List<Field> allFields = getAllFieldsOnBoard();
         List<Field> newAllFields;
 
 
@@ -450,5 +443,11 @@ class ExecuteMoveHandler {
 
     private static void end() {
         System.exit(0);
+    }
+
+    private static List<Field> getAllFieldsOnBoard() {
+        return IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                .filter(field -> field.yCoordinate() != 0).collect(Collectors.toList());
     }
 }
