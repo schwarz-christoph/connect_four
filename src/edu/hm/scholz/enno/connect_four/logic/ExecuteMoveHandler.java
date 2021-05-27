@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 
 
 //TODO can not get FullBoard out of FullGame
+//TODO edit x overflow because -1%8 is -1 not 8!
 
 class ExecuteMoveHandler {
 
@@ -156,6 +157,8 @@ class ExecuteMoveHandler {
      * @param board           The board.
      */
     private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
+        //TODO Edit because we only get occupied Fields as highlight, but not sure
+
         List<Field> allHighlights = board.getFields();
         final List<Field> newHighlights;
 
@@ -175,6 +178,8 @@ class ExecuteMoveHandler {
      * @param board           The board.
      */
     private static void createDeleteJokerHighlight(Field targetHighlight, FullBoard board) {
+        //TODO Edit because we only get occupied Fields as highlight, but not sure
+
         List<Field> allHighlights = board.getFields();
         List<Field> newHighlights = null;
 
