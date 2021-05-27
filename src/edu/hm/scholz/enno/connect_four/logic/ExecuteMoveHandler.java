@@ -7,7 +7,6 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
-import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -121,7 +120,13 @@ class ExecuteMoveHandler {
         }
     }
 
-    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game){
+    /**
+     * Decides if the move is valid. Because if the line is full no more stones could be placed
+     *
+     * @param currentHighlight the current hightlight
+     * @param game             the active game
+     */
+    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game) {
         //Higherst Field in the Row
         Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
 
@@ -129,7 +134,7 @@ class ExecuteMoveHandler {
                 .filter(field -> field.xCoordinate() == targetField.xCoordinate())
                 .noneMatch(field -> field.yCoordinate() == targetField.yCoordinate());
 
-        if(!isFull) {
+        if (!isFull) {
             createStone(currentHighlight, game); //Place a stone
         }
 
