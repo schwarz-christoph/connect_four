@@ -109,36 +109,36 @@ class ExecuteMoveHandler {
         final int newXCoordinate;
         if (move == Move.RIGHT) {
 
-            createHighlight(fieldOverflowManager(1,0,targetField), board);
+            createHighlight(fieldOverflowManager(1, 0, targetField), board);
         } else if (move == Move.LEFT) {
-            createHighlight(fieldOverflowManager(-1,0,targetField), board);
+            createHighlight(fieldOverflowManager(-1, 0, targetField), board);
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
         } else if (move == Move.CONFIRM) {
-            decideConfirmMatrix(currentHighlight, game);
+            decideConfirmMatrix(currentHighlight, game, board);
         }
     }
 
-    private static int fieldOverflowManager(int adderX, int adderY, Field targetField){
+    private static int fieldOverflowManager(int adderX, int adderY, Field targetField) {
         int newX;
         int endOfLine;
 
-        if(adderX > 0){
+        if (adderX > 0) {
             endOfLine = 0;
             newX = targetField.xCoordinate() + adderX;
-        }else{
+        } else {
             //Because on 0 is the Menu which cant be accessed during the joker placement
             endOfLine = 1;
             newX = targetField.xCoordinate() + adderY;
         }
 
-        if(newX < endOfLine){
+        if (newX < endOfLine) {
             //Only can be -1
             //The left end
             newX = Settings.fieldSize - 1;
-        }else if(newX >= Settings.fieldSize){
+        } else if (newX >= Settings.fieldSize) {
             //The right end
-            newX = newX%Settings.fieldSize;
+            newX = newX % Settings.fieldSize;
         }
 
         return newX;
@@ -150,7 +150,7 @@ class ExecuteMoveHandler {
      * @param currentHighlight the current hightlight
      * @param game             the active game
      */
-    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game) {
+    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
         //Higherst Field in the Row
         Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
 
@@ -159,7 +159,7 @@ class ExecuteMoveHandler {
                 .noneMatch(field -> field.yCoordinate() == targetField.yCoordinate());
 
         if (!isFull) {
-            createStone(currentHighlight, game); //Place a stone
+            createStone(currentHighlight, game, board); //Place a stone
         }
 
     }
@@ -200,13 +200,11 @@ class ExecuteMoveHandler {
      * @param board           The board.
      */
     private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
-        //TODO Edit because we only get occupied Fields as highlight, but not sure
-        //TODO Build a method that creates all Possible Fields and dann slect it with the Method from georg I think its the simplest way to get the radius correctly
 
-        List<Field> allHighlights = board.getFields();
         final List<Field> newHighlights;
-
-        newHighlights = allHighlights.stream()
+        newHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                .filter(field -> field.yCoordinate() != 0)
                 //Filter everything thats in the radius
                 .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
                         Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
@@ -225,24 +223,31 @@ class ExecuteMoveHandler {
         //TODO Edit because we only get occupied Fields as highlight, but not sure
 
         List<Field> allHighlights = board.getFields();
-        List<Field> newHighlights = null;
+        List<Field> newHighlights;
 
         //selected whole column
         if (targetHighlight.xCoordinate() > 8) {
-            newHighlights = allHighlights.stream()
+            newHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                    .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                    .filter(field -> field.yCoordinate() != 0)
                     .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                     .collect(Collectors.toList());
 
             //TODO: Check if user is left (y < 0)?
             //selected whole row
         } else if (targetHighlight.yCoordinate() > 8) {
+
+            //TODO What does this ? Is The AllHiglights Right? How can we change it to an Stream?
+            newHighlights = null;
             allHighlights = allHighlights.stream()
                     .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
                     .collect(Collectors.toList());
         }
         //select only a single field
         else {
-            newHighlights = allHighlights.stream()
+            newHighlights = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                    .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                    .filter(field -> field.yCoordinate() != 0)
                     .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                     .filter(field -> field.yCoordinate() == targetHighlight.yCoordinate())
                     .collect(Collectors.toList());
@@ -263,19 +268,19 @@ class ExecuteMoveHandler {
             final Field targetField = highlight.get(0);
 
             if (move == Move.CONFIRM) {
-                executeDeleteJoker(targetField, game);
+                executeDeleteJoker(targetField, game, board);
             } else if (move == Move.UP) {
                 createDeleteJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowManager(0,1,targetField), targetField.owner()), board);
+                        fieldOverflowManager(0, 1, targetField), targetField.owner()), board);
             } else if (move == Move.DOWN) {
                 createDeleteJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowManager(0,-1,targetField), targetField.owner()), board);
+                        fieldOverflowManager(0, -1, targetField), targetField.owner()), board);
             } else if (move == Move.LEFT) {
-                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(-1,0,targetField),
+                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(-1, 0, targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             } else {
                 //right
-                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(1,0,targetField),
+                createDeleteJokerHighlight(Factory.makeField(fieldOverflowManager(1, 0, targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             }
         }
@@ -296,16 +301,16 @@ class ExecuteMoveHandler {
                 executeBombJoker(targetField, game);
             } else if (move == Move.UP) {
                 createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowManager(0,1,targetField), targetField.owner()), board);
+                        fieldOverflowManager(0, 1, targetField), targetField.owner()), board);
             } else if (move == Move.DOWN) {
                 createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowManager(0,-1,targetField), targetField.owner()), board);
+                        fieldOverflowManager(0, -1, targetField), targetField.owner()), board);
             } else if (move == Move.LEFT) {
-                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(-1,0,targetField),
+                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(-1, 0, targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             } else {
                 //right
-                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(1,0,targetField),
+                createBombJokerHighlight(Factory.makeField(fieldOverflowManager(1, 0, targetField),
                         targetField.yCoordinate(), targetField.owner()), board);
             }
         }
@@ -313,12 +318,14 @@ class ExecuteMoveHandler {
 
     private static void executeBombJoker(Field targetHighlight, FullGame game) {
         FullBoard board = (FullBoard) game.getBoard();
-        List<Field> allFields = game.getBoard().getFields();
+        List<Field> allFields = IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
+                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+                .filter(field -> field.yCoordinate() != 0)
+                .collect(Collectors.toList());
         List<Field> newAllFields;
 
 
         //TODO: Datastore updaten
-        //TODO: AllFields fehler beseitigen
         //Remove all bombed fields
         newAllFields = allFields.stream()
                 //filter everything thats not in the radius
@@ -360,9 +367,7 @@ class ExecuteMoveHandler {
      * @param targetHighlight stone that will be removed
      * @param game            current game
      */
-    private static void executeDeleteJoker(Field targetHighlight, FullGame game) {
-        //TODO remove TypeCast
-        FullBoard board = (FullBoard) game.getBoard();
+    private static void executeDeleteJoker(Field targetHighlight, FullGame game, FullBoard board) {
         List<Field> allFields = game.getBoard().getFields();
         List<Field> newAllFields;
 
@@ -415,9 +420,7 @@ class ExecuteMoveHandler {
 
     }
 
-    private static void createStone(List<Field> currentHighlight, FullGame game) {
-        //TODO remove typecast
-        FullBoard board = (FullBoard) game.getBoard();
+    private static void createStone(List<Field> currentHighlight, FullGame game, FullBoard board) {
         int targetXCoordinate = currentHighlight.get(0).xCoordinate();
 
         List<Field> allFields = board.getFields();
