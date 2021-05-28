@@ -10,33 +10,13 @@ package edu.hm.scholz.enno.connect_four.datastore;
  */
 
 public interface Observer {
-
     /**
-     * Updates the cursor of the view.
+     * Updates the entire view according to the supplied datastore objects.
      *
-     * @param board Reference to datastore object. Can't be null.
+     * @param board Reference to board datastore object. Can't be null.
+     * @param game Reference to game datastore object. Can't be null.
+     * @param player1 Reference to a player datastore object. Can't be null.
+     * @param player2 Reference to another player datastore object. Can't be null.
      */
-    void updateCursor(Board board);
-
-    /**
-     * Updates the matrix of the view.
-     *
-     * @param board  Reference to datastore object. Can't be null.
-     * @param player Reference to datastore object. Can't be null.
-     */
-    void updateMatrix(Board board, Player player);
-
-    /**
-     * Updates the winner screen in the view.
-     *
-     * @param game Reference to datastore object. Can't be null.
-     */
-    void updateWinner(Game game);
-
-    /**
-     * Updates the player select screen of the view.
-     *
-     * @param game Reference to datastore object. Can't be null.
-     */
-    void updatePlayerSelect(Game game);
+    void update(Board board, Game game, Player player1, Player player2);
 }

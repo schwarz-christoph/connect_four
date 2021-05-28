@@ -42,33 +42,12 @@ abstract class AbstractConnectFourObservable implements Observable {
     }
 
     @Override
-    public void notifyObservers(Game game) {
+    public void notifyObservers(Board board, Game game, Player player1, Player player2) {
         if(game == null) {
             throw new IllegalArgumentException("Observable can't be null.");
         }
         for(Observer observer : observers) {
-            observer.updatePlayerSelect(game);
-            observer.updateWinner(game);
-        }
-    }
-
-    @Override
-    public void notifyObservers(Board board, Player player) {
-        if(board == null || player == null) {
-            throw new IllegalArgumentException("Observables can't be null.");
-        }
-        for(Observer observer : observers) {
-            observer.updateMatrix(board, player);
-        }
-    }
-
-    @Override
-    public void notifyObservers(Board board) {
-        if(board == null) {
-            throw new IllegalArgumentException("Observable can't be null.");
-        }
-        for(Observer observer : observers) {
-            observer.updateCursor(board);
+            observer.update(board, game, player1, player2);
         }
     }
 }
