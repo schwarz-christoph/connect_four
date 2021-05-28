@@ -55,24 +55,23 @@ public class GetMovesMenuTest {
     private final int xCoordinate;
     private final int yCoordinate;
     private final PlayerID owner;
-    private final List<Move> possibleMoves;
+    private final List<Move> expectedMoves;
 
-    public GetMovesMenuTest(int xCoordinate, int yCoordinate, PlayerID owner, List<Move> possibleMoves){
+    public GetMovesMenuTest(int xCoordinate, int yCoordinate, PlayerID owner, List<Move> expectedMoves){
         this.xCoordinate = xCoordinate;
         this.yCoordinate = yCoordinate;
         this.owner = owner;
-        this.possibleMoves = possibleMoves;
+        this.expectedMoves = expectedMoves;
     }
 
     @Test
     public void getMovesInMenuTestAsPlayer_1() {
         //arrange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(xCoordinate, yCoordinate, owner))));
-
-        List<Move> expectedMoves =possibleMoves;
 
         //act
         List<Move> actualMoves = manager.getMoves(owner);
