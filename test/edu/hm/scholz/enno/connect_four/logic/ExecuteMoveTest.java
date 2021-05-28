@@ -31,10 +31,13 @@ public class ExecuteMoveTest {
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         ArrayList<Field> want = new ArrayList<>();
         Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.PLAYER_1));
+        List<Field> have = board.getFields();
+
         //act
         manager.executeMove(Move.CONFIRM, game.getActivePlayer());
 
         //assert
+        assertEquals(want, have);
     }
 
 }
