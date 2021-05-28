@@ -71,7 +71,7 @@ public class HighlightTest {
         //arange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(1, xBefore, PlayerID.NONE), Factory.makeField(2, xBefore, PlayerID.NONE), Factory.makeField(3, xBefore, PlayerID.NONE), Factory.makeField(4, xBefore, PlayerID.NONE), Factory.makeField(5, xBefore, PlayerID.NONE), Factory.makeField(6, xBefore, PlayerID.NONE), Factory.makeField(7, xBefore, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
         Collections.addAll(want, Factory.makeField(xWant, 0, PlayerID.NONE));
