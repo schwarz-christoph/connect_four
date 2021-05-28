@@ -62,21 +62,22 @@ public class ConnectFourManager implements GameManager {
 
     @Override
     public boolean executeMove(Move move, PlayerID playerID) {
-
         final boolean result;
+        if (game.isStarted()) {
 
-        final List<Move> allowedMoves = this.getMoves(playerID);
-        final boolean allowed = allowedMoves.stream()
-                .anyMatch(allowedMoves::equals);
 
-        if (allowed) {
-            final List<Field> currentHighlight = board.getHighlight();
-            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board);
-            setGameState(); // Checks if the game is won
-            //TODO extend it until the next player is ready to play
+            final List<Move> allowedMoves = this.getMoves(playerID);
+            final boolean allowed = allowedMoves.stream()
+                    .anyMatch(allowedMoves::equals);
 
-            result = true;
-        } else {
+            if (allowed) {
+                final List<Field> currentHighlight = board.getHighlight();
+                result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+                setGameState(); // Checks if the game is won
+            } else {
+                result = false;
+            }
+        }else{
             result = false;
         }
 
@@ -233,8 +234,7 @@ public class ConnectFourManager implements GameManager {
             }
         } else {
             //Player2
-            //TODO edit because field can be bigger than 7 so player 2 menu goes from 5 to 7 but Fields can go form 0 to inf
-            if(targetXCord > 5){
+            if(targetXCord > 5 && targetXCord < 8){
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
