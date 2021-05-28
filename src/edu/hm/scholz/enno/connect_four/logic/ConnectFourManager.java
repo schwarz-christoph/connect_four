@@ -68,7 +68,7 @@ public class ConnectFourManager implements GameManager {
 
             final List<Move> allowedMoves = this.getMoves(playerID);
             final boolean allowed = allowedMoves.stream()
-                    .anyMatch(allowedMoves::equals);
+                    .anyMatch(allowedMove -> allowedMove.equals(move));
 
             if (allowed) {
                 final List<Field> currentHighlight = board.getHighlight();
@@ -184,7 +184,7 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> getMovesInRegularGame() {
         final List<Move> possibleMoves;
-        final List<Field> highlight = game.getBoard().getHighlight();
+        final List<Field> highlight = board.getHighlight();
         final Field target = highlight.get(0);
 
         if (target.yCoordinate() == 0) {

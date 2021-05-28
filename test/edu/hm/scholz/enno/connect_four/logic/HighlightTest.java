@@ -6,6 +6,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(Parameterized.class)
 public class HighlightTest {
     @Parameterized.Parameters(name = "Field from Y = {0} with Move.{1} to Y = {2}")
     public static Iterable<Object[]> testcasesHighlightTest(){
@@ -26,7 +28,7 @@ public class HighlightTest {
                 {4, Move.RIGHT, 5},
                 {5, Move.RIGHT, 6},
                 {6, Move.RIGHT, 7},
-                {7, Move.RIGHT, 1},
+                {7, Move.RIGHT, 0},
 
                 {7, Move.LEFT, 6},
                 {6, Move.LEFT, 5},
@@ -34,7 +36,8 @@ public class HighlightTest {
                 {4, Move.LEFT, 3},
                 {3, Move.LEFT, 2},
                 {2, Move.LEFT, 1},
-                {1, Move.LEFT, 7},
+                {1, Move.LEFT, 0},
+                {0, Move.LEFT, 7},
         });
     }
 
@@ -42,7 +45,7 @@ public class HighlightTest {
     private final int xWant;
     private final Move move;
 
-    public HighlightTest(int yBefore, int yWant, Move move){
+    public HighlightTest(int yBefore, Move move, int yWant){
         this.xBefore = yBefore;
         this.xWant = yWant;
         this.move = move;
@@ -52,6 +55,7 @@ public class HighlightTest {
     public void highlightTest() {
         //arange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
@@ -60,24 +64,6 @@ public class HighlightTest {
 
         //act
         manager.executeMove(move, game.getActivePlayer());
-
-        //assert
-        List<Field> have = board.getHighlight();
-        assertEquals(want, have);
-    }
-
-    @Test
-    public void highlightMenuTest(){
-        //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
-        GameManager manager = LogicFactory.makeGameManager(board, game);
-        ArrayList<Field> want = new ArrayList<>();
-        Collections.addAll(want, Factory.makeField(xWant, 0, PlayerID.NONE));
-
-        //act
-        manager.executeMove(Move.UP, game.getActivePlayer());
 
         //assert
         List<Field> have = board.getHighlight();

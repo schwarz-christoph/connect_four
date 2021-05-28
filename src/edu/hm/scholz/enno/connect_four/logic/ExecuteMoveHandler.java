@@ -1,7 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.common.Settings;
-import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
@@ -13,10 +12,8 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 //TODO Active the Observer and use them
 
@@ -192,8 +189,7 @@ class ExecuteMoveHandler {
         List<Field> newHighlight = new ArrayList<>();
         //Start from 1 becuase on 0 is the Menu
         //Ends on fieldSize -1 because the Field is fieldSize long but wie start with the Menu by 0
-
-        IntStream.range(1, Settings.fieldSize - 1)
+        IntStream.range(1, Settings.fieldSize)
                 .forEach(yCoordinate -> newHighlight.add(Factory.makeField(targetFieldXCoordinate, yCoordinate, PlayerID.NONE)));
 
         board.setHighlight(newHighlight);
