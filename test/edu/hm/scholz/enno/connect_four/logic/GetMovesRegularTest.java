@@ -30,7 +30,7 @@ public class GetMovesRegularTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.UP, Move.CONFIRM));
+        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -69,7 +69,7 @@ public class GetMovesRegularTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.UP, Move.CONFIRM));
+        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -109,7 +109,7 @@ public class GetMovesRegularTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.UP, Move.CONFIRM));
+        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
