@@ -152,4 +152,19 @@ public class GetMovesRegularTest {
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
     }
+
+    @Test
+    public void getMovesInPlayerSelect(){
+        //arrange
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        FullBoard board = Factory.makeBoard();
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+
+        //assert
+        List<Move> want = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
+        assertEquals(want, have);
+    }
 }
