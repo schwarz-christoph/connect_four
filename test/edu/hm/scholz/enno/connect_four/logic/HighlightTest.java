@@ -5,7 +5,9 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
@@ -18,6 +20,9 @@ import static org.junit.Assert.*;
 
 @RunWith(Parameterized.class)
 public class HighlightTest {
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(1_000);
+
     @Parameterized.Parameters(name = "Field from Y = {0} with Move.{1} to Y = {2}")
     public static Iterable<Object[]> testcasesHighlightTest(){
         return Arrays.asList(new Object[][]{
