@@ -30,7 +30,13 @@ public class ExecuteMoveTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE),
+                Factory.makeField(xBefore, 2, PlayerID.NONE),
+                Factory.makeField(xBefore, 3, PlayerID.NONE),
+                Factory.makeField(xBefore, 4, PlayerID.NONE),
+                Factory.makeField(xBefore, 5, PlayerID.NONE),
+                Factory.makeField(xBefore, 6, PlayerID.NONE),
+                Factory.makeField(xBefore, 7, PlayerID.NONE)));
         ArrayList<Field> want = new ArrayList<>();
         Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.PLAYER_1));
         List<Field> have = board.getFields();
@@ -51,7 +57,13 @@ public class ExecuteMoveTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE),
+                Factory.makeField(xBefore, 2, PlayerID.NONE),
+                Factory.makeField(xBefore, 3, PlayerID.NONE),
+                Factory.makeField(xBefore, 4, PlayerID.NONE),
+                Factory.makeField(xBefore, 5, PlayerID.NONE),
+                Factory.makeField(xBefore, 6, PlayerID.NONE),
+                Factory.makeField(xBefore, 7, PlayerID.NONE)));
         ArrayList<Field> want = new ArrayList<>();
         Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.PLAYER_1));
         List<Field> have = board.getFields();
@@ -73,7 +85,7 @@ public class ExecuteMoveTest {
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //act, assert
-        assertFalse(manager.executeMove(Move.DOWN, PlayerID.PLAYER_1));
+        assertFalse(manager.executeMove(Move.DOWN, game.getActivePlayer()));
     }
 
     @Test
@@ -86,7 +98,7 @@ public class ExecuteMoveTest {
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //act, assert
-        assertFalse(manager.executeMove(Move.CONFIRM, PlayerID.PLAYER_1));
+        assertFalse(manager.executeMove(Move.CONFIRM, game.getActivePlayer()));
     }
 
 }
