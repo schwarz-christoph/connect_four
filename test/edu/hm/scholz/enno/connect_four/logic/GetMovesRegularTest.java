@@ -167,4 +167,21 @@ public class GetMovesRegularTest {
         List<Move> want = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
         assertEquals(want, have);
     }
+
+    @Test
+    public void getMovesWhilePlayerWonTest(){
+        //arrange
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        FullBoard board = Factory.makeBoard();
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        game.setWinner(PlayerID.PLAYER_2);
+        //act
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+
+        //assert
+        List<Move> want = new ArrayList<>(Arrays.asList(Move.CONFIRM));
+        assertEquals(want, have);
+    }
 }
