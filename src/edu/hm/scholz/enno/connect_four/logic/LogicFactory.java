@@ -21,4 +21,9 @@ public interface LogicFactory {
         return new ConnectFourManager(board, game, player1, player2);
 
     }
+
+    static GameManager makeGameManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
+        return new ConnectFourManager(board, game, player1, player2);
+
+    }
 }

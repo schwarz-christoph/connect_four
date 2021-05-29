@@ -65,6 +65,7 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
         this.humanPlayers = 1; //Default value for one player
+        this.isJokerInUse = PlayerActiveJoker.NONE;
     }
 
     /**
