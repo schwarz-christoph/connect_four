@@ -7,9 +7,11 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@Suite.SuiteClasses({ExecuteMoveTest.class, GetMovesMenuTest.class, HighlightTest.class})
+@RunWith(Suite.class)
+@Suite.SuiteClasses({ExecuteMoveTest.class, GetMovesMenuTest.class, HighlightTest.class, GetMovesRegularTest.class})
 public class ConnectFourManagerTest {
 
     @Test(expected = NullPointerException.class)
