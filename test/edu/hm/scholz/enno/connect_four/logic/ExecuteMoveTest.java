@@ -8,6 +8,8 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@RunWith(Parameterized.class)
 public class ExecuteMoveTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
