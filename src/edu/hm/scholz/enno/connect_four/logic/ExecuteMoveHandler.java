@@ -10,6 +10,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,12 +63,12 @@ class ExecuteMoveHandler {
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
         if (move == Move.RIGHT) {
-            newXCoordinate = (targetFieldXCoordinate + 1) % Settings.fieldSize; // Calculate the new x coordinate for the new highlight in the menu
-            createHighlight(newXCoordinate, board);
+            newXCoordinate = fieldOverflowX(1, targetFieldXCoordinate); // Calculate the new x coordinate for the new highlight in the menu
+            createMenuHighlight(newXCoordinate, board);
             result = true;
         } else if (move == Move.LEFT) {
-            newXCoordinate = (targetFieldXCoordinate - 1) % Settings.fieldSize; // Calculate the new x coordinate for the new highlight in the menu
-            createHighlight(newXCoordinate, board);
+            newXCoordinate = fieldOverflowX(-1, targetFieldXCoordinate); // Calculate the new x coordinate for the new highlight in the menu
+            createMenuHighlight(newXCoordinate, board);
             result = true;
         } else if (move == Move.DOWN) {
             createHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
@@ -202,9 +203,7 @@ class ExecuteMoveHandler {
      * @param board                  The board.
      */
     private static void createMenuHighlight(int targetFieldXCoordinate, FullBoard board) {
-        List<Field> newHighlight = new ArrayList<>();
-        newHighlight.add(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE));
-        board.setHighlight(newHighlight);
+        board.setHighlight(Arrays.asList(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
     }
 
     /**
