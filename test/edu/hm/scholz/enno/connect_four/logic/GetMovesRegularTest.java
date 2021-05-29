@@ -87,7 +87,7 @@ public class GetMovesRegularTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.UP));
+        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //Place One Stone at the top just for simulating a full column
         board.placeStone(Factory
@@ -127,7 +127,7 @@ public class GetMovesRegularTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.LEFT, Move.RIGHT, Move.UP));
+        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //Place One Stone at the top just for simulating a full column
         board.placeStone(Factory
