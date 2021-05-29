@@ -73,7 +73,7 @@ public class ConnectFourFieldTest {
         //arrange
         final int x = 1;
         final int y = 2;
-        final int secondX = 42;
+        final int secondX = 5;
         final PlayerID wantID = PlayerID.PLAYER_1;
         final Field subjectUnderTestField = Factory.makeField(x, y, wantID);
         final Field secondField = Factory.makeField(secondX, y, wantID);
