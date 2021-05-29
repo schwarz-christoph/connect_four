@@ -18,7 +18,6 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-@RunWith(Parameterized.class)
 public class ExecuteMoveTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
