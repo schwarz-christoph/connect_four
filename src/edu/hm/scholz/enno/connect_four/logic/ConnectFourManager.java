@@ -151,7 +151,7 @@ public class ConnectFourManager implements GameManager {
             game.setActivePlayer(PlayerID.NONE);
         }
 
-        if (player1Win && player2Win || boardFull) {
+        if ((player1Win && player2Win) || boardFull) {
             game.setWinner(PlayerID.NONE);
             game.setActivePlayer(PlayerID.NONE);
         }
