@@ -38,24 +38,27 @@ public class CannedMain {
         // Buchstaben fuer Moves
         game.setIsStarted(true);
         board.setHighlight(Arrays.asList(new ConnectFourField(0, 1, PlayerID.NONE)));
-        final String script = "CLCLLCRC";
+        final String script = "CCRCCRCCRCC";
 
         if (args.length == 0) {
             for (char needle : script.toCharArray())
-                for (PlayerID playerID : PlayerID.values())
-                    if(playerID != PlayerID.NONE) {
-                        for (Move move : gameManager.getMoves(playerID))
+                for (PlayerID playerID : PlayerID.values()) {
+                    if (playerID == game.getActivePlayer()) {
+                        for (Move move : gameManager.getMoves(playerID)) {
                             if (move.getMoveName() == needle) {
                                 System.out.println(move);
                                 gameManager.executeMove(move);
                                 break;
                             }
+                        }
+                        break;
                     }
+                }
         } else
             script.chars()
                     .sequential() // force sequential
                     .forEach(needle -> Stream.of(PlayerID.values())
-                            .filter(playerID -> playerID != PlayerID.NONE)
+                            .filter(playerID -> playerID == game.getActivePlayer())
                             .map(gameManager::getMoves)
                             .flatMap(List::stream)
                             .filter(move -> move.getMoveName() == needle)

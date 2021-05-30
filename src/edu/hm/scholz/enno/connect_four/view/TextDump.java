@@ -53,7 +53,7 @@ public class TextDump implements Observer {
         builder.append(frameLine);
         builder.append(getMenuString(player1, player2));
 
-        IntStream.range(0, 8).forEach(index -> builder.append(index).append(getGameLineString(board, index)));
+        IntStream.range(1, 8).forEach(index -> builder.append(index).append(getGameLineString(board, index)));
 
         builder.append(frameLine);
         return builder.toString();
