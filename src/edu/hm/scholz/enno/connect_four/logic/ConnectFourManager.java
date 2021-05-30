@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 
 public class ConnectFourManager implements GameManager {
 
-    private  FullBoard board;
-    private  FullGame game;
-    private  FullPlayer player1;
-    private  FullPlayer player2;
+    private FullBoard board;
+    private FullGame game;
+    private FullPlayer player1;
+    private FullPlayer player2;
 
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
@@ -288,16 +288,14 @@ public class ConnectFourManager implements GameManager {
         final List<Field> highlight = board.getHighlight();
         final Field target = highlight.get(0);
 
-        if (target.yCoordinate() == 0) {
+		if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
+            possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
+        } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
+            possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
+        } else if (target.yCoordinate() == 0) {
             possibleMoves = menuSelection(target, game.getActivePlayer());
         } else if (target.yCoordinate() == 1) {
             possibleMoves = playgroundSelection(target);
-        } else if (game.getActiveJoker() != PlayerActiveJoker.NONE) {
-            if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
-                possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
-            } else {
-                possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
-            }
         } else {
             throw new UnsupportedOperationException("Not yet Implemented");
         }
