@@ -213,7 +213,7 @@ class ExecuteMoveHandler {
         newHighlights = getAllFieldsOnBoard().stream()
                 //Filter everything thats in the radius
                 .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
-                        Math.abs(field.yCoordinate()) - targetHighlight.yCoordinate()) < 3)
+                        Math.abs(field.yCoordinate() - targetHighlight.yCoordinate()) < 3))
                 .collect(Collectors.toList());
 
         board.setHighlight(newHighlights);
