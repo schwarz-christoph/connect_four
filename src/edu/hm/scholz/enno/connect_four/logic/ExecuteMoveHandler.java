@@ -40,8 +40,6 @@ class ExecuteMoveHandler {
             }
         }
 
-        game.notifyObservers(board, game, player1, player2);
-
         return result;
     }
 

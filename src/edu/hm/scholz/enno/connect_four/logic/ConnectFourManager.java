@@ -82,6 +82,8 @@ public class ConnectFourManager implements GameManager {
             result = false;
         }
 
+        game.notifyObservers(board, game, player1, player2);
+
         return result;
     }
 
