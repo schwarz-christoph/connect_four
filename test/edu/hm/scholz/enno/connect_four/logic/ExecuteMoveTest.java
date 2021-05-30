@@ -22,29 +22,28 @@ public class ExecuteMoveTest {
 
     @Test
     public void executeMoveTest(){
-        int xBefore = 1;
-
         //arrange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE),
-                Factory.makeField(xBefore, 2, PlayerID.NONE),
-                Factory.makeField(xBefore, 3, PlayerID.NONE),
-                Factory.makeField(xBefore, 4, PlayerID.NONE),
-                Factory.makeField(xBefore, 5, PlayerID.NONE),
-                Factory.makeField(xBefore, 6, PlayerID.NONE),
-                Factory.makeField(xBefore, 7, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(1, 1, PlayerID.NONE),
+                Factory.makeField(1, 2, PlayerID.NONE),
+                Factory.makeField(1, 3, PlayerID.NONE),
+                Factory.makeField(1, 4, PlayerID.NONE),
+                Factory.makeField(1, 5, PlayerID.NONE),
+                Factory.makeField(1, 6, PlayerID.NONE),
+                Factory.makeField(1, 7, PlayerID.NONE)));
+
         ArrayList<Field> want = new ArrayList<>();
-        Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.PLAYER_1));
-        List<Field> have = board.getFields();
+        Collections.addAll(want, Factory.makeField(1, 7, PlayerID.PLAYER_1));
 
         //act
         manager.executeMove(Move.CONFIRM);
 
         //assert
+        List<Field> have = board.getFields();
         assertEquals(want, have);
     }
 
