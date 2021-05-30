@@ -66,7 +66,6 @@ public class ConnectFourManager implements GameManager {
         final boolean result;
         if (game.isStarted()) {
 
-
             final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
             final boolean allowed = allowedMoves.stream()
                     .anyMatch(allowedMove -> allowedMove.equals(move));
@@ -194,6 +193,8 @@ public class ConnectFourManager implements GameManager {
             possibleMoves = menuSelection(target, game.getActivePlayer());
         } else if (target.yCoordinate() == 1) {
             possibleMoves = playgroundSelection(target);
+        } else if (game.getActiveJoker() != PlayerActiveJoker.NONE) {
+            possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
         } else {
             throw new UnsupportedOperationException("Not yet Implemented");
         }
