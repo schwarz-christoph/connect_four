@@ -19,8 +19,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ExecuteMoveTest {
-//    @Rule
-//    public Timeout globalTimeout = Timeout.millis(1_000);
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Test
     public void executeMoveTest(){
@@ -44,7 +44,7 @@ public class ExecuteMoveTest {
         List<Field> have = board.getFields();
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         assertEquals(want, have);
@@ -71,10 +71,10 @@ public class ExecuteMoveTest {
         List<Field> have = board.getFields();
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertFalse(manager.executeMove(Move.CONFIRM, game.getActivePlayer()));
+        assertFalse(manager.executeMove(Move.CONFIRM));
     }
 
     @Test
@@ -87,7 +87,7 @@ public class ExecuteMoveTest {
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //act, assert
-        assertFalse(manager.executeMove(Move.DOWN, game.getActivePlayer()));
+        assertFalse(manager.executeMove(Move.DOWN));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class ExecuteMoveTest {
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //act, assert
-        assertTrue(manager.executeMove(Move.CONFIRM, game.getActivePlayer()));
+        assertTrue(manager.executeMove(Move.CONFIRM));
     }
 
 }

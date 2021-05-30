@@ -32,7 +32,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.DELETE;
@@ -55,7 +55,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.BOMB;
@@ -78,7 +78,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.NONE;
@@ -101,7 +101,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.NONE;
@@ -124,7 +124,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.DELETE;
@@ -147,7 +147,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.BOMB;
@@ -170,7 +170,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.NONE;
@@ -193,7 +193,7 @@ public class MenuTest{
         GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
 
         //assert
         PlayerActiveJoker want = PlayerActiveJoker.NONE;

@@ -11,7 +11,30 @@ package edu.hm.scholz.enno.connect_four.logic;
 public enum Move {
     UP, DOWN, LEFT, RIGHT, CONFIRM;
 
-    public static String getAllMovesString() {
-        return "UDLRC";
+    public char getMoveName() {
+        final char moveChar;
+        switch (this) {
+            case UP -> moveChar = 'U';
+            case DOWN -> moveChar = 'D';
+            case LEFT -> moveChar = 'L';
+            case RIGHT -> moveChar = 'R';
+            case CONFIRM -> moveChar = 'C';
+            default -> moveChar = '?';
+        }
+        return moveChar;
+    }
+
+    @Override
+    public String toString() {
+        final String moveDescription;
+        switch (this) {
+            case UP -> moveDescription = "Select field above";
+            case DOWN -> moveDescription = "Select field below";
+            case LEFT -> moveDescription = "Select left field";
+            case RIGHT -> moveDescription = "Select right field";
+            case CONFIRM -> moveDescription = "Confirm selected field";
+            default -> moveDescription = "Unknown move";
+        }
+        return moveDescription;
     }
 }

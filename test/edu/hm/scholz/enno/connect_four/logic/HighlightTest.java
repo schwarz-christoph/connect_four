@@ -68,7 +68,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xWant, 1, PlayerID.NONE), Factory.makeField(xWant, 2, PlayerID.NONE), Factory.makeField(xWant, 3, PlayerID.NONE), Factory.makeField(xWant, 4, PlayerID.NONE), Factory.makeField(xWant, 5, PlayerID.NONE), Factory.makeField(xWant, 6, PlayerID.NONE), Factory.makeField(xWant, 7, PlayerID.NONE));
 
         //act
-        manager.executeMove(move, game.getActivePlayer());
+        manager.executeMove(move);
 
         //assert
         List<Field> have = board.getHighlight();
@@ -87,7 +87,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.NONE));
 
         //act
-        manager.executeMove(Move.UP, game.getActivePlayer());
+        manager.executeMove(Move.UP);
 
         //assert
         List<Field> have = board.getHighlight();
@@ -106,7 +106,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE));
 
         //act
-        manager.executeMove(Move.DOWN, game.getActivePlayer());
+        manager.executeMove(Move.DOWN);
 
         //assert
         List<Field> have = board.getHighlight();
@@ -125,7 +125,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xWant, 0, PlayerID.NONE));
 
         //act
-        manager.executeMove(move, game.getActivePlayer());
+        manager.executeMove(move);
 
         //assert
         List<Field> have = board.getHighlight();
@@ -145,7 +145,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE));
 
         //act
-        manager.executeMove(Move.DOWN, game.getActivePlayer());
+        manager.executeMove(Move.DOWN);
 
         //assert
         List<Field> have = board.getHighlight();
@@ -164,7 +164,7 @@ public class HighlightTest {
         Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.NONE));
 
         //act
-        manager.executeMove(Move.UP, game.getActivePlayer());
+        manager.executeMove(Move.UP);
 
         //assert
         List<Field> have = board.getHighlight();

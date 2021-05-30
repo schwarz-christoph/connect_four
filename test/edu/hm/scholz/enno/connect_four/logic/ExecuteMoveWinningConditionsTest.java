@@ -41,7 +41,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.PLAYER_1;
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert
@@ -66,7 +66,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.PLAYER_1;
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert
@@ -91,7 +91,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.PLAYER_1;
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert
@@ -122,7 +122,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.PLAYER_1;
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert
@@ -153,7 +153,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.PLAYER_1;
 
         //act
-        manager.executeMove(Move.CONFIRM, game.getActivePlayer());
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert

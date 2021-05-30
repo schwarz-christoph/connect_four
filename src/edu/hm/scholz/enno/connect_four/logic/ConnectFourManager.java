@@ -61,12 +61,12 @@ public class ConnectFourManager implements GameManager {
     }
 
     @Override
-    public boolean executeMove(Move move, PlayerID playerID) {
+    public boolean executeMove(Move move) {
         final boolean result;
         if (game.isStarted()) {
 
 
-            final List<Move> allowedMoves = this.getMoves(playerID);
+            final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
             final boolean allowed = allowedMoves.stream()
                     .anyMatch(allowedMove -> allowedMove.equals(move));
 
