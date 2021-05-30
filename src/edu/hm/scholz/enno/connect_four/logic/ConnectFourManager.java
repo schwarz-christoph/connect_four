@@ -10,6 +10,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -152,17 +153,17 @@ public class ConnectFourManager implements GameManager {
 
     private boolean winningSequenceDiagonalUpLeftDownright(List<Field> fields) {
         return fields.stream()
-                .filter(field -> field.xCoordinate() > 3)
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
+                .filter(field -> field.xCoordinate() > 2)
+                .filter(field -> field.yCoordinate() > 2)
+                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner())))
+                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner())))
+                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() - 3, field.owner())));
     }
 
     private boolean winningSequenceDiagonalRightUp(List<Field> fields) {
         return fields.stream()
                 .filter(field -> field.xCoordinate() < Settings.fieldSize - 3)
-                .filter(field -> field.yCoordinate() > 3)
+                .filter(field -> field.yCoordinate() > 2)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate() - 3, field.owner())));
