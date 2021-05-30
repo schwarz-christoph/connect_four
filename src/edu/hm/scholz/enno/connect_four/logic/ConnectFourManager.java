@@ -65,23 +65,60 @@ public class ConnectFourManager implements GameManager {
     public boolean executeMove(Move move) {
         final boolean result;
         if (game.isStarted()) {
+            if(game.getWinner() == PlayerID.NONE){
+                final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
+                final boolean allowed = allowedMoves.stream()
+                        .anyMatch(allowedMove -> allowedMove.equals(move));
 
-            final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
-            final boolean allowed = allowedMoves.stream()
-                    .anyMatch(allowedMove -> allowedMove.equals(move));
-
-            if (allowed) {
-                final List<Field> currentHighlight = board.getHighlight();
-                result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
-                setGameState(); // Checks if the game is won
-            } else {
-                result = false;
+                if (allowed) {
+                    final List<Field> currentHighlight = board.getHighlight();
+                    result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+                    setGameState(); // Checks if the game is won
+                } else {
+                    result = false;
+                }
+            }else{
+                if(move == Move.CONFIRM){
+                    //TODO add restart or something like this
+                    result = true;
+                }else{
+                    result = false;
+                }
             }
         }else{
-            result = false;
+            result = playerSelectScreen(move);
         }
 
         game.notifyObservers(board, game, player1, player2);
+
+        return result;
+    }
+
+    /**
+     * Creates the Playerselectscreen
+     * If the player confirms his human player amount it also creates the intial highlight
+     * @param move the move that's taken
+     * @return if the move returns successfully
+     */
+    private boolean playerSelectScreen(Move move){
+        final boolean result;
+
+        final boolean allowedInPlayerSelect = getMovesInPlayerSelect().stream()
+                .anyMatch(allowedMove -> allowedMove.equals(move));
+
+        if(allowedInPlayerSelect){
+            if(move == Move.RIGHT){
+                game.setPlayerCount(Settings.maxPlayerCount);
+            }else if(move == Move.LEFT){
+                game.setPlayerCount(1);
+            }else{
+                game.setIsStarted(true);
+                board.setHighlight(List.of(Factory.makeField(2, 0, PlayerID.NONE)));
+            }
+            result = true;
+        } else {
+            result = false;
+        }
 
         return result;
     }
@@ -193,8 +230,6 @@ public class ConnectFourManager implements GameManager {
             possibleMoves = menuSelection(target, game.getActivePlayer());
         } else if (target.yCoordinate() == 1) {
             possibleMoves = playgroundSelection(target);
-        } else if (game.getActiveJoker() != PlayerActiveJoker.NONE) {
-            possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
         } else {
             throw new UnsupportedOperationException("Not yet Implemented");
         }
