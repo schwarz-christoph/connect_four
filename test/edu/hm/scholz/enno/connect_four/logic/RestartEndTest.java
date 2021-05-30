@@ -1,11 +1,9 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
-import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
-import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
