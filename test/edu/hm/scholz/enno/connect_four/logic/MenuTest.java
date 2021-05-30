@@ -24,7 +24,7 @@ public class MenuTest{
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(1, 0, PlayerID.NONE)));
 
 
         FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
@@ -47,7 +47,7 @@ public class MenuTest{
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(1, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
 
 
         FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
@@ -116,7 +116,7 @@ public class MenuTest{
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE)));
 
 
         FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
@@ -139,7 +139,7 @@ public class MenuTest{
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
 
 
         FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
