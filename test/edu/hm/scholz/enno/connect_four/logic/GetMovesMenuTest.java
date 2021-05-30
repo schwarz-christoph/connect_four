@@ -27,11 +27,11 @@ public class GetMovesMenuTest {
                 {0, 0, PlayerID.PLAYER_1,
                         new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {0, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {1, 0, PlayerID.PLAYER_1,
                         new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {1, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {2, 0, PlayerID.PLAYER_1,
                         new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {2, 0, PlayerID.PLAYER_2,
@@ -47,11 +47,11 @@ public class GetMovesMenuTest {
                 {6, 0, PlayerID.PLAYER_2,
                         new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {6, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {7, 0, PlayerID.PLAYER_2,
                         new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {7, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
 
         });
     }
