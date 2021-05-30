@@ -198,7 +198,7 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+        board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
                 Factory.makeField(7, 2, PlayerID.NONE),
                 Factory.makeField(7, 3, PlayerID.NONE),
                 Factory.makeField(7, 4, PlayerID.NONE),
@@ -236,7 +236,7 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+        board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
                 Factory.makeField(7, 2, PlayerID.NONE),
                 Factory.makeField(7, 3, PlayerID.NONE),
                 Factory.makeField(7, 4, PlayerID.NONE),
@@ -293,7 +293,7 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
                 Factory.makeField(3, 2, PlayerID.NONE),
                 Factory.makeField(3, 3, PlayerID.NONE),
                 Factory.makeField(3, 4, PlayerID.NONE),
@@ -334,7 +334,7 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
                 Factory.makeField(3, 2, PlayerID.NONE),
                 Factory.makeField(3, 3, PlayerID.NONE),
                 Factory.makeField(3, 4, PlayerID.NONE),
@@ -531,7 +531,7 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+        board.setHighlight(List.of(Factory.makeField(4, 1, PlayerID.NONE),
                 Factory.makeField(4, 2, PlayerID.NONE),
                 Factory.makeField(4, 3, PlayerID.NONE),
                 Factory.makeField(4, 4, PlayerID.NONE),
