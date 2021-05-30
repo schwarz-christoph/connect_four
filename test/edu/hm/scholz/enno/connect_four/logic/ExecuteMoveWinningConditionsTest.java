@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class ExecuteMoveWinningConditionsTest {
+
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
