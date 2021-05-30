@@ -258,7 +258,7 @@ class ExecuteMoveHandler {
 
         if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
             //New in Joker
-            game.setActiveJoker(PlayerActiveJoker.BOMB);
+            game.setActiveJoker(PlayerActiveJoker.DELETE);
             createDeleteJokerHighlight(Factory.makeField(0, Settings.fieldSize - 1, PlayerID.NONE), board);
         } else {
             //Joker currently in use
@@ -293,7 +293,7 @@ class ExecuteMoveHandler {
 
         if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
             //New in Joker
-            game.setActiveJoker(PlayerActiveJoker.DELETE);
+            game.setActiveJoker(PlayerActiveJoker.BOMB);
             createBombJokerHighlight(Factory.makeField(0, Settings.fieldSize - 1, PlayerID.NONE), board);
         } else {
             //Joker currently in use
