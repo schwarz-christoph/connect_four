@@ -240,28 +240,24 @@ public class ExecuteMoveWinningConditionsTest {
                 Factory.makeField(7, 7, PlayerID.NONE)));
 
         //arrange stones
-        board.placeStone(Factory.makeField(4, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(4, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(4, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(4, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(5, 2, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(5, 3, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(5, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(5, 4, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(5, 5, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(5, 6, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(5, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(6, 1, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(6, 2, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(6, 2, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(6, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(6, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(6, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(7, 1, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(7, 2, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(7, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(7, 4, PlayerID.PLAYER_1));
@@ -338,28 +334,24 @@ public class ExecuteMoveWinningConditionsTest {
                 Factory.makeField(3, 7, PlayerID.NONE)));
 
         //arrange stones
-        board.placeStone(Factory.makeField(0, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(0, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(0, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(0, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(1, 2, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 3, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(1, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(1, 4, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(1, 5, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(1, 6, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(2, 1, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 2, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(2, 2, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_2));
 
-        board.placeStone(Factory.makeField(3, 1, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(3, 2, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(3, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(3, 4, PlayerID.PLAYER_1));
@@ -474,7 +466,6 @@ public class ExecuteMoveWinningConditionsTest {
                 Factory.makeField(0, 7, PlayerID.NONE)));
 
         //arrange stones
-        board.placeStone(Factory.makeField(0, 1, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(0, 2, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(0, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(0, 4, PlayerID.PLAYER_1));
@@ -482,18 +473,14 @@ public class ExecuteMoveWinningConditionsTest {
         board.placeStone(Factory.makeField(0, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_2));
 
-
-        board.placeStone(Factory.makeField(1, 1, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 2, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(1, 2, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(1, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(1, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(1, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(1, 6, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
 
-
-        board.placeStone(Factory.makeField(2, 2, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_2));
@@ -501,7 +488,6 @@ public class ExecuteMoveWinningConditionsTest {
         board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
 
 
-        board.placeStone(Factory.makeField(3, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(3, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(3, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(3, 6, PlayerID.PLAYER_2));
@@ -535,7 +521,6 @@ public class ExecuteMoveWinningConditionsTest {
                 Factory.makeField(4, 7, PlayerID.NONE)));
 
         //arrange stones
-        board.placeStone(Factory.makeField(4, 1, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(4, 2, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(4, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(4, 4, PlayerID.PLAYER_1));
@@ -544,8 +529,7 @@ public class ExecuteMoveWinningConditionsTest {
         board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_2));
 
 
-        board.placeStone(Factory.makeField(5, 1, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(5, 2, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(5, 2, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(5, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(5, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(5, 5, PlayerID.PLAYER_1));
@@ -553,8 +537,7 @@ public class ExecuteMoveWinningConditionsTest {
         board.placeStone(Factory.makeField(5, 7, PlayerID.PLAYER_2));
 
 
-        board.placeStone(Factory.makeField(6, 2, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(6, 4, PlayerID.PLAYER_2));
         board.placeStone(Factory.makeField(6, 5, PlayerID.PLAYER_2));
@@ -562,7 +545,6 @@ public class ExecuteMoveWinningConditionsTest {
         board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_1));
 
 
-        board.placeStone(Factory.makeField(7, 3, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(7, 4, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(7, 5, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(7, 6, PlayerID.PLAYER_2));

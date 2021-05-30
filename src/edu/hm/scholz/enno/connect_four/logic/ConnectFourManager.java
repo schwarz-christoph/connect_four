@@ -65,7 +65,7 @@ public class ConnectFourManager implements GameManager {
     public boolean executeMove(Move move) {
         final boolean result;
         if (game.isStarted()) {
-            if(game.getWinner() == PlayerID.NONE){
+            if (game.getWinner() == PlayerID.NONE) {
                 final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
                 final boolean allowed = allowedMoves.stream()
                         .anyMatch(allowedMove -> allowedMove.equals(move));
@@ -77,15 +77,15 @@ public class ConnectFourManager implements GameManager {
                 } else {
                     result = false;
                 }
-            }else{
-                if(move == Move.CONFIRM){
+            } else {
+                if (move == Move.CONFIRM) {
                     //TODO add restart or something like this
                     result = true;
-                }else{
+                } else {
                     result = false;
                 }
             }
-        }else{
+        } else {
             result = playerSelectScreen(move);
         }
 
@@ -97,21 +97,22 @@ public class ConnectFourManager implements GameManager {
     /**
      * Creates the Playerselectscreen
      * If the player confirms his human player amount it also creates the intial highlight
+     *
      * @param move the move that's taken
      * @return if the move returns successfully
      */
-    private boolean playerSelectScreen(Move move){
+    private boolean playerSelectScreen(Move move) {
         final boolean result;
 
         final boolean allowedInPlayerSelect = getMovesInPlayerSelect().stream()
                 .anyMatch(allowedMove -> allowedMove.equals(move));
 
-        if(allowedInPlayerSelect){
-            if(move == Move.RIGHT){
+        if (allowedInPlayerSelect) {
+            if (move == Move.RIGHT) {
                 game.setPlayerCount(Settings.maxPlayerCount);
-            }else if(move == Move.LEFT){
+            } else if (move == Move.LEFT) {
                 game.setPlayerCount(1);
-            }else{
+            } else {
                 game.setIsStarted(true);
                 board.setHighlight(List.of(Factory.makeField(2, 0, PlayerID.NONE)));
             }
@@ -200,12 +201,23 @@ public class ConnectFourManager implements GameManager {
     }
 
     private boolean winningSequenceDiagonalRightUp(List<Field> fields) {
-        return fields.stream()
+        boolean result;
+
+        result = fields.stream()
                 .filter(field -> field.xCoordinate() < Settings.fieldSize - 3)
                 .filter(field -> field.yCoordinate() > 2)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate() - 3, field.owner())));
+        if(!result)
+        result = fields.stream()
+                .filter(field -> field.xCoordinate() > 2)
+                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
+                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
+                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
+                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
+
+    return result;
     }
 
     /**
@@ -246,7 +258,7 @@ public class ConnectFourManager implements GameManager {
     private List<Move> playgroundSelection(Field target) {
         final List<Move> possibleMoves;
         final boolean isFull;
-        if(board.getFields().isEmpty()){
+        if (board.getFields().isEmpty()) {
             isFull = false;
         } else {
             isFull = board.getFields().stream()
@@ -274,21 +286,21 @@ public class ConnectFourManager implements GameManager {
         final List<Move> possibleMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
         final int targetXCord = target.xCoordinate();
 
-        if(player == PlayerID.PLAYER_1) {
+        if (player == PlayerID.PLAYER_1) {
             //Player1
-            if(targetXCord < 2){
+            if (targetXCord < 2) {
                 //Player1 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         } else {
             //Player2
-            if(targetXCord > 5 && targetXCord < 8){
+            if (targetXCord > 5 && targetXCord < 8) {
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         }
 
-        if(targetXCord < 5 && targetXCord > 2){
+        if (targetXCord < 5 && targetXCord > 2) {
             //One of the Player in the Game-Menu
             possibleMoves.add(Move.CONFIRM);
         }
