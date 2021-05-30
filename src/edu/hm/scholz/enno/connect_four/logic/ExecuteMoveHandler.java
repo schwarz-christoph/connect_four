@@ -299,12 +299,10 @@ class ExecuteMoveHandler {
                 activePlayer.useBombJoker();
                 changePlayer(game);
             } else if (move == Move.LEFT) {
-                createBombJokerHighlight(targetField.xCoordinate(),
-                        fieldOverflowY(-1, targetField.yCoordinate()), board);
+                createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), 1, board);
             } else {
                 //right
-                createBombJokerHighlight(targetField.xCoordinate(),
-                        fieldOverflowY(1, targetField.yCoordinate()), board);
+                createBombJokerHighlight(fieldOverflowX(1, targetField.xCoordinate()), 1, board);
             }
         }
 
