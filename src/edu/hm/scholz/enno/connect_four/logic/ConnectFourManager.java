@@ -231,6 +231,13 @@ public class ConnectFourManager implements GameManager {
             possibleMoves = menuSelection(target, game.getActivePlayer());
         } else if (target.yCoordinate() == 1) {
             possibleMoves = playgroundSelection(target);
+        } else if (game.getActiveJoker() != PlayerActiveJoker.NONE) {
+            if(game.getActiveJoker() == PlayerActiveJoker.BOMB){
+                possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
+            }
+            else {
+                possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
+            }
         } else {
             throw new UnsupportedOperationException("Not yet Implemented");
         }

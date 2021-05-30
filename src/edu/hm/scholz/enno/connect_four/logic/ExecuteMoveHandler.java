@@ -204,19 +204,13 @@ class ExecuteMoveHandler {
     /**
      * Creates a new bomb joker highlight in the matrix.
      *
-     * @param targetHighlight The selected field to create a bomb joker in
-     * @param board           The board.
+     * @param xCoordinate the x Coordinate of the new Highlight
+     * @param yCoordinate the y Coordinate of the new Highlight
+     * @param board       The board.
      */
-    private static void createBombJokerHighlight(Field targetHighlight, FullBoard board) {
+    private static void createBombJokerHighlight(int xCoordinate, int yCoordinate, FullBoard board) {
 
-        final List<Field> newHighlights;
-        newHighlights = getAllFieldsOnBoard().stream()
-                //Filter everything thats in the radius
-                .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) +
-                        Math.abs(field.yCoordinate() - targetHighlight.yCoordinate()) < 3))
-                .collect(Collectors.toList());
-
-        board.setHighlight(newHighlights);
+        board.setHighlight(List.of(Factory.makeField(xCoordinate, yCoordinate, PlayerID.NONE)));
     }
 
     /**
@@ -294,7 +288,7 @@ class ExecuteMoveHandler {
         if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
             //New in Joker
             game.setActiveJoker(PlayerActiveJoker.BOMB);
-            createBombJokerHighlight(Factory.makeField(0, Settings.fieldSize - 1, PlayerID.NONE), board);
+            createBombJokerHighlight(0, 1, board);
         } else {
             //Joker currently in use
             final List<Field> highlight = game.getBoard().getHighlight();
@@ -304,19 +298,13 @@ class ExecuteMoveHandler {
                 executeBombJoker(targetField, board);
                 activePlayer.useBombJoker();
                 changePlayer(game);
-            } else if (move == Move.UP) {
-                createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowY(-1, targetField.yCoordinate()), targetField.owner()), board);
-            } else if (move == Move.DOWN) {
-                createBombJokerHighlight(Factory.makeField(targetField.xCoordinate(),
-                        fieldOverflowY(-1, targetField.yCoordinate()), targetField.owner()), board);
             } else if (move == Move.LEFT) {
-                createBombJokerHighlight(Factory.makeField(fieldOverflowX(-1, targetField.xCoordinate()),
-                        targetField.yCoordinate(), targetField.owner()), board);
+                createBombJokerHighlight(targetField.xCoordinate(),
+                        fieldOverflowY(-1, targetField.yCoordinate()), board);
             } else {
                 //right
-                createBombJokerHighlight(Factory.makeField(fieldOverflowX(1, targetField.xCoordinate()),
-                        targetField.yCoordinate(), targetField.owner()), board);
+                createBombJokerHighlight(targetField.xCoordinate(),
+                        fieldOverflowY(1, targetField.yCoordinate()), board);
             }
         }
 
@@ -325,14 +313,21 @@ class ExecuteMoveHandler {
     private static void executeBombJoker(Field targetHighlight, FullBoard board) {
 
         //Remove all bombed fields
-        board.getHighlight().stream()
-                .forEach(field -> board.removeStone(field));
+        Field lowestFreeField = getAllFieldsOnBoard().stream()
+                .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                .filter(field -> field.owner() == PlayerID.NONE)
+                .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
+
+        board.getFields().stream()
+                .filter(field -> (Math.abs(field.xCoordinate() - field.xCoordinate())
+                        + Math.abs(field.yCoordinate() - field.yCoordinate())) < 3)
+                .forEach(board::removeStone);
 
         //get every field that need to be updated for radius1
-        updateBombedFields(1, targetHighlight, board);
+        updateBombedFields(1, lowestFreeField, board);
 
         //get every field that need to be updated for radius 2
-        updateBombedFields(2, targetHighlight, board);
+        updateBombedFields(2, lowestFreeField, board);
     }
 
     private static void updateBombedFields(int radius, Field targetHighlight, FullBoard board) {
