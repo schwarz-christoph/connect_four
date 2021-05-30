@@ -56,6 +56,38 @@ public class ExecuteMoveWinningConditionsTest {
     }
 
     @Test
+    public void executeMoveHorizontalRightTestPlayer2(){
+
+        //arrange
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
+        game.setIsStarted(true);
+        FullBoard board = Factory.makeBoard();
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
+                Factory.makeField(3, 2, PlayerID.NONE),
+                Factory.makeField(3, 3, PlayerID.NONE),
+                Factory.makeField(3, 4, PlayerID.NONE),
+                Factory.makeField(3, 5, PlayerID.NONE),
+                Factory.makeField(3, 6, PlayerID.NONE),
+                Factory.makeField(3, 7, PlayerID.NONE)));
+
+        //arrange stones
+        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_2));
+
+        PlayerID wantWinner = PlayerID.PLAYER_2;
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        PlayerID actualWinner = game.getWinner();
+
+        //assert
+        assertEquals(wantWinner, actualWinner);
+    }
+
+    @Test
     public void executeMoveHorizontalLeftTest(){
 
         //arrange
