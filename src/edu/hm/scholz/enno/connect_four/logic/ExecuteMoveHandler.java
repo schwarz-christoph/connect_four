@@ -9,10 +9,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -404,13 +401,12 @@ class ExecuteMoveHandler {
             xCoordinate = targetXCoordinate;
             yCoordinate = Settings.fieldSize - 1;
         }else {
-            Field lowestField = allFields.stream()
+            xCoordinate = targetXCoordinate;
+            yCoordinate = allFields.stream()
                     .filter(n -> n.xCoordinate() == targetXCoordinate)
                     .min(Comparator.comparing(Field::yCoordinate))
-                    .orElse(Factory.makeField(targetXCoordinate, Settings.fieldSize - 1, PlayerID.NONE));
-
-            xCoordinate = lowestField.xCoordinate();
-            yCoordinate = lowestField.yCoordinate();
+                    .map(field -> field.yCoordinate() - 1)
+                    .orElse(Settings.fieldSize - 1);
         }
 
         board.placeStone(Factory.makeField(xCoordinate, yCoordinate, game.getActivePlayer()));
