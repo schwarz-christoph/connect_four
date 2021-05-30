@@ -8,8 +8,6 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
 import java.util.Arrays;
