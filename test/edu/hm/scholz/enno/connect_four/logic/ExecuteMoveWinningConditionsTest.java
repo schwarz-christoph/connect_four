@@ -137,9 +137,9 @@ public class ExecuteMoveWinningConditionsTest {
                 Factory.makeField(0, 7, PlayerID.NONE)));
 
         //arrange stones
-        board.placeStone(Factory.makeField(0, 0, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(0, 1, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(0, 2, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0, 6, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0, 5, PlayerID.PLAYER_1));
 
         PlayerID wantWinner = PlayerID.PLAYER_1;
 

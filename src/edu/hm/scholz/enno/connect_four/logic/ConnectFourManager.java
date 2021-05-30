@@ -144,7 +144,7 @@ public class ConnectFourManager implements GameManager {
 
     private boolean winningSequenceUp(List<Field> fields) {
         return fields.stream()
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - 4)
+                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 3, field.owner())));
@@ -153,7 +153,7 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceDiagonalUpLeftDownright(List<Field> fields) {
         return fields.stream()
                 .filter(field -> field.xCoordinate() > 3)
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - 4)
+                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
