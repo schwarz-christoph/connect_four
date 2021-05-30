@@ -402,18 +402,18 @@ class ExecuteMoveHandler {
 
         if(allFields.isEmpty()){
             xCoordinate = targetXCoordinate;
-            yCoordinate = Settings.fieldSize;
+            yCoordinate = Settings.fieldSize - 1;
         }else {
             Field lowestField = allFields.stream()
                     .filter(n -> n.xCoordinate() == targetXCoordinate)
                     .min(Comparator.comparing(Field::yCoordinate))
-                    .orElseThrow(NullPointerException::new);
+                    .orElse(Factory.makeField(targetXCoordinate, Settings.fieldSize - 1, PlayerID.NONE));
 
             xCoordinate = lowestField.xCoordinate();
             yCoordinate = lowestField.yCoordinate();
         }
 
-        board.placeStone(Factory.makeField(xCoordinate, yCoordinate - 1, game.getActivePlayer()));
+        board.placeStone(Factory.makeField(xCoordinate, yCoordinate, game.getActivePlayer()));
     }
 
     private static void changePlayer(FullGame game) {
