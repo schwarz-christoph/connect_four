@@ -72,10 +72,13 @@ public class GetMovesMenuTest {
     public void getMovesInMenuTestAsPlayer_1() {
         //arrange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
+        game.setIsStarted(true);;
         FullBoard board = Factory.makeBoard();
+
+        game.setActivePlayer(owner);
+
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(xCoordinate, yCoordinate, owner))));
+        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(xCoordinate, yCoordinate, PlayerID.NONE))));
 
         //act
         List<Move> actualMoves = manager.getMoves(owner);
