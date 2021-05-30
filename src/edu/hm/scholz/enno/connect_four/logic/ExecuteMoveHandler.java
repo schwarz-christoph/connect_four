@@ -311,15 +311,19 @@ class ExecuteMoveHandler {
     private static void executeBombJoker(Field targetHighlight, FullBoard board) {
 
         //Remove all bombed fields
-        Field lowestFreeField = getAllFieldsOnBoard().stream()
+        Field highestOccupiedField = board.getFields().stream()
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
-                .filter(field -> field.owner() == PlayerID.NONE)
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-        board.getFields().stream()
-                .filter(field -> (Math.abs(field.xCoordinate() - field.xCoordinate())
-                        + Math.abs(field.yCoordinate() - field.yCoordinate())) < 3)
-                .forEach(board::removeStone);
+        Field lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
+                highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
+
+        List<Field> allFields = board.getFields().stream()
+                .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
+                        + Math.abs(field.yCoordinate() - lowestFreeField.yCoordinate())) <= 2)
+                .collect(Collectors.toList());
+
+        allFields.forEach(board::removeStone);
 
         //get every field that need to be updated for radius1
         updateBombedFields(1, lowestFreeField, board);
@@ -341,8 +345,8 @@ class ExecuteMoveHandler {
 
         //Get every stone which is in the adjacent column and needs to be updated
         fieldsToUpdate = board.getFields().stream()
-                .filter(field -> Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) == radius)
-                .filter(field -> field.yCoordinate() > targetHighlight.yCoordinate())
+                .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) == radius))
+                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate())
                 .collect(Collectors.toList());
 
         //Replace old stone positions with updated ones by fallsize
@@ -350,8 +354,8 @@ class ExecuteMoveHandler {
                 .forEach(board::removeStone);
         fieldsToUpdate
                 .forEach(field -> board.placeStone(Factory
-                        .makeField(targetHighlight.xCoordinate(),
-                                targetHighlight.yCoordinate() - fallSize, field.owner())));
+                        .makeField(field.xCoordinate(),
+                                field.yCoordinate() + fallSize, field.owner())));
     }
 
     /**
