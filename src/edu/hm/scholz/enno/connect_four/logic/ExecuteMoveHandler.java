@@ -394,18 +394,26 @@ class ExecuteMoveHandler {
 
     private static void createStone(List<Field> currentHighlight, FullGame game, FullBoard board) {
         int targetXCoordinate = currentHighlight.get(0).xCoordinate();
+        Field lowestFiled;
 
         List<Field> allFields = board.getFields();
 
-        Field lowestFiled = allFields.stream()
-                .filter(n -> n.xCoordinate() == targetXCoordinate)
-                .filter(n -> n.owner() == PlayerID.NONE)
-                .min(Comparator.comparing(Field::yCoordinate))
-                .orElseThrow(NullPointerException::new);
+        if(allFields == null){
+            lowestFiled = Factory.makeField(targetXCoordinate, Settings.fieldSize - 1, PlayerID.NONE);
+        }else {
+            lowestFiled = allFields.stream()
+                    .filter(n -> n.xCoordinate() == targetXCoordinate)
+                    .filter(n -> n.owner() == PlayerID.NONE)
+                    .min(Comparator.comparing(Field::yCoordinate))
+                    .orElseThrow(NullPointerException::new);
 
-        //Changes the selected Field in the Board
-        board.removeStone(lowestFiled);
-        board.placeStone(Factory.makeField(lowestFiled.xCoordinate(), lowestFiled.yCoordinate(), game.getActivePlayer()));
+            lowestFiled = allFields.stream()
+                    .filter(n -> n.xCoordinate() == targetXCoordinate)
+                    .min(Comparator.comparing(Field::yCoordinate))
+                    .orElseThrow(NullPointerException::new);
+        }
+
+        board.placeStone(Factory.makeField(lowestFiled.xCoordinate(), lowestFiled.yCoordinate() - 1, game.getActivePlayer()));
     }
 
     private static void changePlayer(FullGame game) {
