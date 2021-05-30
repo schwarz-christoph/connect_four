@@ -245,9 +245,11 @@ public class ConnectFourManager implements GameManager {
      */
     private List<Move> playgroundSelection(Field target) {
         final List<Move> possibleMoves;
-        final Stream<Field> occupiedFields = game.getBoard().getFields().stream();
+        final boolean isFull = board.getFields().stream()
+                .filter(field -> target.xCoordinate() == field.xCoordinate())
+                .anyMatch(field -> target.yCoordinate() == 1);
 
-        if (occupiedFields.anyMatch(field -> field.equals(target))) {
+        if (isFull) {
             possibleMoves = new ArrayList<>(Arrays.asList(Move.UP, Move.RIGHT, Move.LEFT));
         } else {
             possibleMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT));
