@@ -81,12 +81,13 @@ public class TextDump implements Observer {
         final boolean isFieldHighlighted = board.getHighlight().stream()
                 .filter(field -> field.xCoordinate() == xCoordinate)
                 .anyMatch(field -> field.yCoordinate() == yCoordinate);
-        final char activePlayerHighlightChar = game.getActivePlayer() == PlayerID.PLAYER_1 ? 'g' : 'b';
+        final char highlightChar = game.getActiveJoker() != PlayerActiveJoker.NONE ? 'W' :
+                game.getActivePlayer() == PlayerID.PLAYER_1 ? 'g' : 'b';
 
         switch (occupyingPlayer) {
-            case PLAYER_1 -> fieldChar = 'G';
-            case PLAYER_2 -> fieldChar = 'B';
-            default -> fieldChar = isFieldHighlighted ? activePlayerHighlightChar : ' ';
+            case PLAYER_1 -> fieldChar = game.getActiveJoker() != PlayerActiveJoker.NONE && isFieldHighlighted ? 'g' : 'G';
+            case PLAYER_2 -> fieldChar = game.getActiveJoker() != PlayerActiveJoker.NONE && isFieldHighlighted ? 'b' : 'B';
+            default -> fieldChar = isFieldHighlighted ? highlightChar : ' ';
         }
         return fieldChar;
     }
