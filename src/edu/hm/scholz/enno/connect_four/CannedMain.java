@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four;
 
+import edu.hm.scholz.enno.connect_four.datastore.ConnectFourField;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
@@ -9,6 +10,7 @@ import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 import edu.hm.scholz.enno.connect_four.view.TextDump;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -34,6 +36,8 @@ public class CannedMain {
         // View, die eine Textdarstellung produziert
         game.register(new TextDump());
         // Buchstaben fuer Moves
+        game.setIsStarted(true);
+        board.setHighlight(Arrays.asList(new ConnectFourField(0, 1, PlayerID.NONE)));
         final String script = "CLCLLCRC";
 
         if (args.length == 0) {
