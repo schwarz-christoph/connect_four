@@ -139,6 +139,7 @@ public class ConnectFourManager implements GameManager {
 
         final boolean player1Win = containsWinningSequence(player1Fields);
         final boolean player2Win = containsWinningSequence(player2Fields);
+        final boolean boardFull = fields.size() == Settings.fieldSize * (Settings.fieldSize - 1);
 
         if (player1Win) {
             game.setWinner(PlayerID.PLAYER_1);
@@ -150,7 +151,7 @@ public class ConnectFourManager implements GameManager {
             game.setActivePlayer(PlayerID.NONE);
         }
 
-        if (player1Win && player2Win) {
+        if (player1Win && player2Win || boardFull) {
             game.setWinner(PlayerID.NONE);
             game.setActivePlayer(PlayerID.NONE);
         }
