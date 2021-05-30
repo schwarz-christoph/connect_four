@@ -16,8 +16,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-//TODO Active the Observer and use them
-
 class ExecuteMoveHandler {
 
     static boolean onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer player1, FullPlayer player2) {
@@ -25,7 +23,7 @@ class ExecuteMoveHandler {
 
         final Field fieldSelected = currentHighlight.get(0);
 
-        FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1? player1:player2;
+        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1? player1:player2;
 
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             //Player has active bomb joker
@@ -44,6 +42,8 @@ class ExecuteMoveHandler {
                 result = decideMatrix(move, currentHighlight, game, board);
             }
         }
+
+        game.notifyObservers(board, game, player1, player2);
 
         return result;
     }
