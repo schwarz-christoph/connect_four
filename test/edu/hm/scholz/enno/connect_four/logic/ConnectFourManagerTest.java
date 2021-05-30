@@ -12,8 +12,10 @@ import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
+import java.awt.*;
+
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ExecuteMoveTest.class, GetMovesMenuTest.class, HighlightTest.class, GetMovesRegularTest.class})
+@Suite.SuiteClasses({ExecuteMoveTest.class, GetMovesMenuTest.class, HighlightTest.class, GetMovesRegularTest.class, ExecuteMoveWinningConditionsTest.class, GetMovesPlayerSelectAndEndScreenTest.class, MenuTest.class})
 public class ConnectFourManagerTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
