@@ -20,9 +20,10 @@ import static org.junit.Assert.assertFalse;
 
 public class ExecuteMoveWinningConditionsTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.millis(1_000);
+//    @Rule
+//    public Timeout globalTimeout = Timeout.millis(1_000);
 
+    @Test
     public void executeMoveHorizontalRightTest(){
 
         //arrange
@@ -31,7 +32,13 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1)));
+        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
+                Factory.makeField(3, 2, PlayerID.NONE),
+                Factory.makeField(3, 3, PlayerID.NONE),
+                Factory.makeField(3, 4, PlayerID.NONE),
+                Factory.makeField(3, 5, PlayerID.NONE),
+                Factory.makeField(3, 6, PlayerID.NONE),
+                Factory.makeField(3, 7, PlayerID.NONE)));
 
         //arrange stones
         board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
@@ -48,6 +55,7 @@ public class ExecuteMoveWinningConditionsTest {
         assertEquals(wantWinner, actualWinner);
     }
 
+    @Test
     public void executeMoveHorizontalLeftTest(){
 
         //arrange
@@ -56,7 +64,13 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.PLAYER_1)));
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+                Factory.makeField(0, 2, PlayerID.NONE),
+                Factory.makeField(0, 3, PlayerID.NONE),
+                Factory.makeField(0, 4, PlayerID.NONE),
+                Factory.makeField(0, 5, PlayerID.NONE),
+                Factory.makeField(0, 6, PlayerID.NONE),
+                Factory.makeField(0, 7, PlayerID.NONE)));
 
         //arrange stones
         board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_1));
@@ -73,6 +87,7 @@ public class ExecuteMoveWinningConditionsTest {
         assertEquals(wantWinner, actualWinner);
     }
 
+    @Test
     public void executeMoveVerticalTest(){
 
         //arrange
@@ -81,7 +96,13 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.PLAYER_1)));
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+                Factory.makeField(0, 2, PlayerID.NONE),
+                Factory.makeField(0, 3, PlayerID.NONE),
+                Factory.makeField(0, 4, PlayerID.NONE),
+                Factory.makeField(0, 5, PlayerID.NONE),
+                Factory.makeField(0, 6, PlayerID.NONE),
+                Factory.makeField(0, 7, PlayerID.NONE)));
 
         //arrange stones
         board.placeStone(Factory.makeField(0, 0, PlayerID.PLAYER_1));
@@ -98,6 +119,7 @@ public class ExecuteMoveWinningConditionsTest {
         assertEquals(wantWinner, actualWinner);
     }
 
+    @Test
     public void executeMoveDiagonalUpperRightTest(){
 
         //arrange
@@ -106,7 +128,13 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1)));
+        board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
+                Factory.makeField(3, 2, PlayerID.NONE),
+                Factory.makeField(3, 3, PlayerID.NONE),
+                Factory.makeField(3, 4, PlayerID.NONE),
+                Factory.makeField(3, 5, PlayerID.NONE),
+                Factory.makeField(3, 6, PlayerID.NONE),
+                Factory.makeField(3, 7, PlayerID.NONE)));
 
         //arrange stones
         board.placeStone(Factory.makeField(0, 0, PlayerID.PLAYER_1));
@@ -129,6 +157,7 @@ public class ExecuteMoveWinningConditionsTest {
         assertEquals(wantWinner, actualWinner);
     }
 
+    @Test
     public void executeMoveDiagonalUpperLeftTest(){
 
         //arrange
@@ -137,7 +166,13 @@ public class ExecuteMoveWinningConditionsTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.PLAYER_1)));
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+                Factory.makeField(0, 2, PlayerID.NONE),
+                Factory.makeField(0, 3, PlayerID.NONE),
+                Factory.makeField(0, 4, PlayerID.NONE),
+                Factory.makeField(0, 5, PlayerID.NONE),
+                Factory.makeField(0, 6, PlayerID.NONE),
+                Factory.makeField(0, 7, PlayerID.NONE)));
 
         //arrange stones
         board.placeStone(Factory.makeField(3, 0, PlayerID.PLAYER_1));
