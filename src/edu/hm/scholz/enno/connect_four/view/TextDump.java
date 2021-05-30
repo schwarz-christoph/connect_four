@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 
 public class TextDump implements Observer {
 
-    private final String indexLine = "  0 1 2 3 4 5 6 7 \n";
-    private final String frameLine = " +===============+\n";
+    private final String indexLine = "  0 1 2 3 4 5 6 7  \n";
+    private final String frameLine = " +================+\n";
 
     @Override
     public void update(Board board, Game game, Player player1, Player player2) {
@@ -26,6 +26,7 @@ public class TextDump implements Observer {
             // player select screen
             gameText = getPlayerSelectString(game);
         }
+        System.out.println(gameText);
     }
 
     private String getEndScreenString(Game game) {
@@ -35,9 +36,9 @@ public class TextDump implements Observer {
 
         final String matrixString;
         switch (game.getWinner()) {
-            case PLAYER_1 -> matrixString = "|G G G G G G G G|\n";
-            case PLAYER_2 -> matrixString = "|B B B B B B B B|\n";
-            default -> matrixString = "|G B G B G B G B|\n";
+            case PLAYER_1 -> matrixString = "|G G G G G G G G |\n";
+            case PLAYER_2 -> matrixString = "|B B B B B B B B |\n";
+            default -> matrixString = "|G B G B G B G B |\n";
         }
 
         IntStream.range(0, 8).forEach(index -> builder.append(index).append(matrixString));
@@ -61,8 +62,9 @@ public class TextDump implements Observer {
     private String getGameLineString(Board board, int lineIndex) {
         final StringBuilder builder = new StringBuilder();
         builder.append('|');
-        IntStream.range(0, 8).forEach(index -> builder.append(getCharForField(board, index, lineIndex)));
+        IntStream.range(0, 8).forEach(index -> builder.append(getCharForField(board, index, lineIndex)).append(' '));
         builder.append('|');
+        builder.append('\n');
         return builder.toString();
     }
 
@@ -100,7 +102,8 @@ public class TextDump implements Observer {
                 (player1.isDeleteJokerUsed() ? "C-" : "C ") +
                 "  R Y   " +
                 (player2.isDeleteJokerUsed() ? "C-" : "C ") +
-                (player2.isBombJokerUsed() ? "O-" : "O|");
+                (player2.isBombJokerUsed() ? "O-" : "O |") +
+                '\n';
     }
 
     private String getPlayerSelectString(Game game) {
@@ -110,9 +113,9 @@ public class TextDump implements Observer {
 
         final String matrixString;
         if(game.getPLayerCount() == 1) {
-            matrixString = "|G G G G        |\n";
+            matrixString = "|G G G G         |\n";
         } else {
-            matrixString = "|G G G G B B B B|\n";
+            matrixString = "|G G G G B B B B |\n";
         }
 
         IntStream.range(0, 8).forEach(index -> builder.append(index).append(matrixString));
