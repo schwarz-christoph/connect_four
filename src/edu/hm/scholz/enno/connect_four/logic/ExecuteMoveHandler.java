@@ -287,8 +287,8 @@ class ExecuteMoveHandler {
                     targetX = -1;
                     targetY = Math.max(targetField.yCoordinate() - 1, 1);
                 } else if(isColumnMultiHighlight) {
-                    targetX = Settings.fieldSize - 1;
-                    targetY = targetField.yCoordinate() - 1;
+                    targetX = targetField.xCoordinate();
+                    targetY = Settings.fieldSize - 1;
                 } else {
                     targetX = targetField.xCoordinate();
                     targetY = targetField.yCoordinate() - 1;
