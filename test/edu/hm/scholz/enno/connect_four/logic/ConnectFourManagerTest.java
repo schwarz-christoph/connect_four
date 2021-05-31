@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
         ExecuteMoveWinningConditionsTest.class,
         GetMovesPlayerSelectAndEndScreenTest.class,
         MenuTest.class,
+        bombJokerTest.class,
         ConnectFourManagerConstructorTest.class,
         DeleteJokerHighlightTest.class})
 public class ConnectFourManagerTest {
