@@ -36,9 +36,7 @@ public class CannedMain {
         // View, die eine Textdarstellung produziert
         game.register(new TextDump());
         // Buchstaben fuer Moves
-        game.setIsStarted(true);
-        board.setHighlight(Arrays.asList(new ConnectFourField(0, 1, PlayerID.NONE)));
-        final String script = "CCRCCRCCRCC";
+        final String script = "RCDCCRCCRCCRCC";
 
         if (args.length == 0) {
             for (char needle : script.toCharArray())
