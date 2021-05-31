@@ -10,9 +10,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class ConnectFourManager implements GameManager {
 
@@ -65,7 +63,7 @@ public class ConnectFourManager implements GameManager {
     public boolean executeMove(Move move) {
         final boolean result;
         if (game.isStarted()) {
-            if (game.getWinner() == PlayerID.NONE) {
+            if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
                 final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
                 final boolean allowed = allowedMoves.stream()
                         .anyMatch(allowedMove -> allowedMove.equals(move));
@@ -78,7 +76,8 @@ public class ConnectFourManager implements GameManager {
                 }
             } else {
                 if (move == Move.CONFIRM) {
-                    //TODO add restart or something like this
+                    //Restarts the game in the End screen
+                    restart();
                     result = true;
                 } else {
                     result = false;
