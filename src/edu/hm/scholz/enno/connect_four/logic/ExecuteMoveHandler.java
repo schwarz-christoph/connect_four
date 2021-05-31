@@ -84,14 +84,8 @@ class ExecuteMoveHandler {
      * @param targetFieldXCoordinate the x coordinate of the selected field
      */
     private static void selectInMenu(int targetFieldXCoordinate, FullGame game, FullBoard board, FullPlayer activePlayer) {
-        if (targetFieldXCoordinate < 2 || targetFieldXCoordinate > 5) {
-            selectJoker(targetFieldXCoordinate, game, board, activePlayer);
-        } else if (targetFieldXCoordinate == 3) {
-            end();
-        } else {
-            restart(game, board);
-        }
-
+        //Can oly be Joker because the other two options are covered by the ConnectFourManager
+        selectJoker(targetFieldXCoordinate, game, board, activePlayer);
     }
 
     /**

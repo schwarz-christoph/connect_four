@@ -16,10 +16,10 @@ import java.util.stream.Stream;
 
 public class ConnectFourManager implements GameManager {
 
-    private final FullBoard board;
-    private final FullGame game;
-    private final FullPlayer player1;
-    private final FullPlayer player2;
+    private  FullBoard board;
+    private  FullGame game;
+    private  FullPlayer player1;
+    private  FullPlayer player2;
 
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
@@ -71,8 +71,7 @@ public class ConnectFourManager implements GameManager {
                         .anyMatch(allowedMove -> allowedMove.equals(move));
 
                 if (allowed) {
-                    final List<Field> currentHighlight = board.getHighlight();
-                    result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+                    result = manageAllowedMoves(move);
                     setGameState(); // Checks if the game is won
                 } else {
                     result = false;
@@ -92,6 +91,57 @@ public class ConnectFourManager implements GameManager {
         game.notifyObservers(board, game, player1, player2);
 
         return result;
+    }
+
+    /**
+     * Manage the Move if its allowed
+     * @param move the current taken move
+     * @return if the move was successfully
+     */
+    private boolean manageAllowedMoves(Move move){
+        final boolean result;
+        final List<Field> currentHighlight = board.getHighlight();
+        final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
+        final int targetFieldYCoordinate = currentHighlight.get(0).yCoordinate();
+        if(targetFieldYCoordinate == 0 && move == Move.CONFIRM){
+
+            if (targetFieldXCoordinate == 3) {
+                end();
+                result = true;
+            } else if (targetFieldXCoordinate == 4) {
+                restart();
+                result = true;
+            } else {
+                result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+            }
+        }  else {
+            result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+        }
+
+        return result;
+    }
+
+    /**
+     * Restarts the game
+     */
+    private void restart(){
+        FullGame oldGame = this.game;
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        this.board = Factory.makeBoard();
+        this.game = Factory.makeGame(oldGame.getActivePlayer(), board);
+        this.player1 = player1;
+        this.player2 = player2;
+    }
+
+    /**
+     * Ends the game immediately
+     */
+    private void end(){
+        this.game.setWinner(PlayerID.NONE);
+        this.game.setActivePlayer(PlayerID.NONE);
     }
 
     /**
@@ -209,15 +259,15 @@ public class ConnectFourManager implements GameManager {
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate() - 3, field.owner())));
-        if(!result)
-        result = fields.stream()
-                .filter(field -> field.xCoordinate() > 2)
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
+        if (!result)
+            result = fields.stream()
+                    .filter(field -> field.xCoordinate() > 2)
+                    .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
+                    .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
+                    .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
+                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
 
-    return result;
+        return result;
     }
 
     /**
@@ -244,10 +294,9 @@ public class ConnectFourManager implements GameManager {
         } else if (target.yCoordinate() == 1) {
             possibleMoves = playgroundSelection(target);
         } else if (game.getActiveJoker() != PlayerActiveJoker.NONE) {
-            if(game.getActiveJoker() == PlayerActiveJoker.BOMB){
+            if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
                 possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
-            }
-            else {
+            } else {
                 possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
             }
         } else {
