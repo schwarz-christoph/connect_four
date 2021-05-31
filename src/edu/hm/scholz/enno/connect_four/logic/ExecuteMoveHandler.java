@@ -140,16 +140,11 @@ class ExecuteMoveHandler {
         //Higherst Field in the Row
         Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
 
-        boolean isFull = currentHighlight.stream()
-                .filter(field -> field.xCoordinate() == targetField.xCoordinate())
-                .noneMatch(field -> field.yCoordinate() == targetField.yCoordinate());
-
-        if (!isFull) {
             createStone(currentHighlight, game, board); //Place a stone
             result = true;
             //Switch the player
             changePlayer(game);
-        }
+
         return result;
     }
 
