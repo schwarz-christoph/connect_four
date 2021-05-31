@@ -14,8 +14,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class DeleteJokerHighlightTest {
-//    @Rule
-//    public Timeout globalTimeout = Timeout.millis(1_000);
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Test
     public void deleteJokerInitialHighlightTest(){
