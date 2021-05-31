@@ -431,7 +431,7 @@ class ExecuteMoveHandler {
             fallSize = 7 - lowestOccupied.yCoordinate();
         } else {
             lowestFreeField = Factory.makeField(
-                    lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() + 1, lowestFreeField.owner());
+                    lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
 
             fallSize = lowestFreeField.yCoordinate() - lowestOccupied.yCoordinate();
         }
