@@ -9,6 +9,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Field;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class bombJokerTest {
@@ -143,6 +144,150 @@ public class bombJokerTest {
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void bombJokerEmptyBoardTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.RIGHT);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = board.getFields();
+
+        //assert
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void bombJokerTestNoOverflow() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+
+        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(7, 7, PlayerID.PLAYER_1));
+
+        List<Field> want = new ArrayList<>(List.of(Factory.makeField(7, 7, PlayerID.PLAYER_1)));
+        //act
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = board.getFields();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void bombJokerOneStoneTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = board.getFields();
+
+        //assert
+        assertTrue(actual.isEmpty());
+    }
+
+    @Test
+    public void bombJokerLeadsToWinTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_1));
+
+        board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(4, 6, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(4, 5, PlayerID.PLAYER_1));
+
+        PlayerID want = PlayerID.PLAYER_1;
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        PlayerID actual = game.getWinner();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void bombJokerLeadsToWinBothPlayersTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_1));
+
+        board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(4, 6, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(4, 5, PlayerID.PLAYER_1));
+
+        board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(6, 6, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(6, 5, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(6, 4, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_2));
+
+        PlayerID want = PlayerID.NONE;
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        PlayerID actual = game.getWinner();
 
         //assert
         assertEquals(want, actual);
