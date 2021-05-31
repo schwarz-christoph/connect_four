@@ -69,23 +69,14 @@ class ExecuteMoveHandler {
             createHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
             result = true;
         } else if (move == Move.CONFIRM) {
-            selectInMenu(targetFieldXCoordinate, game, board, activePlayer);//Select a joker, stop or restart the game
+            //Can oly be Joker because the other two options are covered by the ConnectFourManager
+            selectJoker(targetFieldXCoordinate, game, board, activePlayer);
             result = true;
         } else {
             result = false;
         }
 
         return result;
-    }
-
-    /**
-     * decides witch of the menu buttons is used
-     *
-     * @param targetFieldXCoordinate the x coordinate of the selected field
-     */
-    private static void selectInMenu(int targetFieldXCoordinate, FullGame game, FullBoard board, FullPlayer activePlayer) {
-        //Can oly be Joker because the other two options are covered by the ConnectFourManager
-        selectJoker(targetFieldXCoordinate, game, board, activePlayer);
     }
 
     /**
