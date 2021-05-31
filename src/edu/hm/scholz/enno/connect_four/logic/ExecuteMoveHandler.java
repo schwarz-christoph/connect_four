@@ -405,22 +405,6 @@ class ExecuteMoveHandler {
         game.setActivePlayer(game.getActivePlayer() == PlayerID.PLAYER_1 ? PlayerID.PLAYER_2 : PlayerID.PLAYER_1);
     }
 
-    private static void restart(FullGame game, FullBoard board) {
-        game.setWinner(PlayerID.NONE);
-        game.setIsStarted(false);
-        game.setPlayerCount(1);
-        game.setActivePlayer(PlayerID.PLAYER_1);
-
-        board.setHighlight(new ArrayList<>());
-        //Removes all occupied fields from the list, resetting it to an empty list
-        board.getFields().forEach(board::removeStone);
-
-    }
-
-    private static void end() {
-        System.exit(0);
-    }
-
     private static List<Field> getAllFieldsOnBoard() {
         return IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
                 .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
