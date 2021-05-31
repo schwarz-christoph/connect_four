@@ -43,9 +43,9 @@ public class DeleteJokerHighlightTest {
     public void deleteJokerHighlightRowTest(){
 
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);

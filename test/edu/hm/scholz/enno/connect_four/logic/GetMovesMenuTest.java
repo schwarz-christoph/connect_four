@@ -71,9 +71,9 @@ public class GetMovesMenuTest {
     @Test
     public void getMovesInMenuTestAsPlayer_1() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);;
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
 
         game.setActivePlayer(owner);
 

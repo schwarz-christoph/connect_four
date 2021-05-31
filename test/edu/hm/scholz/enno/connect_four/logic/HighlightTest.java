@@ -59,9 +59,9 @@ public class HighlightTest {
     @Test
     public void highlightTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
@@ -78,9 +78,9 @@ public class HighlightTest {
     @Test
     public void highlightInMenuTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
@@ -97,9 +97,9 @@ public class HighlightTest {
     @Test
     public void highlightOutMenuTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 0, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
@@ -116,9 +116,9 @@ public class HighlightTest {
     @Test
     public void highlightMenuTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 0, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
@@ -136,9 +136,9 @@ public class HighlightTest {
     @Test
     public void highlightDoNotingTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE), Factory.makeField(xBefore, 2, PlayerID.NONE), Factory.makeField(xBefore, 3, PlayerID.NONE), Factory.makeField(xBefore, 4, PlayerID.NONE), Factory.makeField(xBefore, 5, PlayerID.NONE), Factory.makeField(xBefore, 6, PlayerID.NONE), Factory.makeField(xBefore, 7, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();
@@ -155,9 +155,9 @@ public class HighlightTest {
     @Test
     public void highlightMenuDoNothingTest() {
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(xBefore, 0, PlayerID.NONE)));
         GameManager manager = LogicFactory.makeGameManager(board, game);
         ArrayList<Field> want = new ArrayList<>();

@@ -23,9 +23,9 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesRegularLeftBorderEmpty() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
 
@@ -40,9 +40,9 @@ public class GetMovesRegularTest {
 
     public void getMovesRegularLeftBorderFull() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
 
@@ -62,9 +62,9 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesRegularRightBorderEmpty() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
@@ -80,9 +80,9 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesRegularRightBorderFull() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
@@ -102,9 +102,9 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesRegularNormalMiddleEmpty() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
@@ -120,9 +120,9 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesRegularNormalMiddleFull() {
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
@@ -142,9 +142,9 @@ public class GetMovesRegularTest {
     @Test(expected = UnsupportedOperationException.class)
     public void getNotImplementedMove(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(4, 4, PlayerID.PLAYER_1))));
 
@@ -155,8 +155,8 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesInPlayerSelect(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
@@ -170,8 +170,8 @@ public class GetMovesRegularTest {
     @Test
     public void getMovesWhilePlayerWonTest(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 

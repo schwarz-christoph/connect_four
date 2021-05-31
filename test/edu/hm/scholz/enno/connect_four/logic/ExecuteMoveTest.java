@@ -23,9 +23,9 @@ public class ExecuteMoveTest {
     @Test
     public void executeMoveTest(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(1, 1, PlayerID.NONE),
@@ -52,8 +52,8 @@ public class ExecuteMoveTest {
         int xBefore = 1;
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE),
@@ -77,9 +77,9 @@ public class ExecuteMoveTest {
     @Test
     public void executeMoveNotAllowedMoveTest(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
@@ -90,9 +90,9 @@ public class ExecuteMoveTest {
     @Test
     public void executeMoveAllowedMoveTest(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 

@@ -22,9 +22,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveHorizontalRightTest(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
@@ -54,9 +54,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveHorizontalRightTestPlayer2(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
@@ -86,9 +86,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveHorizontalLeftTest(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -118,9 +118,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveVerticalTest(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -150,9 +150,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperRightTest(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
@@ -188,9 +188,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperRightTest2(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
@@ -226,9 +226,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperRightTest3(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
@@ -279,9 +279,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperRightTest4(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
@@ -320,9 +320,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperRightTest5(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(3, 1, PlayerID.NONE),
@@ -373,9 +373,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperLeftTest(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -411,9 +411,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperLeftTest2(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -452,9 +452,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperLeftTest3(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -507,9 +507,9 @@ public class ExecuteMoveWinningConditionsTest {
     public void executeMoveDiagonalUpperLeftTest4(){
 
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(4, 1, PlayerID.NONE),

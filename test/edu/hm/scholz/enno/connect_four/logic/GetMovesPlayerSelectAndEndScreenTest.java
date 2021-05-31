@@ -21,10 +21,10 @@ public class GetMovesPlayerSelectAndEndScreenTest {
     @Test
     public void getMovesEndScreen(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         game.setWinner(PlayerID.PLAYER_1);
-        FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM));
@@ -39,10 +39,10 @@ public class GetMovesPlayerSelectAndEndScreenTest {
     @Test
     public void getMovesPlayerSelect(){
         //arrange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(false);
 
-        FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
