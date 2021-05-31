@@ -33,7 +33,8 @@ class ExecuteMoveHandler {
         } else {
             if (fieldSelected.yCoordinate() == 0) {
                 //Player is in Menu
-                result = decideMenu(move, currentHighlight, game, board, activePlayer);
+                decideMenu(move, currentHighlight, game, board, activePlayer);
+                result = true;
             } else {
                 //Player is in Matrix
                 result = decideMatrix(move, currentHighlight, game, board);
@@ -51,32 +52,23 @@ class ExecuteMoveHandler {
      * @param game             The game.
      * @param board            The board.
      */
-    private static boolean decideMenu(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
-        final boolean result;
-
+    private static void decideMenu(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field targetField = currentHighlight.get(0);
         final int targetFieldXCoordinate = targetField.xCoordinate();
         final int newXCoordinate;
         if (move == Move.RIGHT) {
             newXCoordinate = fieldOverflowX(1, targetFieldXCoordinate); // Calculate the new x coordinate for the new highlight in the menu
             createMenuHighlight(newXCoordinate, board);
-            result = true;
         } else if (move == Move.LEFT) {
             newXCoordinate = fieldOverflowX(-1, targetFieldXCoordinate); // Calculate the new x coordinate for the new highlight in the menu
             createMenuHighlight(newXCoordinate, board);
-            result = true;
         } else if (move == Move.DOWN) {
             createHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
-            result = true;
-        } else if (move == Move.CONFIRM) {
+        } else {
             //Can oly be Joker because the other two options are covered by the ConnectFourManager
             selectJoker(targetFieldXCoordinate, game, board, activePlayer);
-            result = true;
-        } else {
-            result = false;
         }
 
-        return result;
     }
 
     /**
