@@ -117,23 +117,16 @@ class ExecuteMoveHandler {
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
             result = true;
-        } else if (move == Move.CONFIRM) {
+        } else{
             result = decideConfirmMatrix(currentHighlight, game, board);
-        } else {
-            result = false;
         }
+
         return result;
     }
 
     private static int fieldOverflowX(int adderX, int targetFieldXCoordinate) {
         //Player stands at 0 and then goes to the left to comes to rest at Fieldsize -1 or the other way around
         return (targetFieldXCoordinate + adderX + Settings.fieldSize) % Settings.fieldSize;
-    }
-
-    private static int fieldOverflowY(int adderY, int targetFieldYCoordinate) {
-        //Handle overflow in Y direction. Wraps from index 1 to index fieldSize-1 since index 0 is the menu
-        return Math.max(targetFieldYCoordinate + adderY > 0 ? 1 : Settings.fieldSize - 1,
-                (targetFieldYCoordinate + adderY + Settings.fieldSize) % Settings.fieldSize);
     }
 
     /**

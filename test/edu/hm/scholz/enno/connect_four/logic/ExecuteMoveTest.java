@@ -245,4 +245,28 @@ public class ExecuteMoveTest {
         //assert
         assertFalse(result);
     }
+
+    @Test
+    public void falseMoveInMatrix(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(0,1, PlayerID.NONE),
+                Factory.makeField(0,2, PlayerID.NONE),
+                Factory.makeField(0,3, PlayerID.NONE),
+                Factory.makeField(0,4, PlayerID.NONE),
+                Factory.makeField(0,5, PlayerID.NONE),
+                Factory.makeField(0,6, PlayerID.NONE),
+                Factory.makeField(0,7, PlayerID.NONE)));
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        boolean result = manager.executeMove(Move.DOWN);
+
+        //assert
+        assertFalse(result);
+    }
 }
