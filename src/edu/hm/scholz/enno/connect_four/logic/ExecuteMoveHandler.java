@@ -248,7 +248,7 @@ class ExecuteMoveHandler {
             createDeleteJokerHighlight(0, Settings.fieldSize - 1, board);
         } else {
             //Joker currently in use
-            final List<Field> highlight = game.getBoard().getHighlight();
+            final List<Field> highlight = board.getHighlight();
             final boolean isColumnMultiHighlight;
             final boolean isRowMultiHighlight;
             if(highlight.size() > 1) {
