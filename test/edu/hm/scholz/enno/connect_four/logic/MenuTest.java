@@ -70,9 +70,9 @@ public class MenuTest{
     public void deleteJokerSelectPlayer1ExecutePlayer2Test(){
         //arrange
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
         game.setIsStarted(true);
-        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(1, 0, PlayerID.NONE)));
 
 
         FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
@@ -93,7 +93,7 @@ public class MenuTest{
     public void bombJokerSelectPlayer1ExecutePlayer2Test(){
         //arrange
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
         game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
 
@@ -116,7 +116,7 @@ public class MenuTest{
     public void deleteJokerSelectPlayer2Test(){
         //arrange
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
         game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE)));
 
@@ -139,7 +139,7 @@ public class MenuTest{
     public void bombJokerSelectPlayer2Test(){
         //arrange
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
         game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
 
