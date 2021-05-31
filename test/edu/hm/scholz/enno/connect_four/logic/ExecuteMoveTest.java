@@ -247,7 +247,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void falseMoveInMatrix(){
+    public void falseMoveInMatrixTest(){
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -265,6 +265,40 @@ public class ExecuteMoveTest {
 
         //act
         boolean result = manager.executeMove(Move.DOWN);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void fullRowInMatrixTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        board.placeStone(Factory.makeField(0,7, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0,6, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(0,5, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0,4, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(0,3, PlayerID.PLAYER_1));
+        board.placeStone(Factory.makeField(0,2, PlayerID.PLAYER_2));
+        board.placeStone(Factory.makeField(0,1, PlayerID.PLAYER_1));
+
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0,1, PlayerID.NONE),
+                Factory.makeField(0,2, PlayerID.NONE),
+                Factory.makeField(0,3, PlayerID.NONE),
+                Factory.makeField(0,4, PlayerID.NONE),
+                Factory.makeField(0,5, PlayerID.NONE),
+                Factory.makeField(0,6, PlayerID.NONE),
+                Factory.makeField(0,7, PlayerID.NONE)));
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+
+        //act
+        boolean result = manager.executeMove(Move.CONFIRM);
 
         //assert
         assertFalse(result);
