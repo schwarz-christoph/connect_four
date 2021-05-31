@@ -31,8 +31,8 @@ public class bombJokerTest {
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
         manager.executeMove(Move.CONFIRM);
         manager.executeMove(Move.RIGHT);
-        manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.RIGHT);
 
         List<Field> want = List.of(Factory.makeField(1, 4, PlayerID.PLAYER_2),
                 Factory.makeField(1, 5, PlayerID.PLAYER_1),
