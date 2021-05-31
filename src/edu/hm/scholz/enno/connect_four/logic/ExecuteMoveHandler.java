@@ -205,12 +205,24 @@ class ExecuteMoveHandler {
      * Creates a new bomb joker highlight in the matrix.
      *
      * @param xCoordinate the x Coordinate of the new Highlight
-     * @param yCoordinate the y Coordinate of the new Highlight
      * @param board       The board.
      */
-    private static void createBombJokerHighlight(int xCoordinate, int yCoordinate, FullBoard board) {
+    private static void createBombJokerHighlight(int xCoordinate, FullBoard board) {
 
-        board.setHighlight(List.of(Factory.makeField(xCoordinate, yCoordinate, PlayerID.NONE)));
+        Field targetHighlight = Factory.makeField(xCoordinate, 1, PlayerID.NONE);
+        Field lowestFreeField = getLowestFreeField(targetHighlight, board);
+
+        Set<Field> columnHighlight = getAllFieldsOnBoard().stream()
+                .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                .collect(Collectors.toSet());
+
+        Set<Field> bombJokerHighlight = getAllFieldsOnBoard().stream()
+                .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
+                        + Math.abs(field.yCoordinate() - lowestFreeField.yCoordinate())) <= 2)
+                .collect(Collectors.toSet());
+        bombJokerHighlight.addAll(columnHighlight);
+
+        board.setHighlight(List.copyOf(bombJokerHighlight));
     }
 
     /**
@@ -288,7 +300,7 @@ class ExecuteMoveHandler {
         if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
             //New in Joker
             game.setActiveJoker(PlayerActiveJoker.BOMB);
-            createBombJokerHighlight(0, 1, board);
+            createBombJokerHighlight(0, board);
         } else {
             //Joker currently in use
             final List<Field> highlight = game.getBoard().getHighlight();
@@ -299,10 +311,10 @@ class ExecuteMoveHandler {
                 activePlayer.useBombJoker();
                 changePlayer(game);
             } else if (move == Move.LEFT) {
-                createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), 1, board);
+                createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), board);
             } else {
                 //right
-                createBombJokerHighlight(fieldOverflowX(1, targetField.xCoordinate()), 1, board);
+                createBombJokerHighlight(fieldOverflowX(1, targetField.xCoordinate()), board);
             }
         }
 
@@ -310,13 +322,7 @@ class ExecuteMoveHandler {
 
     private static void executeBombJoker(Field targetHighlight, FullBoard board) {
 
-        //Remove all bombed fields
-        Field highestOccupiedField = board.getFields().stream()
-                .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
-                .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
-
-        Field lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
-                highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
+        Field lowestFreeField = getLowestFreeField(targetHighlight, board);
 
         List<Field> allFields = board.getFields().stream()
                 .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
@@ -330,6 +336,17 @@ class ExecuteMoveHandler {
 
         //get every field that need to be updated for radius 2
         updateBombedFields(2, lowestFreeField, board);
+    }
+
+    private static Field getLowestFreeField(Field targetHighlight, FullBoard board){
+        Field highestOccupiedField = board.getFields().stream()
+                .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
+                .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
+
+        Field lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
+                highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
+
+        return lowestFreeField;
     }
 
     private static void updateBombedFields(int radius, Field targetHighlight, FullBoard board) {
