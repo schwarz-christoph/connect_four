@@ -21,9 +21,9 @@ public class MenuTest{
     @Test
     public void deleteJokerSelectTest(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(1, 0, PlayerID.NONE)));
 
 
@@ -44,9 +44,9 @@ public class MenuTest{
     @Test
     public void bombJokerSelectTest(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
 
 
@@ -67,9 +67,9 @@ public class MenuTest{
     @Test
     public void deleteJokerSelectPlayer1ExecutePlayer2Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
 
 
@@ -90,9 +90,9 @@ public class MenuTest{
     @Test
     public void bombJokerSelectPlayer1ExecutePlayer2Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
 
 
@@ -113,9 +113,9 @@ public class MenuTest{
     @Test
     public void deleteJokerSelectPlayer2Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE)));
 
 
@@ -136,9 +136,9 @@ public class MenuTest{
     @Test
     public void bombJokerSelectPlayer2Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
 
 
@@ -159,9 +159,9 @@ public class MenuTest{
     @Test
     public void deleteJokerSelectPlayer2ExecutePlayer1Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
 
 
@@ -182,9 +182,9 @@ public class MenuTest{
     @Test
     public void bombJokerSelectPlayer2ExecutePlayer1Test(){
         //arange
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
-        game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE)));
 
 
