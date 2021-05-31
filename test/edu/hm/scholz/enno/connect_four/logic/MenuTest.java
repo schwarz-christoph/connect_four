@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -10,6 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -199,6 +201,44 @@ public class MenuTest{
         PlayerActiveJoker want = PlayerActiveJoker.NONE;
         PlayerActiveJoker have = game.getActiveJoker();
 
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void restartTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(4, 0, PlayerID.NONE)));
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        List<Move> want = new ArrayList<>(List.of(Move.CONFIRM ,Move.RIGHT, Move.LEFT)); //Moves from Player select screen
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void endTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(3, 0, PlayerID.NONE)));
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        List<Move> want = new ArrayList<>(List.of(Move.CONFIRM)); //Moves from Player select screen
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
 }

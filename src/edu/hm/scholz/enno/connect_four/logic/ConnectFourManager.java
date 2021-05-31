@@ -48,7 +48,7 @@ public class ConnectFourManager implements GameManager {
     public List<Move> getMoves(PlayerID playerID) {
         final List<Move> possibleMoves;
         if (game.isStarted()) {
-            if (game.getWinner() == PlayerID.NONE) {
+            if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
                 possibleMoves = getMovesInRegularGame();
             } else {
                 possibleMoves = getMovesInEndScreen();
