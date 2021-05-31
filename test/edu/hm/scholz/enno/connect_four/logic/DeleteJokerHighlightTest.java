@@ -24,7 +24,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -46,7 +46,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -78,7 +78,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -109,7 +109,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -142,7 +142,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -168,7 +168,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
@@ -199,7 +199,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
@@ -224,7 +224,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
@@ -249,7 +249,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -279,7 +279,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -310,7 +310,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -341,7 +341,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -367,7 +367,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -398,7 +398,7 @@ public class DeleteJokerHighlightTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2);
         game.setIsStarted(true);
         FullBoard board = Factory.makeBoard();
-        board.setHighlight(List.of(Factory.makeField(7, 0, PlayerID.NONE))); //Delete Joker Player 2
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
