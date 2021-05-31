@@ -20,7 +20,7 @@ public class MenuTest{
 
     @Test
     public void deleteJokerSelectTest(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -43,7 +43,7 @@ public class MenuTest{
 
     @Test
     public void bombJokerSelectTest(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -66,7 +66,7 @@ public class MenuTest{
 
     @Test
     public void deleteJokerSelectPlayer1ExecutePlayer2Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -89,7 +89,7 @@ public class MenuTest{
 
     @Test
     public void bombJokerSelectPlayer1ExecutePlayer2Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -112,7 +112,7 @@ public class MenuTest{
 
     @Test
     public void deleteJokerSelectPlayer2Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -135,7 +135,7 @@ public class MenuTest{
 
     @Test
     public void bombJokerSelectPlayer2Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -158,7 +158,7 @@ public class MenuTest{
 
     @Test
     public void deleteJokerSelectPlayer2ExecutePlayer1Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -181,7 +181,7 @@ public class MenuTest{
 
     @Test
     public void bombJokerSelectPlayer2ExecutePlayer1Test(){
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);

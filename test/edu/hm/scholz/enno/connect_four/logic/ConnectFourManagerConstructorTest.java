@@ -29,7 +29,7 @@ public class ConnectFourManagerConstructorTest {
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
-        //Act
+        //act
         ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, null);
     }
 
@@ -39,7 +39,7 @@ public class ConnectFourManagerConstructorTest {
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
-        //Act
+        //act
         ConnectFourManager gameManager = new ConnectFourManager(board, game, null, player2);
     }
 
@@ -50,7 +50,7 @@ public class ConnectFourManagerConstructorTest {
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
-        //Act
+        //act
         ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, player2);
     }
 
@@ -61,7 +61,7 @@ public class ConnectFourManagerConstructorTest {
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
-        //Act
+        //act
         ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, player2);
     }
 }

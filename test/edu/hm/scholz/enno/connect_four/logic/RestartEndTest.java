@@ -33,7 +33,7 @@ public class RestartEndTest {
         board.setHighlight(List.of(Factory.makeField(4, 0, PlayerID.NONE)));
         manager.executeMove(Move.CONFIRM);
 
-        //Act, assert
+        //act, assert
         assertFalse(game.isStarted());
     }
 
@@ -56,7 +56,7 @@ public class RestartEndTest {
 
         PlayerID want = PlayerID.PLAYER_1;
 
-        //Act
+        //act
         PlayerID actual = game.getActivePlayer();
 
         //assert
@@ -82,7 +82,7 @@ public class RestartEndTest {
 
         PlayerID want = PlayerID.NONE;
 
-        //Act
+        //act
         PlayerID actual = game.getWinner();
 
         //assert
@@ -108,7 +108,7 @@ public class RestartEndTest {
 
         int want = 1;
 
-        //Act
+        //act
         int actual = game.getPLayerCount();
 
         //assert

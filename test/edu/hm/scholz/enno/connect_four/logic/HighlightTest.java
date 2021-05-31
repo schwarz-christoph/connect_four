@@ -58,7 +58,7 @@ public class HighlightTest {
 
     @Test
     public void highlightTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -77,7 +77,7 @@ public class HighlightTest {
 
     @Test
     public void highlightInMenuTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -96,7 +96,7 @@ public class HighlightTest {
 
     @Test
     public void highlightOutMenuTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -115,7 +115,7 @@ public class HighlightTest {
 
     @Test
     public void highlightMenuTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -135,7 +135,7 @@ public class HighlightTest {
 
     @Test
     public void highlightDoNotingTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
@@ -154,7 +154,7 @@ public class HighlightTest {
 
     @Test
     public void highlightMenuDoNothingTest() {
-        //arange
+        //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
