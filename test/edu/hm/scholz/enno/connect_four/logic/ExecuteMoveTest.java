@@ -96,8 +96,153 @@ public class ExecuteMoveTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        //act, assert
+        //assert
         assertTrue(manager.executeMove(Move.CONFIRM));
     }
 
+    @Test
+    public void playerInEndScreenNoPlayerWonTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setActivePlayer(PlayerID.NONE); //Restart if no Player won the Game
+
+        //act
+        final boolean result = manager.executeMove(Move.DOWN);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void playerInEndScreenRestartGameNoPlayerWonTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setActivePlayer(PlayerID.NONE); //Restart if no Player won the Game
+        game.setWinner(PlayerID.PLAYER_1); //Restart if one Player won the Game
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT); //Moves in Player select screen
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerInEndScreenPlayerWonTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setWinner(PlayerID.PLAYER_1); //Restart if one Player won the Game
+
+        //act
+        final boolean result = manager.executeMove(Move.DOWN);
+
+        //assert
+        assertFalse(result);
+    }
+
+    @Test
+    public void playerInEndScreenRestartGamePlayerWonTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setWinner(PlayerID.PLAYER_1); //Restart if one Player won the Game
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT); //Moves in Player select screen
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerSelectTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+
+        //assert
+        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT); //Moves in Player select screen
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerSelectAddPlayerTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.RIGHT);
+
+        //assert
+        int want = 2;
+        int have = game.getPLayerCount();
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerSelectRemovePlayerTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        game.setPlayerCount(2);
+
+        //act
+        manager.executeMove(Move.LEFT);
+
+        //assert
+        int want = 1;
+        int have = game.getPLayerCount();
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerSelectStartGameTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        boolean have = game.isStarted();
+        assertTrue(have);
+    }
+
+    @Test
+    public void playerSelectFalseMoveTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        boolean result = manager.executeMove(Move.UP);
+
+        //assert
+        assertFalse(result);
+    }
 }
