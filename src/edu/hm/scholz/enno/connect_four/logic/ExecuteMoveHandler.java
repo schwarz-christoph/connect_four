@@ -195,17 +195,27 @@ class ExecuteMoveHandler {
     private static void createBombJokerHighlight(int xCoordinate, FullBoard board) {
 
         Field targetHighlight = Factory.makeField(xCoordinate, 1, PlayerID.NONE);
+        List<Field> bombJokerHighlight = new ArrayList<>(List.of(targetHighlight));
+
         Field lowestFreeField = getLowestFreeField(targetHighlight, board);
 
-        Set<Field> columnHighlight = getAllFieldsOnBoard().stream()
+        //add all fields on the same column to the highlight
+        List<Field> columnHighlight = getAllFieldsOnBoard().stream()
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
+        bombJokerHighlight.addAll(columnHighlight);
 
-        Set<Field> bombJokerHighlight = getAllFieldsOnBoard().stream()
+        //add all fields that are in the bomb radius
+        List<Field> bombRadius = getAllFieldsOnBoard().stream()
                 .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
                         + Math.abs(field.yCoordinate() - lowestFreeField.yCoordinate())) <= 2)
-                .collect(Collectors.toSet());
-        bombJokerHighlight.addAll(columnHighlight);
+                .collect(Collectors.toList());
+        bombJokerHighlight.addAll(bombRadius);
+
+        //Removes duplicates that were in the column and the bomb radius
+        bombJokerHighlight = bombJokerHighlight.stream()
+                .distinct()
+                .collect(Collectors.toList());
 
         board.setHighlight(List.copyOf(bombJokerHighlight));
     }
@@ -379,28 +389,52 @@ class ExecuteMoveHandler {
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-        Field lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
-                highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
+        Field lowestFreeField;
+        if(highestOccupiedField == null){
+            lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  7, PlayerID.NONE);
+        }else {
+            lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
+                    highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
+        }
+
 
         return lowestFreeField;
     }
 
-    private static void updateBombedFields(int radius, Field targetHighlight, FullBoard board) {
-        int fallSize;
-
-        if (radius == 1) {
-            fallSize = 3;
-        } else {
-            fallSize = 1;
-        }
+    private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
+        final int fallSize;
 
         List<Field> fieldsToUpdate;
 
-        //Get every stone which is in the adjacent column and needs to be updated
+        //Get every stone which is in the radius and needs to be updated
         fieldsToUpdate = board.getFields().stream()
-                .filter(field -> (Math.abs(field.xCoordinate() - targetHighlight.xCoordinate()) == radius))
-                .filter(field -> field.yCoordinate() < targetHighlight.yCoordinate())
+                .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
+                .filter(field -> field.yCoordinate() < bombCenter.yCoordinate())
                 .collect(Collectors.toList());
+
+        //If list ist empty than no stones need to be updated, otherwise the lower stone that needs to be updated
+        Field lowestOccupied;
+        if(fieldsToUpdate.isEmpty()){
+            return;
+        }
+        else{
+            lowestOccupied = fieldsToUpdate.stream()
+                    .max(Comparator.comparing(Field::yCoordinate)).orElse(null);
+        }
+
+        Field lowestFreeField = board.getFields().stream()
+                .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
+                .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
+                .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
+
+        if(lowestFreeField == null){
+            fallSize = 7 - lowestOccupied.yCoordinate();
+        } else {
+            lowestFreeField = Factory.makeField(
+                    lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
+
+            fallSize = lowestFreeField.yCoordinate() - lowestOccupied.yCoordinate();
+        }
 
         //Replace old stone positions with updated ones by fallsize
         fieldsToUpdate
