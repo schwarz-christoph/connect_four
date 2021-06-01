@@ -25,6 +25,10 @@ import java.util.stream.IntStream;
 
 class ExecuteMoveHandler {
 
+    public ExecuteMoveHandler() {
+        throw new UnsupportedOperationException("Class only for static usage, do not create Objects.");
+    }
+
     static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field fieldSelected = currentHighlight.get(0);
 

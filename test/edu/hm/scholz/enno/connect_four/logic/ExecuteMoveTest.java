@@ -21,6 +21,12 @@ public class ExecuteMoveTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
+    @Test (expected = UnsupportedOperationException.class)
+    public void createExecuteMoveHandlerExceptionTest(){
+        //arrange, act
+        ExecuteMoveHandler executeMoveHandler = new ExecuteMoveHandler();
+}
+
     @Test
     public void executeMoveTest(){
         //arrange
