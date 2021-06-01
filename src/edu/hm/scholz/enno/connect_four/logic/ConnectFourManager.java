@@ -8,7 +8,6 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -68,7 +67,7 @@ public class ConnectFourManager implements GameManager {
             if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE)
                 possibleMoves = getMovesInRegularGame();
             else
-                possibleMoves = getMovesInEndScreen();
+                possibleMoves = List.of(Move.CONFIRM);
         } else
             possibleMoves = getMovesInPlayerSelect();
         return possibleMoves;
@@ -210,25 +209,29 @@ public class ConnectFourManager implements GameManager {
                 .filter(field -> field.owner() == PlayerID.PLAYER_2)
                 .collect(Collectors.toList());
 
-
         final boolean player1Win = containsWinningSequence(player1Fields);
         final boolean player2Win = containsWinningSequence(player2Fields);
         final boolean boardFull = fields.size() == 8 * 7;
 
-        if (player1Win) {
-            game.setWinner(PlayerID.PLAYER_1);
+        if(player1Win || player2Win || boardFull) {
+            game.setWinner(getWinner(player1Win, player2Win));
             game.setActivePlayer(PlayerID.NONE);
         }
+    }
 
-        if (player2Win) {
-            game.setWinner(PlayerID.PLAYER_2);
-            game.setActivePlayer(PlayerID.NONE);
-        }
-
-        if ((player1Win && player2Win) || boardFull) {
-            game.setWinner(PlayerID.NONE);
-            game.setActivePlayer(PlayerID.NONE);
-        }
+    /**
+     * Returns the winner. None if both or none are winning.
+     * @param player1Win Whether Player1 has a winning sequence on board.
+     * @param player2Win Whether Player2 has a winning sequence on board.
+     * @return           The PlayerID of the winner or NONE for a tie.
+     */
+    private PlayerID getWinner(boolean player1Win, boolean player2Win) {
+        final PlayerID winner;
+        if(player1Win ^ player2Win)
+            winner = player1Win ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
+        else
+            winner = PlayerID.NONE;
+        return winner;
     }
 
     /**
@@ -317,7 +320,7 @@ public class ConnectFourManager implements GameManager {
      * @return All valid moves (Confirm, Right, Left).
      */
     private List<Move> getMovesInPlayerSelect() {
-        return new ArrayList<>(List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT));
+        return List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT);
     }
 
     /**
@@ -366,9 +369,9 @@ public class ConnectFourManager implements GameManager {
                     .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
 
         if (isFull)
-            possibleMoves = new ArrayList<>(List.of(Move.UP, Move.RIGHT, Move.LEFT));
+            possibleMoves = List.of(Move.UP, Move.RIGHT, Move.LEFT);
         else
-            possibleMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT));
+            possibleMoves = List.of(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT);
 
         return possibleMoves;
     }
@@ -409,14 +412,5 @@ public class ConnectFourManager implements GameManager {
         final int player2LowestJokerIndex = 6;
         return (xCoordinate <= player1HighestJokerIndex && playerID == PlayerID.PLAYER_1)
                 || (xCoordinate >= player2LowestJokerIndex && playerID == PlayerID.PLAYER_2);
-    }
-
-    /**
-     * All available moves in the end screen.
-     *
-     * @return All valid moves (Confirm).
-     */
-    private List<Move> getMovesInEndScreen() {
-        return new ArrayList<>(List.of(Move.CONFIRM));
     }
 }
