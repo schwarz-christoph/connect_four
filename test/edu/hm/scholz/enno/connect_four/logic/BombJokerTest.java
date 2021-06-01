@@ -7,6 +7,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -345,10 +346,9 @@ public class BombJokerTest {
         List<Field> want = List.of(Factory.makeField(0, 1, PlayerID.NONE));
 
         //act
-        List<Field> actual = board.getHighlight();
+        List<Field> have = board.getHighlight();
 
         //assert
-        List<Field> have = board.getHighlight();
         assertEquals(want, have);
     }
 
@@ -370,10 +370,221 @@ public class BombJokerTest {
         List<Field> want = List.of(Factory.makeField(3, 1, PlayerID.NONE));
 
         //act
+        List<Field> have = board.getHighlight();
+
+        //assert
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void highlightDuringBombUse() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        String boardState =
+                          "........"
+                        + "........"
+                        + "........"
+                        + "..B....."
+                        + "..B....."
+                        + "..G....."
+                        + "..G.....";
+
+        TestUtility.createBoardState(board, boardState);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        String highlightArea =
+                "..H....." +
+                ".HHH...." +
+                "HHHHH..." +
+                ".HHH...." +
+                "..H....." +
+                "..H....." +
+                "..H.....";
+
+        List<Field> want = TestUtility.getHighlightedFieldList(highlightArea);
+
+        //act
         List<Field> actual = board.getHighlight();
 
         //assert
-        List<Field> have = board.getHighlight();
-        assertEquals(want, have);
+        assertTrue(want.containsAll(actual));
+    }
+
+    @Test
+    public void TestPlayerChangeAfterBombUse() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        PlayerID want = PlayerID.PLAYER_2;
+
+        //act
+        PlayerID actual = game.getActivePlayer();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void TestBombJokerIsNotAvailableAfterUse() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        PlayerID want = PlayerID.PLAYER_2;
+
+        //act
+        PlayerID actual = game.getActivePlayer();
+
+        //assert
+        assertTrue(player1.isBombJokerUsed());
+    }
+
+    @Test
+    public void TestBombJokerLeftBorder(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            ".BB....." +
+                            ".BGG...." +
+                            "GGBGB,..";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        String afterBomb = "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "..BG...." +
+                "..BGB,..";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
+
+        //act
+        List<Field> actual = TestUtility.getOccupiedFieldList(afterBomb);
+
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void TestBombJokerLeftBottomCorner(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            ".BB....." +
+                            ".BGG...." +
+                            ".GBGB,..";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        String afterBomb = "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           "..BG...." +
+                           "..BGB,..";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
+
+        //act
+        List<Field> actual = TestUtility.getOccupiedFieldList(afterBomb);
+
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void TestBombJokerLeftTopCorner(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        String beforeBomb = "........" +
+                            "GGG....." +
+                            "GGG....." +
+                            "BBB....." +
+                            "GGG....." +
+                            "GGG....." +
+                            "GGG.....";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        String afterBomb = "........" +
+                           "..G....." +
+                           ".GG....." +
+                           "BBB....." +
+                           "GGG....." +
+                           "GGG....." +
+                           "GGG.....";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
+
+        //act
+        List<Field> actual = TestUtility.getOccupiedFieldList(afterBomb);
+
+        assertEquals(want, actual);
     }
 }

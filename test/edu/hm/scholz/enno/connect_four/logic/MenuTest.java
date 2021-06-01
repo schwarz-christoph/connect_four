@@ -260,4 +260,62 @@ public class MenuTest{
         PlayerID have = game.getWinner();
         assertEquals(want, have);
     }
+
+    @Test
+    public void menuHighlightMoveLeftTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.LEFT);
+
+        List<Field> want = List.of(Factory.makeField(1, 0, PlayerID.NONE));
+        List<Field> actual  = board.getHighlight(); //Moves from Player select screen
+
+        //assert
+        assertEquals(want, actual);
+    }
+    @Test
+    public void menuHighlightMoveRightTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+
+        List<Field> want = List.of(Factory.makeField(3, 0, PlayerID.NONE));
+        List<Field> actual  = board.getHighlight(); //Moves from Player select screen
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void menuHighlightMoveDownUpTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.DOWN);
+        manager.executeMove(Move.UP);
+
+        List<Field> want = List.of(Factory.makeField(2, 0, PlayerID.NONE));
+        List<Field> actual  = board.getHighlight(); //Moves from Player select screen
+
+        //assert
+        assertEquals(want, actual);
+    }
+
 }

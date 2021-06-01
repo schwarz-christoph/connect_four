@@ -163,7 +163,6 @@ class ExecuteMoveHandler {
      */
     private static void createMenuHighlight(int targetFieldXCoordinate, FullBoard board) {
         board.setHighlight(List.of(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
-        board.setHighlight(List.of(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
     }
 
     /**

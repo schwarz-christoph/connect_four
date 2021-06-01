@@ -22,6 +22,14 @@ public class TestUtility {
         getOccupiedFieldList(boardState).forEach(board::placeStone);
     }
 
+    public static List<Field> getHighlightedFieldList(String highlightArea) {
+        final List<Field> allHighlitedFields = new ArrayList<>();
+        IntStream.range(0, highlightArea.length())
+                .filter(index -> highlightArea.charAt(index) == 'H')
+                .forEach(index -> allHighlitedFields.add(generateHighlightField(index)));
+        return allHighlitedFields;
+    }
+
     private static Field generateField(int index, char owningPlayer) {
         final int fieldSize = 8;
         final PlayerID player = owningPlayer == 'G' ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
@@ -29,4 +37,12 @@ public class TestUtility {
         final int fieldYCoordinate = (index / fieldSize) + 1;
         return Factory.makeField(fieldXCoordinate, fieldYCoordinate, player);
     }
+
+    private static Field generateHighlightField(int index) {
+        final int fieldSize = 8;
+        final int fieldXCoordinate = index % fieldSize;
+        final int fieldYCoordinate = (index / fieldSize) + 1;
+        return Factory.makeField(fieldXCoordinate, fieldYCoordinate, PlayerID.NONE);
+    }
+
 }
