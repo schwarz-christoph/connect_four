@@ -34,7 +34,7 @@ public class CannedMain {
         // View, die eine Textdarstellung produziert
         game.register(new TextDump());
         // Buchstaben fuer Moves
-        final String script = "RCDCCRCCRCCRCC";
+        final String script = "RCDCRCULLCLCCCRCCRCCRC";
 
         if (args.length == 0) {
             for (char needle : script.toCharArray())
