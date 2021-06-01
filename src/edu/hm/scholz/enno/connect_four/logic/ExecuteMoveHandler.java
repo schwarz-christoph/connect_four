@@ -29,7 +29,7 @@ class ExecuteMoveHandler {
         throw new UnsupportedOperationException("Class only for static usage, do not create Objects.");
     }
 
-    static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
+    static void onExecute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field fieldSelected = currentHighlight.get(0);
 
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB)

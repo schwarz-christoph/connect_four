@@ -137,9 +137,9 @@ public class ConnectFourManager implements GameManager {
             else if (targetFieldXCoordinate == menuButtonRestart)
                 restart();
             else
-                ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
+                ExecuteMoveHandler.onExecute(move, currentHighlight, game, board, activePlayer);
         } else
-            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
+            ExecuteMoveHandler.onExecute(move, currentHighlight, game, board, activePlayer);
 
     }
 
