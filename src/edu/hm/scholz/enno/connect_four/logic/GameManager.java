@@ -15,6 +15,7 @@ public interface GameManager {
 
     /**
      * The allowed Moves
+     * @param playerID PlayerID of the player you want the moves from
      * @return List of all possible moves in the current turn.
      */
     List<Move> getMoves(PlayerID playerID);

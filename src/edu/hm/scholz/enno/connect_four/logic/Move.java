@@ -13,28 +13,28 @@ public enum Move {
 
     public char getMoveName() {
         final char moveChar;
-        switch (this) {
-            case UP -> moveChar = 'U';
-            case DOWN -> moveChar = 'D';
-            case LEFT -> moveChar = 'L';
-            case RIGHT -> moveChar = 'R';
-            case CONFIRM -> moveChar = 'C';
-            default -> moveChar = '?';
-        }
+        moveChar = switch (this) {
+            case UP -> 'U';
+            case DOWN -> 'D';
+            case LEFT -> 'L';
+            case RIGHT -> 'R';
+            case CONFIRM -> 'C';
+        };
+        
         return moveChar;
     }
 
     @Override
     public String toString() {
         final String moveDescription;
-        switch (this) {
-            case UP -> moveDescription = "Select field above";
-            case DOWN -> moveDescription = "Select field below";
-            case LEFT -> moveDescription = "Select left field";
-            case RIGHT -> moveDescription = "Select right field";
-            case CONFIRM -> moveDescription = "Confirm selected field";
-            default -> moveDescription = "Unknown move";
-        }
+        moveDescription = switch (this) {
+            case UP -> "Select field above";
+            case DOWN ->  "Select field below";
+            case LEFT ->  "Select left field";
+            case RIGHT ->  "Select right field";
+            case CONFIRM ->  "Confirm selected field";
+        };
+
         return moveDescription;
     }
 }

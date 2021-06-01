@@ -7,16 +7,16 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 public interface LogicFactory {
     /**
-     * Make a GameManager
-     *
-     * @param game the Game witch needs the rules
+     * Make a GameManager.
+     * @param board the board that is being played on
+     * @param game the Game which needs the rules
      * @return the logic of the game with two independent players
      */
     static GameManager makeGameManager(FullBoard board, FullGame game) {
 
-        FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
+        final FullPlayer player1 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_1);
 
-        FullPlayer player2 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_2);
+        final FullPlayer player2 = edu.hm.scholz.enno.connect_four.datastore.mutable.Factory.makePlayer(PlayerID.PLAYER_2);
 
         return new ConnectFourManager(board, game, player1, player2);
 

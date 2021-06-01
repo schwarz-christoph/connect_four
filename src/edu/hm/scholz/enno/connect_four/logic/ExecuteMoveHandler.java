@@ -9,7 +9,10 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 

@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.TestUtility;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -288,6 +289,42 @@ public class bombJokerTest {
         //act
         manager.executeMove(Move.CONFIRM);
         PlayerID actual = game.getWinner();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
+    public void bombJokerUpdateToGround() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        String boardState = "........"
+                          +("........")
+                          +("........")
+                          +(".B......")
+                          +(".G......")
+                          +(".G......")
+                          +(".GG.....");
+
+
+        TestUtility.createBoardState(board, boardState);
+
+        List<Field> want = new ArrayList<>(List.of(
+                Factory.makeField(1, 7, PlayerID.PLAYER_2)
+        ));
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = game.getBoard().getFields();
 
         //assert
         assertEquals(want, actual);
