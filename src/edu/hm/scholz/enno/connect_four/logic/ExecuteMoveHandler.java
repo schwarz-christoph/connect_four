@@ -15,9 +15,7 @@ import java.util.stream.IntStream;
 
 class ExecuteMoveHandler {
 
-    static boolean onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer player1, FullPlayer player2) {
-        final boolean result;
-
+    static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer player1, FullPlayer player2) {
         final Field fieldSelected = currentHighlight.get(0);
 
         final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1? player1:player2;
@@ -25,23 +23,19 @@ class ExecuteMoveHandler {
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             //Player has active bomb joker
             createBombJoker(game, move, board, activePlayer);
-            result = true;
         } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
             //Player has active delete joker
             createDeleteJoker(game, move, board, activePlayer);
-            result = true;
         } else {
             if (fieldSelected.yCoordinate() == 0) {
                 //Player is in Menu
                 decideMenu(move, currentHighlight, game, board, activePlayer);
-                result = true;
             } else {
                 //Player is in Matrix
-                result = decideMatrix(move, currentHighlight, game, board);
+                decideMatrix(move, currentHighlight, game, board);
             }
         }
 
-        return result;
     }
 
     /**
@@ -95,25 +89,19 @@ class ExecuteMoveHandler {
      * @param game             The game.
      * @param board            The board.
      */
-    private static boolean decideMatrix(Move move, List<Field> currentHighlight, FullGame game, FullBoard board) {
-        final boolean result;
-
+    private static void decideMatrix(Move move, List<Field> currentHighlight, FullGame game, FullBoard board) {
         final Field targetField = currentHighlight.get(0);
         final int targetFieldXCoordinate = targetField.xCoordinate();
         if (move == Move.RIGHT) {
             createHighlight(fieldOverflowX(1, targetFieldXCoordinate), board);
-            result = true;
         } else if (move == Move.LEFT) {
             createHighlight(fieldOverflowX(-1, targetFieldXCoordinate), board);
-            result = true;
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
-            result = true;
-        } else{
-            result = decideConfirmMatrix(currentHighlight, game, board);
+        } else {
+           decideConfirmMatrix(currentHighlight, game, board);
         }
 
-        return result;
     }
 
     private static int fieldOverflowX(int adderX, int targetFieldXCoordinate) {
@@ -127,17 +115,15 @@ class ExecuteMoveHandler {
      * @param currentHighlight the current hightlight
      * @param game             the active game
      */
-    private static boolean decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
-        boolean result = false;
+    private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
+
         //Higherst Field in the Row
         Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
 
-            createStone(currentHighlight, game, board); //Place a stone
-            result = true;
-            //Switch the player
-            changePlayer(game);
+        createStone(currentHighlight, game, board); //Place a stone
+        //Switch the player
+        changePlayer(game);
 
-        return result;
     }
 
     /**

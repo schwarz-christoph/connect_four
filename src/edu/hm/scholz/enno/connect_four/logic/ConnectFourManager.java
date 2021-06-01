@@ -69,8 +69,9 @@ public class ConnectFourManager implements GameManager {
                         .anyMatch(allowedMove -> allowedMove.equals(move));
 
                 if (allowed) {
-                    result = manageAllowedMoves(move);
+                    manageAllowedMoves(move);
                     setGameState(); // Checks if the game is won
+                    result = true;
                 } else {
                     result = false;
                 }
@@ -97,8 +98,7 @@ public class ConnectFourManager implements GameManager {
      * @param move the current taken move
      * @return if the move was successfully
      */
-    private boolean manageAllowedMoves(Move move){
-        final boolean result;
+    private void manageAllowedMoves(Move move){
         final List<Field> currentHighlight = board.getHighlight();
         final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
         final int targetFieldYCoordinate = currentHighlight.get(0).yCoordinate();
@@ -106,18 +106,15 @@ public class ConnectFourManager implements GameManager {
 
             if (targetFieldXCoordinate == 3) {
                 end();
-                result = true;
             } else if (targetFieldXCoordinate == 4) {
                 restart();
-                result = true;
             } else {
-                result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+                ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
             }
         }  else {
-            result = ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
         }
 
-        return result;
     }
 
     /**
