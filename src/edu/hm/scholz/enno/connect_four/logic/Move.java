@@ -22,7 +22,7 @@ public enum Move {
             case DOWN -> 'D';
             case LEFT -> 'L';
             case RIGHT -> 'R';
-            case CONFIRM -> 'C';
+            default -> 'C';
         };
         
         return moveChar;
