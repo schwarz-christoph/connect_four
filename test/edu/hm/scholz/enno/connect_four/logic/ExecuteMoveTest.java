@@ -269,4 +269,31 @@ public class ExecuteMoveTest {
         //assert
         assertFalse(result);
     }
+
+    @Test
+    public void playerChangeTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        board.setHighlight(List.of(Factory.makeField(1, 1, PlayerID.NONE),
+                Factory.makeField(1, 2, PlayerID.NONE),
+                Factory.makeField(1, 3, PlayerID.NONE),
+                Factory.makeField(1, 4, PlayerID.NONE),
+                Factory.makeField(1, 5, PlayerID.NONE),
+                Factory.makeField(1, 6, PlayerID.NONE),
+                Factory.makeField(1, 7, PlayerID.NONE)));
+
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        PlayerID want = PlayerID.PLAYER_2;
+        PlayerID have = game.getActivePlayer();
+        assertEquals(want, have);
+    }
+
 }
