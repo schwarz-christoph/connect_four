@@ -44,7 +44,7 @@ public class FullConnectFourGameTest {
         assertEquals(want, subjectUnderTestGame.getActivePlayer());
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void setActivePlayerNullTest() {
         //arrange
         final FullBoard board = Factory.makeBoard();
@@ -64,7 +64,7 @@ public class FullConnectFourGameTest {
         assertEquals(want, subjectUnderTestGame.getWinner());
     }
 
-    @Test (expected = NullPointerException.class)
+    @Test (expected = IllegalArgumentException.class)
     public void setWinnerNullTest() {
         //arrange
         final PlayerID want = PlayerID.PLAYER_2;

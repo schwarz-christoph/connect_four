@@ -9,21 +9,21 @@ import org.junit.Test;
 
 public class ConnectFourManagerConstructorTest {
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void ConnectFourManagerNullBoard(){
         //arrange
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         GameManager manager = LogicFactory.makeGameManager(null, game);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void ConnectFourManagerNullGame(){
         //arrange
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void ConnectFourManagerPlayer_2NUll(){
         FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
@@ -33,7 +33,7 @@ public class ConnectFourManagerConstructorTest {
         ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, null);
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void ConnectFourManagerPlayer_1NUll(){
         FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
