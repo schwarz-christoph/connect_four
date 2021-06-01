@@ -22,6 +22,14 @@ public interface LogicFactory {
 
     }
 
+    /**
+     * Creates a game manager
+     * @param board the board of the game
+     * @param game the game
+     * @param player1 the first player
+     * @param player2 the second player
+     * @return the logic of the connect for game
+     */
     static GameManager makeGameManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
         return new ConnectFourManager(board, game, player1, player2);
 

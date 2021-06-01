@@ -29,6 +29,17 @@ public class ConnectFourManager implements GameManager {
     private FullPlayer player1;
     private FullPlayer player2;
 
+    /**
+     * Construcs a connect four manager.
+     *
+     * @param board   the board of the game
+     * @param game    the game
+     * @param player1 the first player
+     * @param player2 the second player
+     * @throws NullPointerException     if the board, game or one of the players is null
+     * @throws IllegalArgumentException if the players have similar IDs
+     */
+
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
         if (board == null) {
@@ -105,13 +116,14 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * Manage the Move if its allowed.
+     *
      * @param move the current taken move.
      */
-    private void manageAllowedMoves(Move move){
+    private void manageAllowedMoves(Move move) {
         final List<Field> currentHighlight = board.getHighlight();
         final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
         final int targetFieldYCoordinate = currentHighlight.get(0).yCoordinate();
-        if(targetFieldYCoordinate == 0 && move == Move.CONFIRM){
+        if (targetFieldYCoordinate == 0 && move == Move.CONFIRM) {
 
             final int menuButtonEnd = 3;
             final int menuButtonRestart = 4;
@@ -123,7 +135,7 @@ public class ConnectFourManager implements GameManager {
             } else {
                 ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
             }
-        }  else {
+        } else {
             ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
         }
 
@@ -132,7 +144,7 @@ public class ConnectFourManager implements GameManager {
     /**
      * Restarts the game.
      */
-    private void restart(){
+    private void restart() {
         final FullGame oldGame = this.game;
 
         final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
@@ -147,7 +159,7 @@ public class ConnectFourManager implements GameManager {
     /**
      * Ends the game immediately.
      */
-    private void end(){
+    private void end() {
         this.game.setWinner(PlayerID.NONE);
         this.game.setActivePlayer(PlayerID.NONE);
     }
@@ -221,6 +233,7 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * Proofs if the matrix contains a winning sequence.
+     *
      * @param fields all fields that need to be proved.
      * @return if the fields contain a winning sequence.
      */
@@ -320,7 +333,7 @@ public class ConnectFourManager implements GameManager {
         final int menuYCoordinate = 0;
         final int firstMatrixYCoordinate = 1;
 
-		if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
+        if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
         } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
             possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);

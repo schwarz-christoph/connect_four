@@ -11,6 +11,10 @@ package edu.hm.scholz.enno.connect_four.logic;
 public enum Move {
     UP, DOWN, LEFT, RIGHT, CONFIRM;
 
+    /**
+     * Get a move with a single unique char
+     * @return the move which corresponds to the char
+     */
     public char getMoveName() {
         final char moveChar;
         moveChar = switch (this) {
