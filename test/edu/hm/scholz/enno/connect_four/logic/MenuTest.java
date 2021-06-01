@@ -241,4 +241,23 @@ public class MenuTest{
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
+
+    @Test
+    public void endWinningPlayerTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(3, 0, PlayerID.NONE)));
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        PlayerID want = PlayerID.NONE; //Moves from Player select screen
+        PlayerID have = game.getWinner();
+        assertEquals(want, have);
+    }
 }
