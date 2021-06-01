@@ -15,7 +15,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 
 public interface FullGame extends Game{
     /**
-     * Sets the active Player
+     * Sets the active Player.
      * @param activePlayer the active player
      * @throws IllegalArgumentException if the activePlayer is null
      */

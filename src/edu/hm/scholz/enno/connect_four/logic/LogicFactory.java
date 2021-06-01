@@ -23,7 +23,7 @@ public interface LogicFactory {
     }
 
     /**
-     * Creates a game manager
+     * Creates a game manager.
      * @param board the board of the game
      * @param game the game
      * @param player1 the first player

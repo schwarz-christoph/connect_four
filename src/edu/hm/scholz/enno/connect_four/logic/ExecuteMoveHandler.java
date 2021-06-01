@@ -30,7 +30,7 @@ class ExecuteMoveHandler {
     static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer player1, FullPlayer player2) {
         final Field fieldSelected = currentHighlight.get(0);
 
-        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1? player1:player2;
+        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
 
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             //Player has active bomb joker
@@ -81,9 +81,9 @@ class ExecuteMoveHandler {
      * Decides witch of the joker is used.
      *
      * @param targetFieldXCoordinate the x coordinate of the selected field.
-     * @param game the current running game.
-     * @param board the current board the game is run on.
-     * @param activePlayer the currently active player.
+     * @param game                   the current running game.
+     * @param board                  the current board the game is run on.
+     * @param activePlayer           the currently active player.
      */
     private static void selectJoker(int targetFieldXCoordinate, FullGame game, FullBoard board, FullPlayer activePlayer) {
 
@@ -116,7 +116,7 @@ class ExecuteMoveHandler {
         } else if (move == Move.UP) {
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
         } else {
-           decideConfirmMatrix(currentHighlight, game, board);
+            decideConfirmMatrix(currentHighlight, game, board);
         }
 
     }
@@ -128,7 +128,8 @@ class ExecuteMoveHandler {
 
     /**
      * Decides if the move is valid. Because if the line is full no more stones could be placed
-     * @param board the board the game runs on.
+     *
+     * @param board            the board the game runs on.
      * @param currentHighlight the current hightlight.
      * @param game             the active game.
      */
@@ -147,7 +148,7 @@ class ExecuteMoveHandler {
      * @param board                  The board.
      */
     private static void createHighlight(int targetFieldXCoordinate, FullBoard board) {
-        List<Field> newHighlight = new ArrayList<>();
+        final List<Field> newHighlight = new ArrayList<>();
         //Start from 1 becuase on 0 is the Menu
         //Ends on fieldSize -1 because the Field is fieldSize long but wie start with the Menu by 0
         IntStream.range(1, Settings.fieldSize)
@@ -241,7 +242,7 @@ class ExecuteMoveHandler {
             final List<Field> highlight = board.getHighlight();
             final boolean isColumnMultiHighlight;
             final boolean isRowMultiHighlight;
-            if(highlight.size() > 1) {
+            if (highlight.size() > 1) {
                 isColumnMultiHighlight =
                         highlight.stream().allMatch(field -> field.xCoordinate() == highlight.get(0).xCoordinate());
                 isRowMultiHighlight =
@@ -254,7 +255,7 @@ class ExecuteMoveHandler {
             final Field targetField = highlight.get(0);
 
             if (move == Move.CONFIRM) {
-                executeDeleteJoker(targetField, board);
+                executeDeleteJoker(board);
                 //Player has used his Joker
                 activePlayer.useDeleteJoker();
                 game.setActiveJoker(PlayerActiveJoker.NONE);
@@ -263,10 +264,10 @@ class ExecuteMoveHandler {
             } else if (move == Move.UP) {
                 final int targetX;
                 final int targetY;
-                if(isRowMultiHighlight) {
+                if (isRowMultiHighlight) {
                     targetX = -1;
                     targetY = Math.max(targetField.yCoordinate() - 1, 1);
-                } else if(isColumnMultiHighlight) {
+                } else if (isColumnMultiHighlight) {
                     targetX = targetField.xCoordinate();
                     targetY = Settings.fieldSize - 1;
                 } else {
@@ -277,10 +278,10 @@ class ExecuteMoveHandler {
             } else if (move == Move.DOWN) {
                 final int targetX;
                 final int targetY;
-                if(isRowMultiHighlight) {
+                if (isRowMultiHighlight) {
                     targetX = -1;
                     targetY = Math.min(targetField.yCoordinate() + 1, Settings.fieldSize - 1);
-                } else if(isColumnMultiHighlight) {
+                } else if (isColumnMultiHighlight) {
                     targetX = targetField.xCoordinate();
                     targetY = 1;
                 } else {
@@ -291,10 +292,10 @@ class ExecuteMoveHandler {
             } else if (move == Move.LEFT) {
                 final int targetX;
                 final int targetY;
-                if(isRowMultiHighlight) {
+                if (isRowMultiHighlight) {
                     targetX = Settings.fieldSize - 1;
                     targetY = targetField.yCoordinate();
-                } else if(isColumnMultiHighlight) {
+                } else if (isColumnMultiHighlight) {
                     targetX = Math.max(targetField.xCoordinate() - 1, 0);
                     targetY = 0;
                 } else {
@@ -306,10 +307,10 @@ class ExecuteMoveHandler {
                 //right
                 final int targetX;
                 final int targetY;
-                if(isRowMultiHighlight) {
+                if (isRowMultiHighlight) {
                     targetX = 0;
                     targetY = targetField.yCoordinate();
-                } else if(isColumnMultiHighlight) {
+                } else if (isColumnMultiHighlight) {
                     targetX = Math.min(targetField.xCoordinate() + 1, Settings.fieldSize - 1);
                     targetY = 0;
                 } else {
@@ -364,17 +365,17 @@ class ExecuteMoveHandler {
         updateBombedFields(2, lowestFreeField, board);
     }
 
-    private static Field getLowestFreeField(Field targetHighlight, FullBoard board){
+    private static Field getLowestFreeField(Field targetHighlight, FullBoard board) {
         final Field highestOccupiedField = board.getFields().stream()
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
 
         final Field lowestFreeField;
-        if(highestOccupiedField == null){
+        if (highestOccupiedField == null) {
             final int yGround = 7;
-            lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  yGround, PlayerID.NONE);
-        }else {
+            lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(), yGround, PlayerID.NONE);
+        } else {
             lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
                     highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
         }
@@ -384,7 +385,7 @@ class ExecuteMoveHandler {
     }
 
     private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
-        final int fallSize;
+
 
         final List<Field> fieldsToUpdate;
 
@@ -395,49 +396,50 @@ class ExecuteMoveHandler {
                 .collect(Collectors.toList());
 
         //If list ist empty than no stones need to be updated, otherwise the lower stone that needs to be updated
-        final Field lowestOccupied;
-        if(fieldsToUpdate.isEmpty()){
-            return;
-        }
-        else{
+
+        if (!fieldsToUpdate.isEmpty()) {
+
+            final int fallSize;
+            final Field lowestOccupied;
+
             lowestOccupied = fieldsToUpdate.stream()
                     .max(Comparator.comparing(Field::yCoordinate)).orElse(null);
+
+
+            Field lowestFreeField = board.getFields().stream()
+                    .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
+                    .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
+                    .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
+
+            if (lowestFreeField == null) {
+                final int yGround = 7;
+                fallSize = yGround - lowestOccupied.yCoordinate();
+            } else {
+                lowestFreeField = Factory.makeField(
+                        lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
+
+                fallSize = lowestFreeField.yCoordinate() - lowestOccupied.yCoordinate();
+            }
+
+            //Replace old stone positions with updated ones by fallsize
+            fieldsToUpdate
+                    .forEach(board::removeStone);
+            fieldsToUpdate
+                    .forEach(field -> board.placeStone(Factory
+                            .makeField(field.xCoordinate(),
+                                    field.yCoordinate() + fallSize, field.owner())));
         }
-
-        Field lowestFreeField = board.getFields().stream()
-                .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
-                .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
-                .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
-
-        if(lowestFreeField == null){
-            final int yGround = 7;
-            fallSize = yGround - lowestOccupied.yCoordinate();
-        } else {
-            lowestFreeField = Factory.makeField(
-                    lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
-
-            fallSize = lowestFreeField.yCoordinate() - lowestOccupied.yCoordinate();
-        }
-
-        //Replace old stone positions with updated ones by fallsize
-        fieldsToUpdate
-                .forEach(board::removeStone);
-        fieldsToUpdate
-                .forEach(field -> board.placeStone(Factory
-                        .makeField(field.xCoordinate(),
-                                field.yCoordinate() + fallSize, field.owner())));
     }
 
     /**
      * executes the delete joker and removes an occupied stone from the board.
      *
-     * @param targetHighlight stone that will be removed
      * @param board           that is being used
      */
-    private static void executeDeleteJoker(Field targetHighlight, FullBoard board) {
+    private static void executeDeleteJoker(FullBoard board) {
         final List<Field> stonesToRemove = board.getFields().stream()
                 .filter(field -> board.getHighlight().stream().anyMatch(highlightField ->
-                                field.xCoordinate() == highlightField.xCoordinate()
+                        field.xCoordinate() == highlightField.xCoordinate()
                                 && field.yCoordinate() == highlightField.yCoordinate()))
                 .collect(Collectors.toList());
 
@@ -446,7 +448,7 @@ class ExecuteMoveHandler {
         final List<Field> stonesToMoveDown = board.getFields().stream()
                 .filter(field -> stonesToRemove.stream().anyMatch(removedField ->
                         removedField.xCoordinate() == field.xCoordinate()
-                        && removedField.yCoordinate() > field.yCoordinate()))
+                                && removedField.yCoordinate() > field.yCoordinate()))
                 .collect(Collectors.toList());
 
         stonesToMoveDown.forEach(board::removeStone);
@@ -464,10 +466,10 @@ class ExecuteMoveHandler {
 
         final List<Field> allFields = board.getFields();
 
-        if(allFields.isEmpty()){
+        if (allFields.isEmpty()) {
             xCoordinate = targetXCoordinate;
             yCoordinate = Settings.fieldSize - 1;
-        }else {
+        } else {
             xCoordinate = targetXCoordinate;
             yCoordinate = allFields.stream()
                     .filter(n -> n.xCoordinate() == targetXCoordinate)
