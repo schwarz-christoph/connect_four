@@ -172,19 +172,19 @@ class ExecuteMoveHandler {
      */
     private static void createBombJokerHighlight(int xCoordinate, FullBoard board) {
 
-        Field targetHighlight = Factory.makeField(xCoordinate, 1, PlayerID.NONE);
+        final Field targetHighlight = Factory.makeField(xCoordinate, 1, PlayerID.NONE);
         List<Field> bombJokerHighlight = new ArrayList<>(List.of(targetHighlight));
 
-        Field lowestFreeField = getLowestFreeField(targetHighlight, board);
+        final Field lowestFreeField = getLowestFreeField(targetHighlight, board);
 
         //add all fields on the same column to the highlight
-        List<Field> columnHighlight = getAllFieldsOnBoard().stream()
+        final List<Field> columnHighlight = getAllFieldsOnBoard().stream()
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .collect(Collectors.toList());
         bombJokerHighlight.addAll(columnHighlight);
 
         //add all fields that are in the bomb radius
-        List<Field> bombRadius = getAllFieldsOnBoard().stream()
+        final List<Field> bombRadius = getAllFieldsOnBoard().stream()
                 .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
                         + Math.abs(field.yCoordinate() - lowestFreeField.yCoordinate())) <= 2)
                 .collect(Collectors.toList());
@@ -346,9 +346,9 @@ class ExecuteMoveHandler {
 
     private static void executeBombJoker(Field targetHighlight, FullBoard board) {
 
-        Field lowestFreeField = getLowestFreeField(targetHighlight, board);
+        final Field lowestFreeField = getLowestFreeField(targetHighlight, board);
 
-        List<Field> allFields = board.getFields().stream()
+        final List<Field> allFields = board.getFields().stream()
                 .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
                         + Math.abs(field.yCoordinate() - lowestFreeField.yCoordinate())) <= 2)
                 .collect(Collectors.toList());
@@ -363,11 +363,11 @@ class ExecuteMoveHandler {
     }
 
     private static Field getLowestFreeField(Field targetHighlight, FullBoard board){
-        Field highestOccupiedField = board.getFields().stream()
+        final Field highestOccupiedField = board.getFields().stream()
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-        Field lowestFreeField;
+        final Field lowestFreeField;
         if(highestOccupiedField == null){
             lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  7, PlayerID.NONE);
         }else {
@@ -382,7 +382,7 @@ class ExecuteMoveHandler {
     private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
         final int fallSize;
 
-        List<Field> fieldsToUpdate;
+        final List<Field> fieldsToUpdate;
 
         //Get every stone which is in the radius and needs to be updated
         fieldsToUpdate = board.getFields().stream()
@@ -391,7 +391,7 @@ class ExecuteMoveHandler {
                 .collect(Collectors.toList());
 
         //If list ist empty than no stones need to be updated, otherwise the lower stone that needs to be updated
-        Field lowestOccupied;
+        final Field lowestOccupied;
         if(fieldsToUpdate.isEmpty()){
             return;
         }
@@ -430,7 +430,7 @@ class ExecuteMoveHandler {
      * @param board           that is being used
      */
     private static void executeDeleteJoker(Field targetHighlight, FullBoard board) {
-        List<Field> stonesToRemove = board.getFields().stream()
+        final List<Field> stonesToRemove = board.getFields().stream()
                 .filter(field -> board.getHighlight().stream().anyMatch(highlightField ->
                                 field.xCoordinate() == highlightField.xCoordinate()
                                 && field.yCoordinate() == highlightField.yCoordinate()))
@@ -457,7 +457,7 @@ class ExecuteMoveHandler {
         final int yCoordinate;
 
 
-        List<Field> allFields = board.getFields();
+        final List<Field> allFields = board.getFields();
 
         if(allFields.isEmpty()){
             xCoordinate = targetXCoordinate;
