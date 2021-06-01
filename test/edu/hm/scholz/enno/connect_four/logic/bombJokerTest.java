@@ -329,4 +329,26 @@ public class bombJokerTest {
         //assert
         assertEquals(want, actual);
     }
+
+    @Test
+    public void highlightAfterBombUse() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        List<Field> want = List.of(Factory.makeField(0, 1, PlayerID.NONE));
+
+        //act
+        List<Field> actual = board.getHighlight();
+
+        //assert
+        List<Field> have = board.getHighlight();
+        assertEquals(want, have);
+    }
 }
