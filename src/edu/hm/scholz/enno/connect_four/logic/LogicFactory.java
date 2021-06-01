@@ -5,11 +5,21 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+/**
+ * ConnectFourManager Factory.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 04-01-2021
+ */
+
 public interface LogicFactory {
     /**
      * Make a GameManager.
+     *
      * @param board the board that is being played on
-     * @param game the Game which needs the rules
+     * @param game  the Game which needs the rules
      * @return the logic of the game with two independent players
      */
     static GameManager makeGameManager(FullBoard board, FullGame game) {
@@ -24,8 +34,9 @@ public interface LogicFactory {
 
     /**
      * Creates a game manager.
-     * @param board the board of the game
-     * @param game the game
+     *
+     * @param board   the board of the game
+     * @param game    the game
      * @param player1 the first player
      * @param player2 the second player
      * @return the logic of the connect for game

@@ -12,7 +12,7 @@ public enum Move {
     UP, DOWN, LEFT, RIGHT, CONFIRM;
 
     /**
-     * Get a move with a single unique char
+     * Get a move with a single unique char.
      * @return the move which corresponds to the char
      */
     public char getMoveName() {
