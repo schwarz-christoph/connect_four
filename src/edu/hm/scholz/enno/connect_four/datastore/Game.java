@@ -1,7 +1,5 @@
 package edu.hm.scholz.enno.connect_four.datastore;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
-
 /**
  * A game of Connect Four.
  *
