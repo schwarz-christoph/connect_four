@@ -57,6 +57,7 @@ class ExecuteMoveHandler {
      * @param currentHighlight The current highlight.
      * @param game             The game.
      * @param board            The board.
+     * @param activePlayer     The currently active player.
      */
     private static void decideMenu(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field targetField = currentHighlight.get(0);
@@ -78,14 +79,19 @@ class ExecuteMoveHandler {
     }
 
     /**
-     * decides witch of the joker is used
+     * Decides witch of the joker is used.
      *
-     * @param targetFieldXCoordinate the x coordinate of the selected field
+     * @param targetFieldXCoordinate the x coordinate of the selected field.
+     * @param game the current running game.
+     * @param board the current board the game is run on.
+     * @param activePlayer the currently active player.
      */
     private static void selectJoker(int targetFieldXCoordinate, FullGame game, FullBoard board, FullPlayer activePlayer) {
 
+        final int player1BombJoker = 0;
+        final int player2BombJoker = 7;
 
-        if (targetFieldXCoordinate == 0 || targetFieldXCoordinate == 7) {
+        if (targetFieldXCoordinate == player1BombJoker || targetFieldXCoordinate == player2BombJoker) {
             createBombJoker(game, Move.CONFIRM, board, activePlayer);
         } else {
             createDeleteJoker(game, Move.CONFIRM, board, activePlayer);
@@ -123,9 +129,9 @@ class ExecuteMoveHandler {
 
     /**
      * Decides if the move is valid. Because if the line is full no more stones could be placed
-     *
-     * @param currentHighlight the current hightlight
-     * @param game             the active game
+     * @param board the board the game runs on.
+     * @param currentHighlight the current hightlight.
+     * @param game             the active game.
      */
     private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
 
@@ -367,9 +373,10 @@ class ExecuteMoveHandler {
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
+        final int yGround = 7;
         final Field lowestFreeField;
         if(highestOccupiedField == null){
-            lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  7, PlayerID.NONE);
+            lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  yGround, PlayerID.NONE);
         }else {
             lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
                     highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
@@ -406,7 +413,8 @@ class ExecuteMoveHandler {
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
         if(lowestFreeField == null){
-            fallSize = 7 - lowestOccupied.yCoordinate();
+            final int yGround = 7;
+            fallSize = yGround - lowestOccupied.yCoordinate();
         } else {
             lowestFreeField = Factory.makeField(
                     lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
