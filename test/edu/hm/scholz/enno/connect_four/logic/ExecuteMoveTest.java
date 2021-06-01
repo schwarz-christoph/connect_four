@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.TestUtility;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -292,6 +293,39 @@ public class ExecuteMoveTest {
 
         //assert
         PlayerID want = PlayerID.PLAYER_2;
+        PlayerID have = game.getActivePlayer();
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void boardFullTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        String boardState = ".GGBBGGG" +
+                "GGGBBGGG" +
+                "BBBGGBBB" +
+                "GGGBBGGG" +
+                "BBBGGBBB" +
+                "GGGBBGGG" +
+                "BBBGGBBB";
+        TestUtility.createBoardState(board, boardState);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+                Factory.makeField(0, 2, PlayerID.NONE),
+                Factory.makeField(0, 3, PlayerID.NONE),
+                Factory.makeField(0, 4, PlayerID.NONE),
+                Factory.makeField(0, 5, PlayerID.NONE),
+                Factory.makeField(0, 6, PlayerID.NONE),
+                Factory.makeField(0, 7, PlayerID.NONE)));
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+
+        //assert
+        PlayerID want = PlayerID.NONE;
         PlayerID have = game.getActivePlayer();
         assertEquals(want, have);
     }
