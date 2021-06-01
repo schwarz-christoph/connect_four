@@ -79,17 +79,7 @@ public class ConnectFourManager implements GameManager {
         final boolean result;
         if (game.isStarted()) {
             if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
-                final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
-                final List<Move> allowedMoves = this.getMoves(activePlayer.getIdentifier());
-                final boolean allowed = allowedMoves.stream()
-                        .anyMatch(allowedMove -> allowedMove.equals(move));
-
-                if (allowed) {
-                    manageAllowedMoves(move, activePlayer);
-                    setGameState(); // Checks if the game is won
-                    result = true;
-                } else
-                    result = false;
+                result = movesInActiveGame(move);
             } else {
                 if (move == Move.CONFIRM) {
                     //Restarts the game in the End screen
@@ -102,6 +92,28 @@ public class ConnectFourManager implements GameManager {
             result = playerSelectScreen(move);
 
         game.notifyObservers(board, game, player1, player2);
+
+        return result;
+    }
+
+    /**
+     * If the Game hast started, no Winner and continues
+     * @param move the move
+     * @return if the move was successfully
+     */
+    private boolean movesInActiveGame(Move move){
+        final boolean result;
+        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+        final List<Move> allowedMoves = this.getMoves(activePlayer.getIdentifier());
+        final boolean allowed = allowedMoves.stream()
+                .anyMatch(allowedMove -> allowedMove.equals(move));
+
+        if (allowed) {
+            manageAllowedMoves(move, activePlayer);
+            setGameState(); // Checks if the game is won
+            result = true;
+        } else
+            result = false;
 
         return result;
     }
