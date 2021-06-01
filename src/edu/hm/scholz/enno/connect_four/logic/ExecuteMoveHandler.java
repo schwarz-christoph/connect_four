@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
@@ -120,7 +119,8 @@ class ExecuteMoveHandler {
 
     private static int fieldOverflowX(int adderX, int targetFieldXCoordinate) {
         //Player stands at 0 and then goes to the left to comes to rest at Fieldsize -1 or the other way around
-        return (targetFieldXCoordinate + adderX + Settings.fieldSize) % Settings.fieldSize;
+        final int fieldSize = 8;
+        return (targetFieldXCoordinate + adderX + fieldSize) % fieldSize;
     }
 
     /**
@@ -146,9 +146,10 @@ class ExecuteMoveHandler {
      */
     private static void createHighlight(int targetFieldXCoordinate, FullBoard board) {
         final List<Field> newHighlight = new ArrayList<>();
+        final int fieldSize = 8;
         //Start from 1 becuase on 0 is the Menu
         //Ends on fieldSize -1 because the Field is fieldSize long but wie start with the Menu by 0
-        IntStream.range(1, Settings.fieldSize)
+        IntStream.range(1, fieldSize)
                 .forEach(yCoordinate -> newHighlight.add(Factory.makeField(targetFieldXCoordinate, yCoordinate, PlayerID.NONE)));
 
         board.setHighlight(newHighlight);
@@ -208,13 +209,15 @@ class ExecuteMoveHandler {
      */
     private static void createDeleteJokerHighlight(int targetX, int targetY, FullBoard board) {
         final List<Field> newHighlights;
+        final int fieldSize = 8;
 
-        if (targetX == -1 || targetX == Settings.fieldSize) {
+
+        if (targetX == -1 || targetX == fieldSize) {
             //selected whole row
             newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.yCoordinate() == targetY)
                     .collect(Collectors.toList());
-        } else if (targetY == 0 || targetY == Settings.fieldSize) {
+        } else if (targetY == 0 || targetY == fieldSize) {
             //selected whole column
             newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.xCoordinate() == targetX)
@@ -231,10 +234,12 @@ class ExecuteMoveHandler {
     }
 
     private static void createDeleteJoker(FullGame game, Move move, FullBoard board, FullPlayer activePlayer) {
+        final int fieldSize = 8;
+
         if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
             //New in Joker
             game.setActiveJoker(PlayerActiveJoker.DELETE);
-            createDeleteJokerHighlight(0, Settings.fieldSize - 1, board);
+            createDeleteJokerHighlight(0, fieldSize - 1, board);
         } else {
             //Joker currently in use
             final List<Field> highlight = board.getHighlight();
@@ -267,7 +272,7 @@ class ExecuteMoveHandler {
                     targetY = Math.max(targetField.yCoordinate() - 1, 1);
                 } else if (isColumnMultiHighlight) {
                     targetX = targetField.xCoordinate();
-                    targetY = Settings.fieldSize - 1;
+                    targetY = fieldSize - 1;
                 } else {
                     targetX = targetField.xCoordinate();
                     targetY = targetField.yCoordinate() - 1;
@@ -278,7 +283,7 @@ class ExecuteMoveHandler {
                 final int targetY;
                 if (isRowMultiHighlight) {
                     targetX = -1;
-                    targetY = Math.min(targetField.yCoordinate() + 1, Settings.fieldSize - 1);
+                    targetY = Math.min(targetField.yCoordinate() + 1, fieldSize - 1);
                 } else if (isColumnMultiHighlight) {
                     targetX = targetField.xCoordinate();
                     targetY = 1;
@@ -291,7 +296,7 @@ class ExecuteMoveHandler {
                 final int targetX;
                 final int targetY;
                 if (isRowMultiHighlight) {
-                    targetX = Settings.fieldSize - 1;
+                    targetX = fieldSize - 1;
                     targetY = targetField.yCoordinate();
                 } else if (isColumnMultiHighlight) {
                     targetX = Math.max(targetField.xCoordinate() - 1, 0);
@@ -309,7 +314,7 @@ class ExecuteMoveHandler {
                     targetX = 0;
                     targetY = targetField.yCoordinate();
                 } else if (isColumnMultiHighlight) {
-                    targetX = Math.min(targetField.xCoordinate() + 1, Settings.fieldSize - 1);
+                    targetX = Math.min(targetField.xCoordinate() + 1, fieldSize - 1);
                     targetY = 0;
                 } else {
                     targetX = targetField.xCoordinate() + 1;
@@ -462,20 +467,20 @@ class ExecuteMoveHandler {
         final int targetXCoordinate = currentHighlight.get(0).xCoordinate();
         final int xCoordinate;
         final int yCoordinate;
-
+        final int fieldSize = 8;
 
         final List<Field> allFields = board.getFields();
 
         if (allFields.isEmpty()) {
             xCoordinate = targetXCoordinate;
-            yCoordinate = Settings.fieldSize - 1;
+            yCoordinate = fieldSize - 1;
         } else {
             xCoordinate = targetXCoordinate;
             yCoordinate = allFields.stream()
                     .filter(n -> n.xCoordinate() == targetXCoordinate)
                     .min(Comparator.comparing(Field::yCoordinate))
                     .map(field -> field.yCoordinate() - 1)
-                    .orElse(Settings.fieldSize - 1);
+                    .orElse(fieldSize - 1);
         }
 
         board.placeStone(Factory.makeField(xCoordinate, yCoordinate, game.getActivePlayer()));
@@ -486,8 +491,10 @@ class ExecuteMoveHandler {
     }
 
     private static List<Field> getAllFieldsOnBoard() {
-        return IntStream.range(0, Settings.fieldSize * Settings.fieldSize)
-                .mapToObj(field -> Factory.makeField(field / Settings.fieldSize, field % Settings.fieldSize, PlayerID.NONE))
+        final int fieldSize = 8;
+
+        return IntStream.range(0, fieldSize * fieldSize)
+                .mapToObj(field -> Factory.makeField(field / fieldSize, field % fieldSize, PlayerID.NONE))
                 .filter(field -> field.yCoordinate() != 0).collect(Collectors.toList());
     }
 }

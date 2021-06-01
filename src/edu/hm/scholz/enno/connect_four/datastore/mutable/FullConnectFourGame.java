@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
@@ -94,7 +93,8 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public void setPlayerCount(int playerCount) {
-        if(playerCount < 0 || playerCount > Settings.maxPlayerCount){
+
+        if(playerCount < 0 || playerCount > 2){
             throw new IllegalArgumentException("Player Count must be between 1 and maxPlayerCount");
         }
 

@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
@@ -178,7 +177,7 @@ public class ConnectFourManager implements GameManager {
 
         if (allowedInPlayerSelect) {
             if (move == Move.RIGHT) {
-                game.setPlayerCount(Settings.maxPlayerCount);
+                game.setPlayerCount(2);
             } else if (move == Move.LEFT) {
                 game.setPlayerCount(1);
             } else {
@@ -212,7 +211,7 @@ public class ConnectFourManager implements GameManager {
 
         final boolean player1Win = containsWinningSequence(player1Fields);
         final boolean player2Win = containsWinningSequence(player2Fields);
-        final boolean boardFull = fields.size() == Settings.fieldSize * (Settings.fieldSize - 1);
+        final boolean boardFull = fields.size() == 8 * 7;
 
         if (player1Win) {
             game.setWinner(PlayerID.PLAYER_1);
@@ -256,9 +255,10 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceRight(List<Field> fields) {
 
         final int maxAdderValue = 3;
+        final int fieldSize = 7;
 
         return fields.stream()
-                .filter(field -> field.xCoordinate() < Settings.fieldSize - maxAdderValue)
+                .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate(), field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate(), field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate(), field.owner())));
@@ -267,9 +267,10 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceUp(List<Field> fields) {
 
         final int maxAdderValue = 3;
+        final int fieldSize = 7;
 
         return fields.stream()
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - maxAdderValue)
+                .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 3, field.owner())));
@@ -292,9 +293,10 @@ public class ConnectFourManager implements GameManager {
 
         final int maxAdderValue = 3;
         final int minAdderValue = 2;
+        final int fieldSize = 7;
 
         result = fields.stream()
-                .filter(field -> field.xCoordinate() < Settings.fieldSize - maxAdderValue)
+                .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
                 .filter(field -> field.yCoordinate() > minAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
@@ -302,7 +304,7 @@ public class ConnectFourManager implements GameManager {
         if (!result)
             result = fields.stream()
                     .filter(field -> field.xCoordinate() > minAdderValue)
-                    .filter(field -> field.yCoordinate() < Settings.fieldSize - maxAdderValue)
+                    .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
@@ -398,7 +400,7 @@ public class ConnectFourManager implements GameManager {
             }
         } else {
             //Player2
-            if (targetXCord > spareField2Menu && targetXCord < 8) {
+            if (targetXCord > spareField2Menu) {
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
