@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
@@ -120,9 +119,8 @@ public class FullConnectFourGameTest {
     public void setPlayerCountMoreThanMaxPlayerCountTest() {
         //arrange;
         final int want = 1;
-
         //act
-        subjectUnderTestGame.setPlayerCount(Settings.maxPlayerCount+1);
+        subjectUnderTestGame.setPlayerCount(3);
 
     }
 

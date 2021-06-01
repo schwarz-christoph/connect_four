@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four.datastore;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import org.junit.Rule;
 import org.junit.Test;
@@ -38,7 +37,7 @@ public class ConnectFourFieldTest {
     @Test (expected = IllegalArgumentException.class)
     public void xCoordinateOutOfBoundsTest() {
         //arrange
-        final int x = Settings.fieldSize;
+        final int x = 8;
         final int y = 1;
         final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
     }
@@ -69,7 +68,7 @@ public class ConnectFourFieldTest {
     public void yCoordinateOutOfBoundsTest() {
         //arrange
         final int x = 1;
-        final int y = Settings.fieldSize;
+        final int y = 8;
         final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
     }
 

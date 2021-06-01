@@ -1,6 +1,5 @@
 package edu.hm.scholz.enno.connect_four;
 
-import edu.hm.scholz.enno.connect_four.common.Settings;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -24,9 +23,10 @@ public class TestUtility {
     }
 
     private static Field generateField(int index, char owningPlayer) {
+        final int fieldSize = 8;
         final PlayerID player = owningPlayer == 'G' ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
-        final int fieldXCoordinate = index % Settings.fieldSize;
-        final int fieldYCoordinate = (index / Settings.fieldSize) + 1;
+        final int fieldXCoordinate = index % fieldSize;
+        final int fieldYCoordinate = (index / fieldSize) + 1;
         return Factory.makeField(fieldXCoordinate, fieldYCoordinate, player);
     }
 }
