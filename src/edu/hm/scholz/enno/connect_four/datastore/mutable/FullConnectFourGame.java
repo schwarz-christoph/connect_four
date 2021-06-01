@@ -68,10 +68,6 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
         this.isJokerInUse = PlayerActiveJoker.NONE;
     }
 
-    /**
-     *
-     * @param activePlayer player to be set to active
-     */
     @Override
     public void setActivePlayer(PlayerID activePlayer) {
         if (activePlayer == null){
