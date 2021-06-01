@@ -11,7 +11,6 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -162,7 +161,8 @@ class ExecuteMoveHandler {
      * @param board                  The board.
      */
     private static void createMenuHighlight(int targetFieldXCoordinate, FullBoard board) {
-        board.setHighlight(Arrays.asList(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
     }
 
     /**

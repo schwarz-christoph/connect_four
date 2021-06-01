@@ -10,7 +10,6 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -317,7 +316,7 @@ public class ConnectFourManager implements GameManager {
      * @return All valid moves (Confirm, Right, Left).
      */
     private List<Move> getMovesInPlayerSelect() {
-        return new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
+        return new ArrayList<>(List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT));
     }
 
     /**
@@ -334,9 +333,9 @@ public class ConnectFourManager implements GameManager {
         final int firstMatrixYCoordinate = 1;
 
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
-            possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
+            possibleMoves = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT);
         } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
-            possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
+            possibleMoves = List.of(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
         } else if (target.yCoordinate() == menuYCoordinate) {
             possibleMoves = menuSelection(target, game.getActivePlayer());
         } else if (target.yCoordinate() == firstMatrixYCoordinate) {
@@ -369,9 +368,9 @@ public class ConnectFourManager implements GameManager {
 
 
         if (isFull) {
-            possibleMoves = new ArrayList<>(Arrays.asList(Move.UP, Move.RIGHT, Move.LEFT));
+            possibleMoves = new ArrayList<>(List.of(Move.UP, Move.RIGHT, Move.LEFT));
         } else {
-            possibleMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT));
+            possibleMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT));
         }
 
         return possibleMoves;
@@ -385,7 +384,7 @@ public class ConnectFourManager implements GameManager {
      * @return All possible Moves.
      */
     private List<Move> menuSelection(Field target, PlayerID player) {
-        final List<Move> possibleMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
+        final List<Move> possibleMoves = new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN));
         final int targetXCord = target.xCoordinate();
 
         final int spareField1Menu = 2;
@@ -418,6 +417,6 @@ public class ConnectFourManager implements GameManager {
      * @return All valid moves (Confirm).
      */
     private List<Move> getMovesInEndScreen() {
-        return new ArrayList<>(Arrays.asList(Move.CONFIRM));
+        return new ArrayList<>(List.of(Move.CONFIRM));
     }
 }
