@@ -44,6 +44,16 @@ public class ConnectFourManagerConstructorTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void ConnectFourManagerPlayerBothNUll(){
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+
+        //act
+        ConnectFourManager gameManager = new ConnectFourManager(board, game, null, null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void ConnectFourManagerBothPlayerSameID(){
         FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
         FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_1);
