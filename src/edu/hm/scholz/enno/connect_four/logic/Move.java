@@ -36,7 +36,7 @@ public enum Move {
             case DOWN ->  "Select field below";
             case LEFT ->  "Select left field";
             case RIGHT ->  "Select right field";
-            case CONFIRM ->  "Confirm selected field";
+            default ->  "Confirm selected field"; //Confirm
         };
 
         return moveDescription;
