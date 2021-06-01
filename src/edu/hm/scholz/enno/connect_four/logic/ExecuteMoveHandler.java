@@ -27,10 +27,8 @@ import java.util.stream.IntStream;
 
 class ExecuteMoveHandler {
 
-    static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer player1, FullPlayer player2) {
+    static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field fieldSelected = currentHighlight.get(0);
-
-        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
 
         if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             //Player has active bomb joker

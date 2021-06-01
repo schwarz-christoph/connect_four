@@ -84,12 +84,13 @@ public class ConnectFourManager implements GameManager {
         final boolean result;
         if (game.isStarted()) {
             if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
-                final List<Move> allowedMoves = this.getMoves(game.getActivePlayer());
+                final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+                final List<Move> allowedMoves = this.getMoves(activePlayer.getIdentifier());
                 final boolean allowed = allowedMoves.stream()
                         .anyMatch(allowedMove -> allowedMove.equals(move));
 
                 if (allowed) {
-                    manageAllowedMoves(move);
+                    manageAllowedMoves(move, activePlayer);
                     setGameState(); // Checks if the game is won
                     result = true;
                 } else {
@@ -118,7 +119,7 @@ public class ConnectFourManager implements GameManager {
      *
      * @param move the current taken move.
      */
-    private void manageAllowedMoves(Move move) {
+    private void manageAllowedMoves(Move move, FullPlayer activePlayer) {
         final List<Field> currentHighlight = board.getHighlight();
         final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
         final int targetFieldYCoordinate = currentHighlight.get(0).yCoordinate();
@@ -132,10 +133,10 @@ public class ConnectFourManager implements GameManager {
             } else if (targetFieldXCoordinate == menuButtonRestart) {
                 restart();
             } else {
-                ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+                ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
             }
         } else {
-            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
+            ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
         }
 
     }
