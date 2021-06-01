@@ -39,21 +39,17 @@ public class ConnectFourManager implements GameManager {
 
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
-        if (board == null) {
+        if (board == null)
             throw new IllegalArgumentException("Board can't be null.");
-        }
 
-        if (game == null) {
+        if (game == null)
             throw new IllegalArgumentException("Game can't be null.");
-        }
 
-        if (player1 == null || player2 == null) {
+        if (player1 == null || player2 == null)
             throw new IllegalArgumentException("Player can't be null.");
-        }
 
-        if (player1.getIdentifier() == player2.getIdentifier()) {
+        if (player1.getIdentifier() == player2.getIdentifier())
             throw new IllegalArgumentException("Player must have different IDs.");
-        }
 
         this.board = board;
         this.game = game;
@@ -66,14 +62,12 @@ public class ConnectFourManager implements GameManager {
     public List<Move> getMoves(PlayerID playerID) {
         final List<Move> possibleMoves;
         if (game.isStarted()) {
-            if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
+            if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE)
                 possibleMoves = getMovesInRegularGame();
-            } else {
+            else
                 possibleMoves = getMovesInEndScreen();
-            }
-        } else {
+        } else
             possibleMoves = getMovesInPlayerSelect();
-        }
         return possibleMoves;
     }
 
@@ -91,21 +85,18 @@ public class ConnectFourManager implements GameManager {
                     manageAllowedMoves(move, activePlayer);
                     setGameState(); // Checks if the game is won
                     result = true;
-                } else {
+                } else
                     result = false;
-                }
             } else {
                 if (move == Move.CONFIRM) {
                     //Restarts the game in the End screen
                     restart();
                     result = true;
-                } else {
+                } else
                     result = false;
-                }
             }
-        } else {
+        } else
             result = playerSelectScreen(move);
-        }
 
         game.notifyObservers(board, game, player1, player2);
 
@@ -126,16 +117,14 @@ public class ConnectFourManager implements GameManager {
             final int menuButtonEnd = 3;
             final int menuButtonRestart = 4;
 
-            if (targetFieldXCoordinate == menuButtonEnd) {
+            if (targetFieldXCoordinate == menuButtonEnd)
                 end();
-            } else if (targetFieldXCoordinate == menuButtonRestart) {
+            else if (targetFieldXCoordinate == menuButtonRestart)
                 restart();
-            } else {
+            else
                 ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
-            }
-        } else {
+        } else
             ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, activePlayer);
-        }
 
     }
 
@@ -176,18 +165,17 @@ public class ConnectFourManager implements GameManager {
                 .anyMatch(allowedMove -> allowedMove.equals(move));
 
         if (allowedInPlayerSelect) {
-            if (move == Move.RIGHT) {
+            if (move == Move.RIGHT)
                 game.setPlayerCount(2);
-            } else if (move == Move.LEFT) {
+            else if (move == Move.LEFT)
                 game.setPlayerCount(1);
-            } else {
+            else {
                 game.setIsStarted(true);
                 board.setHighlight(List.of(Factory.makeField(2, 0, PlayerID.NONE)));
             }
             result = true;
-        } else {
+        } else
             result = false;
-        }
 
         return result;
     }
@@ -238,17 +226,17 @@ public class ConnectFourManager implements GameManager {
     private boolean containsWinningSequence(List<Field> fields) {
         final boolean result;
 
-        if (winningSequenceRight(fields)) {
+        if (winningSequenceRight(fields))
             result = true;
-        } else if (winningSequenceUp(fields)) {
+        else if (winningSequenceUp(fields))
             result = true;
-        } else if (winningSequenceDiagonalUpLeftDownright(fields)) {
+        else if (winningSequenceDiagonalUpLeftDownright(fields))
             result = true;
-        } else if (winningSequenceDiagonalRightUp(fields)) {
+        else if (winningSequenceDiagonalRightUp(fields))
             result = true;
-        } else {
+        else
             result = false;
-        }
+
         return result;
     }
 
@@ -334,17 +322,17 @@ public class ConnectFourManager implements GameManager {
         final int menuYCoordinate = 0;
         final int firstMatrixYCoordinate = 1;
 
-        if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
+        if (game.getActiveJoker() == PlayerActiveJoker.BOMB)
             possibleMoves = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT);
-        } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
+        else if (game.getActiveJoker() == PlayerActiveJoker.DELETE)
             possibleMoves = List.of(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
-        } else if (target.yCoordinate() == menuYCoordinate) {
+        else if (target.yCoordinate() == menuYCoordinate)
             possibleMoves = menuSelection(target, game.getActivePlayer());
-        } else if (target.yCoordinate() == firstMatrixYCoordinate) {
+        else if (target.yCoordinate() == firstMatrixYCoordinate)
             possibleMoves = playgroundSelection(target);
-        } else {
+        else
             throw new UnsupportedOperationException("Not yet Implemented");
-        }
+
         return possibleMoves;
     }
 
@@ -360,20 +348,19 @@ public class ConnectFourManager implements GameManager {
 
         final int firstMatrixYCoordinate = 1;
 
-        if (board.getFields().isEmpty()) {
+        if (board.getFields().isEmpty())
             isFull = false;
-        } else {
+        else
             isFull = board.getFields().stream()
                     .filter(field -> field.xCoordinate() == target.xCoordinate())
                     .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
-        }
 
 
-        if (isFull) {
+
+        if (isFull)
             possibleMoves = new ArrayList<>(List.of(Move.UP, Move.RIGHT, Move.LEFT));
-        } else {
+        else
             possibleMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP, Move.RIGHT, Move.LEFT));
-        }
 
         return possibleMoves;
     }
@@ -394,22 +381,20 @@ public class ConnectFourManager implements GameManager {
 
         if (player == PlayerID.PLAYER_1) {
             //Player1
-            if (targetXCord < spareField1Menu) {
+            if (targetXCord < spareField1Menu)
                 //Player1 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
-            }
         } else {
             //Player2
-            if (targetXCord > spareField2Menu) {
+            if (targetXCord > spareField2Menu)
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
-            }
         }
 
-        if (targetXCord < spareField2Menu && targetXCord > spareField1Menu) {
+        if (targetXCord < spareField2Menu && targetXCord > spareField1Menu)
             //One of the Player in the Game-Menu
             possibleMoves.add(Move.CONFIRM);
-        }
+
         return possibleMoves;
     }
 

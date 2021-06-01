@@ -28,21 +28,20 @@ class ExecuteMoveHandler {
     static void onEcexute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field fieldSelected = currentHighlight.get(0);
 
-        if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
+        if (game.getActiveJoker() == PlayerActiveJoker.BOMB)
             //Player has active bomb joker
             createBombJoker(game, move, board, activePlayer);
-        } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
+        else if (game.getActiveJoker() == PlayerActiveJoker.DELETE)
             //Player has active delete joker
             createDeleteJoker(game, move, board, activePlayer);
-        } else {
-            if (fieldSelected.yCoordinate() == 0) {
+        else
+            if (fieldSelected.yCoordinate() == 0)
                 //Player is in Menu
                 decideMenu(move, currentHighlight, game, board, activePlayer);
-            } else {
+            else
                 //Player is in Matrix
                 decideMatrix(move, currentHighlight, game, board);
-            }
-        }
+
 
     }
 
@@ -66,10 +65,9 @@ class ExecuteMoveHandler {
             createMenuHighlight(newXCoordinate, board);
         } else if (move == Move.DOWN) {
             createHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
-        } else {
+        } else
             //Can oly be Joker because the other two options are covered by the ConnectFourManager
             selectJoker(targetFieldXCoordinate, game, board, activePlayer);
-        }
 
     }
 
@@ -86,11 +84,10 @@ class ExecuteMoveHandler {
         final int player1BombJoker = 0;
         final int player2BombJoker = 7;
 
-        if (targetFieldXCoordinate == player1BombJoker || targetFieldXCoordinate == player2BombJoker) {
+        if (targetFieldXCoordinate == player1BombJoker || targetFieldXCoordinate == player2BombJoker)
             createBombJoker(game, Move.CONFIRM, board, activePlayer);
-        } else {
+        else
             createDeleteJoker(game, Move.CONFIRM, board, activePlayer);
-        }
 
     }
 
@@ -105,15 +102,14 @@ class ExecuteMoveHandler {
     private static void decideMatrix(Move move, List<Field> currentHighlight, FullGame game, FullBoard board) {
         final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
 
-        if (move == Move.RIGHT) {
+        if (move == Move.RIGHT)
             createHighlight(fieldOverflowX(1, targetFieldXCoordinate), board);
-        } else if (move == Move.LEFT) {
+        else if (move == Move.LEFT)
             createHighlight(fieldOverflowX(-1, targetFieldXCoordinate), board);
-        } else if (move == Move.UP) {
+        else if (move == Move.UP)
             createMenuHighlight(targetFieldXCoordinate, board); // If the player goes from the menu in the matrix
-        } else {
+        else
             decideConfirmMatrix(currentHighlight, game, board);
-        }
 
     }
 
@@ -212,23 +208,23 @@ class ExecuteMoveHandler {
         final int fieldSize = 8;
 
 
-        if (targetX == -1 || targetX == fieldSize) {
+        if (targetX == -1 || targetX == fieldSize)
             //selected whole row
             newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.yCoordinate() == targetY)
                     .collect(Collectors.toList());
-        } else if (targetY == 0 || targetY == fieldSize) {
+        else if (targetY == 0 || targetY == fieldSize)
             //selected whole column
             newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.xCoordinate() == targetX)
                     .collect(Collectors.toList());
-        } else {
+        else
             //select only a single field
             newHighlights = getAllFieldsOnBoard().stream()
                     .filter(field -> field.xCoordinate() == targetX)
                     .filter(field -> field.yCoordinate() == targetY)
                     .collect(Collectors.toList());
-        }
+
 
         board.setHighlight(newHighlights);
     }
@@ -342,12 +338,12 @@ class ExecuteMoveHandler {
                 changePlayer(game);
                 board.setHighlight(List.of(targetField));
 
-            } else if (move == Move.LEFT) {
+            } else if (move == Move.LEFT)
                 createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), board);
-            } else {
+            else
                 //right
                 createBombJokerHighlight(fieldOverflowX(1, targetField.xCoordinate()), board);
-            }
+
         }
 
     }
@@ -380,11 +376,9 @@ class ExecuteMoveHandler {
         if (highestOccupiedField == null) {
             final int yGround = 7;
             lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(), yGround, PlayerID.NONE);
-        } else {
+        } else
             lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
                     highestOccupiedField.yCoordinate() - 1, PlayerID.NONE);
-        }
-
 
         return lowestFreeField;
     }
