@@ -28,7 +28,7 @@ public class ConnectFourManager implements GameManager {
     private FullPlayer player2;
 
     /**
-     * Construcs a connect four manager.
+     * Constructs a connect four manager.
      *
      * @param board   the board of the game
      * @param game    the game
@@ -340,7 +340,7 @@ public class ConnectFourManager implements GameManager {
         else if (target.yCoordinate() == menuYCoordinate)
             possibleMoves = menuSelection(target, game.getActivePlayer());
         else if (target.yCoordinate() == firstMatrixYCoordinate)
-            possibleMoves = playgroundSelection(target);
+            possibleMoves = boardSelection(target);
         else
             throw new UnsupportedOperationException("Not yet Implemented");
 
@@ -348,15 +348,14 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Finds the accepted Moves in the playground.
+     * Finds the accepted Moves on the regular board.
      *
      * @param target The first Field of the highlight.
      * @return All possible Moves.
      */
-    private List<Move> playgroundSelection(Field target) {
+    private List<Move> boardSelection(Field target) {
         final List<Move> possibleMoves;
         final boolean isFull;
-
         final int firstMatrixYCoordinate = 1;
 
         if (board.getFields().isEmpty())
@@ -365,8 +364,6 @@ public class ConnectFourManager implements GameManager {
             isFull = board.getFields().stream()
                     .filter(field -> field.xCoordinate() == target.xCoordinate())
                     .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
-
-
 
         if (isFull)
             possibleMoves = new ArrayList<>(List.of(Move.UP, Move.RIGHT, Move.LEFT));
@@ -384,29 +381,34 @@ public class ConnectFourManager implements GameManager {
      * @return All possible Moves.
      */
     private List<Move> menuSelection(Field target, PlayerID player) {
-        final List<Move> possibleMoves = new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN));
+        final List<Move> possibleMoves;
         final int targetXCord = target.xCoordinate();
 
-        final int spareField1Menu = 2;
-        final int spareField2Menu = 5;
+        final int resetButton = 3;
+        final int endButton = 4;
 
-        if (player == PlayerID.PLAYER_1) {
-            //Player1
-            if (targetXCord < spareField1Menu)
-                //Player1 in the Joker Menu
-                possibleMoves.add(Move.CONFIRM);
-        } else {
-            //Player2
-            if (targetXCord > spareField2Menu)
-                //Player2 in the Joker Menu
-                possibleMoves.add(Move.CONFIRM);
-        }
-
-        if (targetXCord < spareField2Menu && targetXCord > spareField1Menu)
-            //One of the Player in the Game-Menu
-            possibleMoves.add(Move.CONFIRM);
+        if(isSelectionInPlayersJokers(targetXCord, player) ||
+                targetXCord == resetButton ||
+                targetXCord == endButton)
+            possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM);
+        else
+            possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
 
         return possibleMoves;
+    }
+
+    /**
+     * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively)
+     *
+     * @param xCoordinate Selected Coordinate.
+     * @param playerID    Selecting Player.
+     * @return            Whether selection is in provided players jokers or not.
+     */
+    private boolean isSelectionInPlayersJokers(int xCoordinate, PlayerID playerID) {
+        final int player1HighestJokerIndex = 1;
+        final int player2LowestJokerIndex = 6;
+        return (xCoordinate <= player1HighestJokerIndex && playerID == PlayerID.PLAYER_1)
+                || (xCoordinate >= player2LowestJokerIndex && playerID == PlayerID.PLAYER_2);
     }
 
     /**
