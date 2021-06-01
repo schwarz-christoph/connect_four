@@ -60,8 +60,7 @@ class ExecuteMoveHandler {
      * @param activePlayer     The currently active player.
      */
     private static void decideMenu(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
-        final Field targetField = currentHighlight.get(0);
-        final int targetFieldXCoordinate = targetField.xCoordinate();
+        final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
         final int newXCoordinate;
         if (move == Move.RIGHT) {
             newXCoordinate = fieldOverflowX(1, targetFieldXCoordinate); // Calculate the new x coordinate for the new highlight in the menu
@@ -108,8 +107,8 @@ class ExecuteMoveHandler {
      * @param board            The board.
      */
     private static void decideMatrix(Move move, List<Field> currentHighlight, FullGame game, FullBoard board) {
-        final Field targetField = currentHighlight.get(0);
-        final int targetFieldXCoordinate = targetField.xCoordinate();
+        final int targetFieldXCoordinate = currentHighlight.get(0).xCoordinate();
+
         if (move == Move.RIGHT) {
             createHighlight(fieldOverflowX(1, targetFieldXCoordinate), board);
         } else if (move == Move.LEFT) {
@@ -134,9 +133,6 @@ class ExecuteMoveHandler {
      * @param game             the active game.
      */
     private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
-
-        //Higherst Field in the Row
-        Field targetField = Factory.makeField(currentHighlight.get(0).xCoordinate(), 1, PlayerID.NONE);
 
         createStone(currentHighlight, game, board); //Place a stone
         //Switch the player
@@ -373,9 +369,10 @@ class ExecuteMoveHandler {
                 .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                 .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-        final int yGround = 7;
+
         final Field lowestFreeField;
         if(highestOccupiedField == null){
+            final int yGround = 7;
             lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(),  yGround, PlayerID.NONE);
         }else {
             lowestFreeField = Factory.makeField(highestOccupiedField.xCoordinate(),
