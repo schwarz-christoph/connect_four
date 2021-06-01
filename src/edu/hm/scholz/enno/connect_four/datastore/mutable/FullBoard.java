@@ -18,6 +18,7 @@ public interface FullBoard extends Board {
     /**
      * Place a stone in the game.
      * @param field Where to place the stone. Can't be null.
+     * @throws IllegalArgumentException if the field is null
      */
     void placeStone(Field field);
 
@@ -30,6 +31,7 @@ public interface FullBoard extends Board {
     /**
      * Set the highlight of the game.
      * @param field Which fields to highlight. Can't be null.
+     * @throws IllegalArgumentException if the List is null
      */
     void setHighlight(List<Field> field);
 }

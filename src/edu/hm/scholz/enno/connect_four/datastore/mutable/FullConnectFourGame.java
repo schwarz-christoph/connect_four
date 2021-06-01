@@ -44,13 +44,14 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     /**
      * Status of joker usage. True when joker is being used, otherwise false.
      */
-    private PlayerActiveJoker isJokerInUse;
+    private PlayerActiveJoker playerActiveJoker;
 
     /**
      * Make a Game.
      *
      * @param startingPlayer Player who starts.
      * @param board          The Board of the Game.
+     * @throws IllegalArgumentException if the board, ir the player is null
      */
     FullConnectFourGame(PlayerID startingPlayer, Board board) {
         if (board == null) {
@@ -65,13 +66,13 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
         this.humanPlayers = 1; //Default value for one player
-        this.isJokerInUse = PlayerActiveJoker.NONE;
+        this.playerActiveJoker = PlayerActiveJoker.NONE;
     }
 
     @Override
     public void setActivePlayer(PlayerID activePlayer) {
         if (activePlayer == null){
-            throw new NullPointerException("activePlayer cant be null");
+            throw new IllegalArgumentException("activePlayer cant be null");
         }
 
         currentPlayer = activePlayer;
@@ -80,7 +81,7 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     @Override
     public void setWinner(PlayerID winner) {
         if (winner == null){
-            throw new NullPointerException("winner cant be null");
+            throw new IllegalArgumentException("winner cant be null");
         }
 
         gameWinner = winner;
@@ -102,7 +103,7 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public void setActiveJoker(PlayerActiveJoker isJokerInUse) {
-        this.isJokerInUse = isJokerInUse;
+        this.playerActiveJoker = isJokerInUse;
     }
 
     @Override
@@ -132,6 +133,6 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public PlayerActiveJoker getActiveJoker() {
-        return isJokerInUse;
+        return playerActiveJoker;
     }
 }

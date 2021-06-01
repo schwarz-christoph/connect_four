@@ -36,22 +36,21 @@ public class ConnectFourManager implements GameManager {
      * @param game    the game
      * @param player1 the first player
      * @param player2 the second player
-     * @throws NullPointerException     if the board, game or one of the players is null
-     * @throws IllegalArgumentException if the players have similar IDs
+     * @throws IllegalArgumentException if the players have similar IDs or board, game, player1 or player2 is null
      */
 
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
 
         if (board == null) {
-            throw new NullPointerException("Board can't be null.");
+            throw new IllegalArgumentException("Board can't be null.");
         }
 
         if (game == null) {
-            throw new NullPointerException("Game can't be null.");
+            throw new IllegalArgumentException("Game can't be null.");
         }
 
         if (player1 == null || player2 == null) {
-            throw new NullPointerException("Player can't be null.");
+            throw new IllegalArgumentException("Player can't be null.");
         }
 
         if (player1.getIdentifier() == player2.getIdentifier()) {
