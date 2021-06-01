@@ -104,9 +104,9 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Manage the Move if its allowed
-     * @param move the current taken move
-     * @return if the move was successfully
+     * Manage the Move if its allowed.
+     * @param move the current taken move.
+     * @return if the move was successfully.
      */
     private void manageAllowedMoves(Move move){
         final List<Field> currentHighlight = board.getHighlight();
@@ -114,9 +114,12 @@ public class ConnectFourManager implements GameManager {
         final int targetFieldYCoordinate = currentHighlight.get(0).yCoordinate();
         if(targetFieldYCoordinate == 0 && move == Move.CONFIRM){
 
-            if (targetFieldXCoordinate == 3) {
+            final int menuButtonEnd = 3;
+            final int menuButtonRestart = 4;
+
+            if (targetFieldXCoordinate == menuButtonEnd) {
                 end();
-            } else if (targetFieldXCoordinate == 4) {
+            } else if (targetFieldXCoordinate == menuButtonRestart) {
                 restart();
             } else {
                 ExecuteMoveHandler.onEcexute(move, currentHighlight, game, board, player1, player2);
@@ -128,13 +131,13 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Restarts the game
+     * Restarts the game.
      */
     private void restart(){
-        FullGame oldGame = this.game;
+        final FullGame oldGame = this.game;
 
-        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
-        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+        final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        final FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
 
         this.board = Factory.makeBoard();
         this.game = Factory.makeGame(oldGame.getActivePlayer(), board);
@@ -143,7 +146,7 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Ends the game immediately
+     * Ends the game immediately.
      */
     private void end(){
         this.game.setWinner(PlayerID.NONE);
@@ -151,11 +154,11 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Creates the Playerselectscreen
-     * If the player confirms his human player amount it also creates the intial highlight
+     * Creates the Playerselectscreen.
+     * If the player confirms his human player amount it also creates the intial highlight.
      *
-     * @param move the move that's taken
-     * @return if the move returns successfully
+     * @param move the move that's taken.
+     * @return if the move returns successfully.
      */
     private boolean playerSelectScreen(Move move) {
         final boolean result;
@@ -180,6 +183,9 @@ public class ConnectFourManager implements GameManager {
         return result;
     }
 
+    /**
+     * Sets the game stated by proofing if somebody won's the game.
+     */
     private void setGameState() {
         final List<Field> fields = board.getFields();
 
@@ -214,6 +220,11 @@ public class ConnectFourManager implements GameManager {
         }
     }
 
+    /**
+     * Proofs if the matrix contains a winning sequence.
+     * @param fields all fields that need to be proved.
+     * @return if the fields contain a winning sequence.
+     */
     private boolean containsWinningSequence(List<Field> fields) {
         final boolean result;
 
@@ -232,25 +243,34 @@ public class ConnectFourManager implements GameManager {
     }
 
     private boolean winningSequenceRight(List<Field> fields) {
+
+        final int maxAdderValue = 3;
+
         return fields.stream()
-                .filter(field -> field.xCoordinate() < Settings.fieldSize - 3)
+                .filter(field -> field.xCoordinate() < Settings.fieldSize - maxAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate(), field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate(), field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate(), field.owner())));
     }
 
     private boolean winningSequenceUp(List<Field> fields) {
+
+        final int maxAdderValue = 3;
+
         return fields.stream()
-                .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
+                .filter(field -> field.yCoordinate() < Settings.fieldSize - maxAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 3, field.owner())));
     }
 
     private boolean winningSequenceDiagonalUpLeftDownright(List<Field> fields) {
+
+        final int minAdderValue = 2;
+
         return fields.stream()
-                .filter(field -> field.xCoordinate() > 2)
-                .filter(field -> field.yCoordinate() > 2)
+                .filter(field -> field.xCoordinate() > minAdderValue)
+                .filter(field -> field.yCoordinate() > minAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() - 3, field.owner())));
@@ -259,16 +279,19 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceDiagonalRightUp(List<Field> fields) {
         boolean result;
 
+        final int maxAdderValue = 3;
+        final int minAdderValue = 2;
+
         result = fields.stream()
-                .filter(field -> field.xCoordinate() < Settings.fieldSize - 3)
-                .filter(field -> field.yCoordinate() > 2)
+                .filter(field -> field.xCoordinate() < Settings.fieldSize - maxAdderValue)
+                .filter(field -> field.yCoordinate() > minAdderValue)
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                 .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
                 .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate() - 3, field.owner())));
         if (!result)
             result = fields.stream()
-                    .filter(field -> field.xCoordinate() > 2)
-                    .filter(field -> field.yCoordinate() < Settings.fieldSize - 3)
+                    .filter(field -> field.xCoordinate() > minAdderValue)
+                    .filter(field -> field.yCoordinate() < Settings.fieldSize - maxAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() + 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() + 2, field.owner())))
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() + 3, field.owner())));
@@ -295,13 +318,16 @@ public class ConnectFourManager implements GameManager {
         final List<Field> highlight = board.getHighlight();
         final Field target = highlight.get(0);
 
+        final int menuYCoordinate = 0;
+        final int firstMatrixYCoordinate = 1;
+
 		if (game.getActiveJoker() == PlayerActiveJoker.BOMB) {
             possibleMoves = Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT);
         } else if (game.getActiveJoker() == PlayerActiveJoker.DELETE) {
             possibleMoves = Arrays.asList(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
-        } else if (target.yCoordinate() == 0) {
+        } else if (target.yCoordinate() == menuYCoordinate) {
             possibleMoves = menuSelection(target, game.getActivePlayer());
-        } else if (target.yCoordinate() == 1) {
+        } else if (target.yCoordinate() == firstMatrixYCoordinate) {
             possibleMoves = playgroundSelection(target);
         } else {
             throw new UnsupportedOperationException("Not yet Implemented");
@@ -313,17 +339,20 @@ public class ConnectFourManager implements GameManager {
      * Finds the accepted Moves in the playground.
      *
      * @param target The first Field of the highlight.
-     * @return All possible Moves
+     * @return All possible Moves.
      */
     private List<Move> playgroundSelection(Field target) {
         final List<Move> possibleMoves;
         final boolean isFull;
+
+        final int firstMatrixYCoordinate = 1;
+
         if (board.getFields().isEmpty()) {
             isFull = false;
         } else {
             isFull = board.getFields().stream()
                     .filter(field -> field.xCoordinate() == target.xCoordinate())
-                    .anyMatch(field -> field.yCoordinate() == 1);
+                    .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
         }
 
 
@@ -337,30 +366,34 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Finds the accepted Moves in the menu
+     * Finds the accepted Moves in the menu.
      *
      * @param target The first Field of the highlight.
-     * @return All possible Moves
+     * @param player The ID of the player which selects the menu
+     * @return All possible Moves.
      */
     private List<Move> menuSelection(Field target, PlayerID player) {
         final List<Move> possibleMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN));
         final int targetXCord = target.xCoordinate();
 
+        final int spareField1Menu = 2;
+        final int spareField2Menu = 5;
+
         if (player == PlayerID.PLAYER_1) {
             //Player1
-            if (targetXCord < 2) {
+            if (targetXCord < spareField1Menu) {
                 //Player1 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         } else {
             //Player2
-            if (targetXCord > 5 && targetXCord < 8) {
+            if (targetXCord > spareField2Menu && targetXCord < 8) {
                 //Player2 in the Joker Menu
                 possibleMoves.add(Move.CONFIRM);
             }
         }
 
-        if (targetXCord < 5 && targetXCord > 2) {
+        if (targetXCord < spareField2Menu && targetXCord > spareField1Menu) {
             //One of the Player in the Game-Menu
             possibleMoves.add(Move.CONFIRM);
         }
