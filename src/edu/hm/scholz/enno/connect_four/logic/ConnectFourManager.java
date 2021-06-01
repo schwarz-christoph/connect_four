@@ -77,7 +77,7 @@ public class ConnectFourManager implements GameManager {
     public boolean executeMove(Move move) {
         final boolean result;
         if (game.isStarted()) {
-            if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE) {
+            if (game.getActivePlayer() != PlayerID.NONE) {
                 result = movesInActiveGame(move);
             } else {
                 if (move == Move.CONFIRM) {
@@ -139,7 +139,6 @@ public class ConnectFourManager implements GameManager {
                 ExecuteMoveHandler.onExecute(move, currentHighlight, game, board, activePlayer);
         } else
             ExecuteMoveHandler.onExecute(move, currentHighlight, game, board, activePlayer);
-
     }
 
     /**

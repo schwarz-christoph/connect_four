@@ -162,6 +162,7 @@ public class ExecuteMoveTest {
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setWinner(PlayerID.PLAYER_1); //Restart if one Player won the Game
+        game.setActivePlayer(PlayerID.NONE);
 
         //act
         manager.executeMove(Move.CONFIRM);
