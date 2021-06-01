@@ -4,11 +4,6 @@ import edu.hm.scholz.enno.connect_four.datastore.ConnectFourField;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
-import edu.hm.scholz.enno.connect_four.logic.ConnectFourManager;
-import edu.hm.scholz.enno.connect_four.logic.GameManager;
-import edu.hm.scholz.enno.connect_four.logic.Move;
-
-import java.util.List;
 
 /**
  * Connect_Four Factory.
