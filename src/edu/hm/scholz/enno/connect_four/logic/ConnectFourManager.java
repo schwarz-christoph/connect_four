@@ -36,17 +36,11 @@ public class ConnectFourManager implements GameManager {
      * @param player2 the second player
      * @throws IllegalArgumentException if the players have similar IDs or board, game, player1 or player2 is null
      */
-
     public ConnectFourManager(FullBoard board, FullGame game, FullPlayer player1, FullPlayer player2) {
-
-        if (board == null)
-            throw new IllegalArgumentException("Board can't be null.");
-
-        if (game == null)
-            throw new IllegalArgumentException("Game can't be null.");
-
-        if (player1 == null || player2 == null)
-            throw new IllegalArgumentException("Player can't be null.");
+        throwExceptionOnNull(board, "Board can't be null.");
+        throwExceptionOnNull(game, "Game can't be null.");
+        throwExceptionOnNull(player1, "Player1 can't be null.");
+        throwExceptionOnNull(player2, "Player2 can't be null.");
 
         if (player1.getIdentifier() == player2.getIdentifier())
             throw new IllegalArgumentException("Player must have different IDs.");
@@ -57,6 +51,15 @@ public class ConnectFourManager implements GameManager {
         this.player2 = player2;
     }
 
+    /**
+     * Throws an IllegalArgumentException with the provided message if the provided object is null.
+     * @param object  Object to check.
+     * @param message Message to pass to Exception.
+     */
+    private void throwExceptionOnNull(Object object, String message) {
+        if(object == null)
+            throw new IllegalArgumentException(message);
+    }
 
     @Override
     public List<Move> getMoves(PlayerID playerID) {
