@@ -14,6 +14,7 @@ import java.util.List;
 public interface GameManager {
 
     /**
+     * The allowed Moves
      * @return List of all possible moves in the current turn.
      */
     List<Move> getMoves(PlayerID playerID);
