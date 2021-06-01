@@ -7,7 +7,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Observer;
 import edu.hm.scholz.enno.connect_four.datastore.Player;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.List;
 
 /**
  * An abstract observable with methods to register and notify registered observers.
@@ -23,7 +23,7 @@ abstract class AbstractConnectFourObservable implements Observable {
     /**
      * A list of observers used to notify them.
      */
-    private final ArrayList<Observer> observers;
+    private final List<Observer> observers;
 
     /**
      * The constructor of the observable.
