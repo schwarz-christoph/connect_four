@@ -147,7 +147,6 @@ public class ConnectFourManager implements GameManager {
      * Ends the game immediately.
      */
     private void end() {
-        this.game.setWinner(PlayerID.NONE);
         this.game.setActivePlayer(PlayerID.NONE);
     }
 
@@ -232,10 +231,7 @@ public class ConnectFourManager implements GameManager {
             result = true;
         else if (winningSequenceDiagonalUpLeftDownright(fields))
             result = true;
-        else if (winningSequenceDiagonalRightUp(fields))
-            result = true;
-        else
-            result = false;
+        else result = winningSequenceDiagonalRightUp(fields);
 
         return result;
     }
