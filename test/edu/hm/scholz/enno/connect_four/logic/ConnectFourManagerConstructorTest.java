@@ -53,15 +53,4 @@ public class ConnectFourManagerConstructorTest {
         //act
         ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, player2);
     }
-
-    @Test
-    public void ConnectFourManagerCorrect(){
-        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
-        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
-        FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
-
-        //act
-        ConnectFourManager gameManager = new ConnectFourManager(board, game, player1, player2);
-    }
 }
