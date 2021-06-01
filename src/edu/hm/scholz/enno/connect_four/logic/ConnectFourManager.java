@@ -255,7 +255,7 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceRight(List<Field> fields) {
 
         final int maxAdderValue = 3;
-        final int fieldSize = 7;
+        final int fieldSize = 8;
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
@@ -267,7 +267,7 @@ public class ConnectFourManager implements GameManager {
     private boolean winningSequenceUp(List<Field> fields) {
 
         final int maxAdderValue = 3;
-        final int fieldSize = 7;
+        final int fieldSize = 8;
 
         return fields.stream()
                 .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
@@ -293,7 +293,7 @@ public class ConnectFourManager implements GameManager {
 
         final int maxAdderValue = 3;
         final int minAdderValue = 2;
-        final int fieldSize = 7;
+        final int fieldSize = 8;
 
         result = fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
