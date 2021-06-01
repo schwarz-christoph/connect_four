@@ -14,6 +14,7 @@ import org.junit.runners.Suite;
         MenuTest.class,
         bombJokerTest.class,
         ConnectFourManagerConstructorTest.class,
-        DeleteJokerHighlightTest.class})
+        DeleteJokerHighlightTest.class,
+        MoveTest.class})
 public class ConnectFourManagerTest {
 }
