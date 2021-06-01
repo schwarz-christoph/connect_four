@@ -106,7 +106,6 @@ public class ConnectFourManager implements GameManager {
     /**
      * Manage the Move if its allowed.
      * @param move the current taken move.
-     * @return if the move was successfully.
      */
     private void manageAllowedMoves(Move move){
         final List<Field> currentHighlight = board.getHighlight();
