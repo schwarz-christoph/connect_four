@@ -351,4 +351,29 @@ public class bombJokerTest {
         List<Field> have = board.getHighlight();
         assertEquals(want, have);
     }
+
+    @Test
+    public void highlightAfterBombUseSecondColumn() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.CONFIRM);
+
+        List<Field> want = List.of(Factory.makeField(3, 1, PlayerID.NONE));
+
+        //act
+        List<Field> actual = board.getHighlight();
+
+        //assert
+        List<Field> have = board.getHighlight();
+        assertEquals(want, have);
+    }
 }

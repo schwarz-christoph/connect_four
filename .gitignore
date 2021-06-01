@@ -1,12 +1,9 @@
 .idea/*
 Connect Four.md
 Connect_Four.iml
-checker/reports/*
-checker/checkers.ps1
 /out
-/checker/checkers.ps1
 /report/
-/checker/ToolRunner.java
 /test/edu/hm/scholz/enno/connect_four/ToolRunner.java
 /upload.zip
 /test/Test.iml
+/checker/*

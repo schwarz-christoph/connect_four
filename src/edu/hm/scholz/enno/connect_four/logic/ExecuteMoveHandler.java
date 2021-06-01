@@ -335,6 +335,8 @@ class ExecuteMoveHandler {
                 executeBombJoker(targetField, board);
                 activePlayer.useBombJoker();
                 changePlayer(game);
+                board.setHighlight(List.of(targetField));
+
             } else if (move == Move.LEFT) {
                 createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), board);
             } else {
