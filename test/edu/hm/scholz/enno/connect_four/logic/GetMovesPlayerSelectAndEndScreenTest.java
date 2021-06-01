@@ -9,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -27,7 +26,7 @@ public class GetMovesPlayerSelectAndEndScreenTest {
         game.setWinner(PlayerID.PLAYER_1);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.CONFIRM));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -45,7 +44,7 @@ public class GetMovesPlayerSelectAndEndScreenTest {
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);

@@ -11,7 +11,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -23,35 +22,35 @@ public class GetMovesMenuTest {
 
     @Parameterized.Parameters(name = "Field on (X = {0} Y = {1}), Player: {2}, Want Moves: {3}")
     public static Iterable<Object[]> testCasesGetMovesMenuTest(){
-        return Arrays.asList(new Object[][]{
+        return List.of(new Object[][]{
                 {0, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {0, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {1, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {1, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {2, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {2, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {3, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {4, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {5, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {5, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {6, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {6, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
                 {7, 0, PlayerID.PLAYER_2,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM))},
                 {7, 0, PlayerID.PLAYER_1,
-                        new ArrayList<>(Arrays.asList(Move.RIGHT, Move.LEFT, Move.DOWN))},
+                        new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN))},
 
         });
     }
@@ -78,7 +77,7 @@ public class GetMovesMenuTest {
         game.setActivePlayer(owner);
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(xCoordinate, yCoordinate, PlayerID.NONE))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(xCoordinate, yCoordinate, PlayerID.NONE))));
 
         //act
         List<Move> actualMoves = manager.getMoves(owner);

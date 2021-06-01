@@ -10,7 +10,6 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -27,9 +26,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -44,9 +43,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(0, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.RIGHT, Move.UP, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.RIGHT, Move.UP, Move.LEFT));
 
         //Place One Stone at the top just for simulating a full column
         board.placeStone(Factory
@@ -66,9 +65,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -84,9 +83,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(7, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.UP,  Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.UP,  Move.RIGHT, Move.LEFT));
 
         //Place One Stone at the top just for simulating a full column
         board.placeStone(Factory
@@ -106,9 +105,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.CONFIRM, Move.UP,  Move.RIGHT, Move.LEFT));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -124,9 +123,9 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        List<Move> expectedMoves = new ArrayList<>(Arrays.asList(Move.UP,  Move.RIGHT, Move.LEFT));
+        List<Move> expectedMoves = new ArrayList<>(List.of(Move.UP,  Move.RIGHT, Move.LEFT));
 
         //Place One Stone at the top just for simulating a full column
         board.placeStone(Factory
@@ -146,7 +145,7 @@ public class GetMovesRegularTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(4, 4, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(4, 4, PlayerID.PLAYER_1))));
 
         //act
         List<Move> actualMoves = manager.getMoves(PlayerID.PLAYER_1);
@@ -163,7 +162,7 @@ public class GetMovesRegularTest {
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
 
         //assert
-        List<Move> want = new ArrayList<>(Arrays.asList(Move.CONFIRM, Move.RIGHT, Move.LEFT));
+        List<Move> want = new ArrayList<>(List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT));
         assertEquals(want, have);
     }
 
@@ -180,7 +179,7 @@ public class GetMovesRegularTest {
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
 
         //assert
-        List<Move> want = new ArrayList<>(Arrays.asList(Move.CONFIRM));
+        List<Move> want = new ArrayList<>(List.of(Move.CONFIRM));
         assertEquals(want, have);
     }
 }

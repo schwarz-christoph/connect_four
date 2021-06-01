@@ -12,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class HighlightTest {
 
     @Parameterized.Parameters(name = "Field from Y = {0} with Move.{1} to Y = {2}")
     public static Iterable<Object[]> testcasesHighlightTest(){
-        return Arrays.asList(new Object[][]{
+        return List.of(new Object[][]{
                 {0, Move.RIGHT, 1},
                 {1, Move.RIGHT, 2},
                 {2, Move.RIGHT, 3},

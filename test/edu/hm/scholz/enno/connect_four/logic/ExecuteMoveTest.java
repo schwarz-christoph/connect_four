@@ -11,7 +11,6 @@ import org.junit.Test;
 import org.junit.rules.Timeout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class ExecuteMoveTest {
     public void createExecuteMoveHandlerExceptionTest(){
         //arrange, act
         ExecuteMoveHandler executeMoveHandler = new ExecuteMoveHandler();
-}
+    }
 
     @Test
     public void executeMoveTest(){
@@ -70,9 +69,6 @@ public class ExecuteMoveTest {
                 Factory.makeField(xBefore, 5, PlayerID.NONE),
                 Factory.makeField(xBefore, 6, PlayerID.NONE),
                 Factory.makeField(xBefore, 7, PlayerID.NONE)));
-        ArrayList<Field> want = new ArrayList<>();
-        Collections.addAll(want, Factory.makeField(xBefore, 0, PlayerID.PLAYER_1));
-        List<Field> have = board.getFields();
 
         //act
         manager.executeMove(Move.CONFIRM);
@@ -88,7 +84,7 @@ public class ExecuteMoveTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //act, assert
         assertFalse(manager.executeMove(Move.DOWN));
@@ -101,7 +97,7 @@ public class ExecuteMoveTest {
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        board.setHighlight(new ArrayList<>(Arrays.asList(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
+        board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
         //assert
         assertTrue(manager.executeMove(Move.CONFIRM));
