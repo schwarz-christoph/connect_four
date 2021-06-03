@@ -22,30 +22,35 @@ public class BombJokerTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setIsStarted(true);
 
-        board.placeStone(Factory.makeField(1, 2, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 3, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(1, 4, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(1, 5, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 6, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
+        String beforeBomb = "........" +
+                            "G......." +
+                            "G......." +
+                            "B......." +
+                            "G......." +
+                            "B......." +
+                            "B.......";
+        TestUtility.createBoardState(board, beforeBomb);
 
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
         manager.executeMove(Move.CONFIRM);
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.LEFT);
-        manager.executeMove(Move.RIGHT);
 
-        List<Field> want = List.of(Factory.makeField(1, 4, PlayerID.PLAYER_2),
-                Factory.makeField(1, 5, PlayerID.PLAYER_1),
-                Factory.makeField(1, 6, PlayerID.PLAYER_2),
-                Factory.makeField(1, 7, PlayerID.PLAYER_2));
+        String afterBomb = "........" +
+                           "........" +
+                           "........" +
+                           "B......." +
+                           "G......." +
+                           "B......." +
+                           "B.......";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
 
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
 
         //assert
-        assertEquals(want, actual);
+        assertTrue(want.containsAll(actual));
     }
 
     @Test
@@ -56,14 +61,23 @@ public class BombJokerTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setIsStarted(true);
 
-        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(3, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(5, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(7, 7, PlayerID.PLAYER_1));
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "GBBGBBBG";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        String afterBomb = "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           "GB..BBBG";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
 
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
         manager.executeMove(Move.CONFIRM);
@@ -71,18 +85,12 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
 
-        List<Field> want = List.of(Factory.makeField(0, 7, PlayerID.PLAYER_1),
-                Factory.makeField(1, 7, PlayerID.PLAYER_2),
-                Factory.makeField(5, 7, PlayerID.PLAYER_2),
-                Factory.makeField(6, 7, PlayerID.PLAYER_2),
-                Factory.makeField(7, 7, PlayerID.PLAYER_1));
-
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
 
         //assert
-        assertEquals(want, actual);
+        assertTrue(want.containsAll(actual));
     }
 
     @Test
@@ -93,30 +101,14 @@ public class BombJokerTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setIsStarted(true);
 
-        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(1, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(3, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(5, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(7, 7, PlayerID.PLAYER_2));
-
-        board.placeStone(Factory.makeField(1, 6, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(3, 6, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(4, 6, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(5, 6, PlayerID.PLAYER_2));
-
-        board.placeStone(Factory.makeField(1, 5, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(4, 5, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(5, 5, PlayerID.PLAYER_2));
-
-        board.placeStone(Factory.makeField(1, 4, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(4, 4, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(5, 4, PlayerID.PLAYER_1));
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            ".GB.BG.." +
+                            ".BB.BB.." +
+                            ".BBBGB.." +
+                            "GBGBGBGB";
+        TestUtility.createBoardState(board, beforeBomb);
 
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
         manager.executeMove(Move.CONFIRM);
@@ -124,29 +116,21 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
 
-        List<Field> want = List.of(
-                Factory.makeField(0, 7, PlayerID.PLAYER_1),
-                Factory.makeField(1, 7, PlayerID.PLAYER_2),
-                Factory.makeField(2, 7, PlayerID.PLAYER_1),
-                Factory.makeField(4, 7, PlayerID.PLAYER_1),
-                Factory.makeField(5, 7, PlayerID.PLAYER_2),
-                Factory.makeField(6, 7, PlayerID.PLAYER_1),
-                Factory.makeField(7, 7, PlayerID.PLAYER_2),
-                Factory.makeField(1, 6, PlayerID.PLAYER_2),
-                Factory.makeField(5, 6, PlayerID.PLAYER_2),
-                Factory.makeField(1, 5, PlayerID.PLAYER_1),
-
-                Factory.makeField(5, 5, PlayerID.PLAYER_1));
-
-
-
+        String afterBomb = "........" +
+                           "........" +
+                           "........" +
+                           "........" +
+                           ".G...G.." +
+                           ".B...B.." +
+                           "GBG.GBGB";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
 
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
 
         //assert
-        assertEquals(want, actual);
+        assertTrue(want.containsAll(actual));
     }
 
     @Test
@@ -201,10 +185,24 @@ public class BombJokerTest {
         board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
         manager.executeMove(Move.CONFIRM);
 
-        board.placeStone(Factory.makeField(0, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(7, 7, PlayerID.PLAYER_1));
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "G......G";
+        TestUtility.createBoardState(board, beforeBomb);
 
-        List<Field> want = new ArrayList<>(List.of(Factory.makeField(7, 7, PlayerID.PLAYER_1)));
+        String afterBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            ".......G";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
+
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
@@ -226,8 +224,14 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
 
-        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
-
+        String beforeBomb = "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "........" +
+                            "..G.....";
+        TestUtility.createBoardState(board, beforeBomb);
         //act
         manager.executeMove(Move.CONFIRM);
         List<Field> actual = board.getFields();
@@ -250,6 +254,14 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
+
+        String boardState = "........" +
+                            "........" +
+                            "..G....." +
+                            "..B....." +
+                            "..G.G..." +
+                            "..G.G..." +
+                            "..G.G...";
 
         board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
         board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_1));
@@ -286,21 +298,15 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.RIGHT);
 
-        board.placeStone(Factory.makeField(2, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 6, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 5, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(2, 4, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(2, 3, PlayerID.PLAYER_1));
+        String boardState = "........" +
+                            "........" +
+                            "..G...B." +
+                            "..B...G." +
+                            "..G.G.B." +
+                            "..G.G.B." +
+                            "..G.G.B.";
 
-        board.placeStone(Factory.makeField(4, 7, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(4, 6, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(4, 5, PlayerID.PLAYER_1));
-
-        board.placeStone(Factory.makeField(6, 7, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(6, 6, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(6, 5, PlayerID.PLAYER_2));
-        board.placeStone(Factory.makeField(6, 4, PlayerID.PLAYER_1));
-        board.placeStone(Factory.makeField(6, 3, PlayerID.PLAYER_2));
+        TestUtility.createBoardState(board, boardState);
 
         PlayerID want = PlayerID.NONE;
 
