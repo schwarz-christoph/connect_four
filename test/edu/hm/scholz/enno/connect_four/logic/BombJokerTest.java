@@ -50,7 +50,7 @@ public class BombJokerTest {
         List<Field> actual = board.getFields();
 
         //assert
-        assertTrue(actual.containsAll(want));
+        assertTrue(TestUtility.equalsListFields(actual, want));
     }
 
     @Test
@@ -441,7 +441,7 @@ public class BombJokerTest {
         List<Field> actual = board.getHighlight();
 
         //assert
-        assertTrue(actual.containsAll(want));
+        assertTrue(TestUtility.equalsListFields(actual, want));
     }
 
     @Test
