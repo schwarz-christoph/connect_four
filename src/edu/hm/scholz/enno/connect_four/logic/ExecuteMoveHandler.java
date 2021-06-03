@@ -23,10 +23,19 @@ import java.util.stream.IntStream;
  * @version 04-20-2021
  */
 
+/**
+ * This class handles the moves of the players and determines what should happen when executing a move.
+ */
 class ExecuteMoveHandler {
 
+    /**
+     * Contains  necessary methods for correct use of both jokers.
+     */
     private static class Joker {
 
+        /**
+         * Contains  necessary methods for correct use of the delete joker.
+         */
         private static class Delete {
             /**
              * Creates a new delete joker highlight in the matrix.
@@ -61,6 +70,13 @@ class ExecuteMoveHandler {
                 board.setHighlight(newHighlights);
             }
 
+            /**
+             * Determines if the delete joker should be activated, executed or moved.
+             * @param game          The current game.
+             * @param move          The desired move.
+             * @param board         The current board.
+             * @param activePlayer  The currently active player.
+             */
             private static void createDeleteJoker(FullGame game, Move move, FullBoard board, FullPlayer activePlayer) {
                 final int fieldSize = 8;
 
@@ -87,6 +103,12 @@ class ExecuteMoveHandler {
                 }
             }
 
+            /**
+             * Determines in which direction the bomb joker is being moved.
+             * @param move          The desired move.
+             * @param board         The current board.
+             * @param fieldSize     The size of the board.
+             */
             private static void chooseDeleteJokerDirection(Move move, FullBoard board, int fieldSize){
                 final List<Field> highlight = board.getHighlight();
                 final boolean isColumnMultiHighlight;
@@ -111,6 +133,13 @@ class ExecuteMoveHandler {
                 }
             }
 
+            /**
+             * Moves the delete joker up based on the current position.
+             * @param board                     The current board.
+             * @param fieldSize                 The size of the board.
+             * @param isRowMultiHighlight       Determines if a whole row is highlighted.
+             * @param isColumnMultiHighlight    Determines if a whole column is highlighted.
+             */
             public static void deleteMoveUp(FullBoard board, int fieldSize,
                                             boolean isRowMultiHighlight, boolean isColumnMultiHighlight){
                 final int targetX;
@@ -131,6 +160,13 @@ class ExecuteMoveHandler {
                 createDeleteJokerHighlight(targetX, targetY, board);
             }
 
+            /**
+             * Moves the delete joker down based on the current position.
+             * @param board                     The current board.
+             * @param fieldSize                 The size of the board.
+             * @param isRowMultiHighlight       Determines if a whole row is highlighted.
+             * @param isColumnMultiHighlight    Determines if a whole column is highlighted.
+             */
             public static void deleteMoveDown(FullBoard board, int fieldSize,
                                               boolean isRowMultiHighlight, boolean isColumnMultiHighlight){
                 final int targetX;
@@ -151,6 +187,13 @@ class ExecuteMoveHandler {
                 createDeleteJokerHighlight(targetX, targetY, board);
             }
 
+            /**
+             * Moves the delete joker left based on the current position.
+             * @param board                     The current board.
+             * @param fieldSize                 The size of the board.
+             * @param isRowMultiHighlight       Determines if a whole row is highlighted.
+             * @param isColumnMultiHighlight    Determines if a whole column is highlighted.
+             */
             public static void deleteMoveLeft(FullBoard board, int fieldSize,
                                               boolean isRowMultiHighlight, boolean isColumnMultiHighlight){
                 final int targetX;
@@ -171,6 +214,13 @@ class ExecuteMoveHandler {
                 createDeleteJokerHighlight(targetX, targetY, board);
             }
 
+            /**
+             * Moves the delete joker right based on the current position.
+             * @param board                     The current board.
+             * @param fieldSize                 The size of the board.
+             * @param isRowMultiHighlight       Determines if a whole row is highlighted.
+             * @param isColumnMultiHighlight    Determines if a whole column is highlighted.
+             */
             public static void deleteMoveRight(FullBoard board, int fieldSize,
                                                boolean isRowMultiHighlight, boolean isColumnMultiHighlight){
                 final int targetX;
@@ -218,7 +268,21 @@ class ExecuteMoveHandler {
             }
         }
 
+        /**
+         * Contains  necessary methods for correct use of the bomb joker.
+         */
         private static class Bomb {
+
+            /**
+             * Handles bomb creation and movement, is also responsible for moving the highlight and radius of the
+             * bomb joker. Will change the player after an successful explosion and deactivates the bomb joker for
+             * the player.
+             *
+             * @param game          The current game.
+             * @param move          The desired move of the currently active player.
+             * @param board         The current board.
+             * @param activePlayer  The currently active player in the game.
+             */
             private static void createBombJoker(FullGame game, Move move, FullBoard board, FullPlayer activePlayer) {
 
                 if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
@@ -245,6 +309,13 @@ class ExecuteMoveHandler {
                 }
             }
 
+            /**
+             * Executes the bomb joker at the column of the highlight
+             *
+             * @param game              The current game.
+             * @param targetHighlight   The currently highlighted field, used to determine column.
+             * @param board             The current board.
+             */
             private static void executeBombJoker(FullGame game, Field targetHighlight, FullBoard board) {
 
                 final Field lowestFreeField = getLowestFreeField(targetHighlight, board);
@@ -338,6 +409,14 @@ class ExecuteMoveHandler {
             }
         }
 
+        /**
+         * Based on the joker decides which stones should be removed
+         *
+         * @param board     The current board.
+         * @param highlight The highlight of the Joker, only needed for the bomb Joker
+         * @param game      The current game, is needed to determine currently active Joker
+         * @return          Stones that need to be removed
+         */
         private static List<Field> getStonesToRemove(FullBoard board, Field highlight, FullGame game){
             final List<Field> stonesToRemove;
             PlayerActiveJoker currentJoker = game.getActiveJoker();
@@ -361,6 +440,13 @@ class ExecuteMoveHandler {
             return stonesToRemove;
         }
 
+        /**
+         * Returns the lowest free field on the column in the given board .
+         *
+         * @param targetHighlight   The highlight, is being used to determine column
+         * @param board             The current board
+         * @return                  The lowest free Field on the same column as the highlight.
+         */
         private static Field getLowestFreeField(Field targetHighlight, FullBoard board) {
 
             final Field highestOccupiedField = board.getFields().stream()
@@ -379,10 +465,21 @@ class ExecuteMoveHandler {
             return lowestFreeField;
         }
 
+        /**
+         * Deletes all Stones its being given from the board.
+         *
+         * @param board             The board stones are being removed from.
+         * @param stonesToBeRemoved Stones which should be removed.
+         */
         private static void deleteStones(FullBoard board, List<Field> stonesToBeRemoved){
             stonesToBeRemoved.forEach(board::removeStone);
         }
 
+        /**
+         * Return all fields on the board without checking if they are occupied
+         *
+         * @return All Fields on the board.
+         */
         private static List<Field> getAllFieldsOnBoard() {
             final int fieldSize = 8;
 
@@ -392,10 +489,22 @@ class ExecuteMoveHandler {
         }
     }
 
+    /**
+     * The constructor of this class shouldn't be called, if it is then throw an UnsupportedOperationException
+     */
     public ExecuteMoveHandler() {
         throw new UnsupportedOperationException("Class only for static usage, do not create Objects.");
     }
 
+    /**
+     * Will execute a move, based on the current move and player
+     *
+     * @param move              The desired move.
+     * @param currentHighlight  All highlighted fields.
+     * @param game              The current game.
+     * @param board             The current board.
+     * @param activePlayer      The currently active player
+     */
     static void onExecute(Move move, List<Field> currentHighlight, FullGame game, FullBoard board, FullPlayer activePlayer) {
         final Field fieldSelected = currentHighlight.get(0);
 
@@ -481,6 +590,13 @@ class ExecuteMoveHandler {
 
     }
 
+    /**
+     * Prevents the player from moving beyond the board on the left and right side.
+     *
+     * @param adderX                    Sets how much the xCoordinate is being moved.
+     * @param targetFieldXCoordinate    xCoordinate of the highlighted field.
+     * @return
+     */
     private static int fieldOverflowX(int adderX, int targetFieldXCoordinate) {
         //Player stands at 0 and then goes to the left to comes to rest at Fieldsize -1 or the other way around
         final int fieldSize = 8;
@@ -528,6 +644,13 @@ class ExecuteMoveHandler {
         board.setHighlight(List.of(Factory.makeField(targetFieldXCoordinate, 0, PlayerID.NONE)));
     }
 
+    /**
+     * Creates a stone and lets it fall.
+     *
+     * @param currentHighlight The currently highlighted field.
+     * @param game The current game.
+     * @param board The current board.
+     */
     private static void createStone(List<Field> currentHighlight, FullGame game, FullBoard board) {
         final int targetXCoordinate = currentHighlight.get(0).xCoordinate();
         final int xCoordinate;
@@ -551,6 +674,11 @@ class ExecuteMoveHandler {
         board.placeStone(Factory.makeField(xCoordinate, yCoordinate, game.getActivePlayer()));
     }
 
+    /**
+     * Changes the current player of the game.
+     *
+     * @param game The current game
+     */
     private static void changePlayer(FullGame game) {
         game.setActivePlayer(game.getActivePlayer() == PlayerID.PLAYER_1 ? PlayerID.PLAYER_2 : PlayerID.PLAYER_1);
     }
