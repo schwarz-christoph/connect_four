@@ -2,6 +2,7 @@ package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.TestUtility;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -587,4 +588,83 @@ public class BombJokerTest {
 
         assertEquals(want, actual);
     }
+
+    @Test
+    public void bombJokerUsedTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        String beforeBomb = "........" +
+                "GGG....." +
+                "GGG....." +
+                "BBB....." +
+                "GGG....." +
+                "GGG....." +
+                "GGG.....";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        String afterBomb = "........" +
+                "..G....." +
+                ".GG....." +
+                "BBB....." +
+                "GGG....." +
+                "GGG....." +
+                "GGG.....";
+        //act
+        assertTrue(player1.isBombJokerUsed());
+    }
+
+    @Test
+    public void bombJokerChangePlayerTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        String beforeBomb = "........" +
+                "GGG....." +
+                "GGG....." +
+                "BBB....." +
+                "GGG....." +
+                "GGG....." +
+                "GGG.....";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        String afterBomb = "........" +
+                "..G....." +
+                ".GG....." +
+                "BBB....." +
+                "GGG....." +
+                "GGG....." +
+                "GGG.....";
+        //act
+        PlayerID wantNextPlayer = PlayerID.PLAYER_2;
+        PlayerID haveNextPlayer = game.getActivePlayer();
+        assertEquals(wantNextPlayer, haveNextPlayer);
+    }
+
 }

@@ -6,6 +6,7 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -18,6 +19,35 @@ import static org.junit.Assert.assertTrue;
 public class DeleteJokerTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
+
+    @Test
+    public void deleteJokerUsedTestTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
+        String boardState = "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "GB......";
+        TestUtility.createBoardState(board, boardState);
+
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+        //assert
+        assertTrue(player2.isDeleteJokerUsed());
+    }
 
     @Test
     public void deleteJokerSingleFieldHighlightTest() {
