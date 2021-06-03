@@ -343,25 +343,25 @@ class ExecuteMoveHandler {
                 //If list ist empty than no stones need to be updated, otherwise the lower stone that needs to be updated
 
                 if (!stonesToUpdate.isEmpty()) {
-                    final Field lowestOccupied;
+                    final Field lowestToUpdate;
 
-                    lowestOccupied = stonesToUpdate.stream()
+                    lowestToUpdate = stonesToUpdate.stream()
                             .max(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-                    Field lowestFreeField = board.getFields().stream()
+                    Field highestOccupied = board.getFields().stream()
                             .filter(field -> Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius)
                             .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
                             .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
                     final int fallSize;
-                    if (lowestFreeField == null) {
+                    if (highestOccupied == null) {
                         final int yGround = 7;
-                        fallSize = yGround - lowestOccupied.yCoordinate();
+                        fallSize = yGround - lowestToUpdate.yCoordinate();
                     } else {
-                        lowestFreeField = Factory.makeField(
-                                lowestFreeField.xCoordinate(), lowestFreeField.yCoordinate() - 1, lowestFreeField.owner());
+                        highestOccupied = Factory.makeField(
+                                highestOccupied.xCoordinate(), highestOccupied.yCoordinate() - 1, highestOccupied.owner());
 
-                        fallSize = lowestFreeField.yCoordinate() - lowestOccupied.yCoordinate();
+                        fallSize = highestOccupied.yCoordinate() - lowestToUpdate.yCoordinate();
                     }
 
                     //Replace old stone positions with updated ones by fallsize
@@ -644,18 +644,12 @@ class ExecuteMoveHandler {
         final int fieldSize = 8;
 
         final List<Field> allFields = board.getFields();
-
-        if (allFields.isEmpty()) {
-            xCoordinate = targetXCoordinate;
-            yCoordinate = fieldSize - 1;
-        } else {
-            xCoordinate = targetXCoordinate;
-            yCoordinate = allFields.stream()
-                    .filter(n -> n.xCoordinate() == targetXCoordinate)
-                    .min(Comparator.comparing(Field::yCoordinate))
-                    .map(field -> field.yCoordinate() - 1)
-                    .orElse(fieldSize - 1);
-        }
+        xCoordinate = targetXCoordinate;
+        yCoordinate = allFields.stream()
+                .filter(n -> n.xCoordinate() == targetXCoordinate)
+                .min(Comparator.comparing(Field::yCoordinate))
+                .map(field -> field.yCoordinate() - 1)
+                .orElse(fieldSize - 1);
 
         board.placeStone(Factory.makeField(xCoordinate, yCoordinate, game.getActivePlayer()));
     }

@@ -223,6 +223,32 @@ public class ExecuteMoveTest {
     }
 
     @Test
+    public void playerCreateStoneTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        String afterCreateStone = "........" +
+                                  "........" +
+                                  "........" +
+                                  "........" +
+                                  "........" +
+                                  "........" +
+                                  "..G.....";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterCreateStone);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.DOWN);
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = board.getFields();
+
+        //assert
+        assertEquals(want, actual);
+    }
+
+    @Test
     public void playerSelectStartGameTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
