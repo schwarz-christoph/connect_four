@@ -94,8 +94,7 @@ class ExecuteMoveHandler {
                 if (highlight.size() > 1) {
                     isColumnMultiHighlight =
                             highlight.stream().allMatch(field -> field.xCoordinate() == highlight.get(0).xCoordinate());
-                    isRowMultiHighlight =
-                            highlight.stream().allMatch(field -> field.yCoordinate() == highlight.get(0).yCoordinate());
+                    isRowMultiHighlight = !isColumnMultiHighlight;
                 } else {
                     isColumnMultiHighlight = false;
                     isRowMultiHighlight = false;
