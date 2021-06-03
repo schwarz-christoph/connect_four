@@ -94,7 +94,7 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     @Override
     public void setPlayerCount(int playerCount) {
 
-        if(playerCount < 0 || playerCount > 2){
+        if(playerCount < 1 || playerCount > 2){
             throw new IllegalArgumentException("Player Count must be between 1 and maxPlayerCount");
         }
 

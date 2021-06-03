@@ -111,7 +111,7 @@ public class FullConnectFourGameTest {
         final int want = 1;
 
         //act
-        subjectUnderTestGame.setPlayerCount(-1);
+        subjectUnderTestGame.setPlayerCount(0);
 
     }
 
