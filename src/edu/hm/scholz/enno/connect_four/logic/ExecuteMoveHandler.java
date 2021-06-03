@@ -350,7 +350,7 @@ class ExecuteMoveHandler {
                 //Get every stone which is in the radius and needs to be updated
                 final List<Field> stonesToUpdate;
                 stonesToUpdate = board.getFields().stream()
-                        .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
+                        .filter(field -> Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius)
                         .filter(field -> field.yCoordinate() < bombCenter.yCoordinate())
                         .collect(Collectors.toList());
 
@@ -364,7 +364,7 @@ class ExecuteMoveHandler {
 
 
                     Field lowestFreeField = board.getFields().stream()
-                            .filter(field -> (Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius))
+                            .filter(field -> Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius)
                             .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
                             .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
@@ -433,7 +433,7 @@ class ExecuteMoveHandler {
          */
         private static List<Field> getStonesToRemove(FullBoard board, Field highlight, FullGame game) {
             final List<Field> stonesToRemove;
-            PlayerActiveJoker currentJoker = game.getActiveJoker();
+            final PlayerActiveJoker currentJoker = game.getActiveJoker();
 
             if (currentJoker == PlayerActiveJoker.DELETE) {
                 stonesToRemove = board.getFields().stream()
@@ -442,7 +442,7 @@ class ExecuteMoveHandler {
                                         && field.yCoordinate() == highlightField.yCoordinate()))
                         .collect(Collectors.toList());
             } else {
-                Field lowestFreeField = getLowestFreeField(highlight, board);
+                final Field lowestFreeField = getLowestFreeField(highlight, board);
 
                 stonesToRemove = board.getFields().stream()
                         .filter(field -> (Math.abs(field.xCoordinate() - lowestFreeField.xCoordinate())
@@ -467,7 +467,7 @@ class ExecuteMoveHandler {
                     .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
 
-            Field lowestFreeField;
+            final Field lowestFreeField;
             if (highestOccupiedField == null) {
                 final int yGround = 7;
                 lowestFreeField = Factory.makeField(targetHighlight.xCoordinate(), yGround, PlayerID.NONE);
@@ -489,7 +489,7 @@ class ExecuteMoveHandler {
         }
 
         /**
-         * Return all fields on the board without checking if they are occupied
+         * Return all fields on the board without checking if they are occupied.
          *
          * @return All Fields on the board.
          */
@@ -503,7 +503,7 @@ class ExecuteMoveHandler {
     }
 
     /**
-     * Will execute a move, based on the current move and player
+     * Will execute a move, based on the current move and player.
      *
      * @param move             The desired move.
      * @param currentHighlight All highlighted fields.

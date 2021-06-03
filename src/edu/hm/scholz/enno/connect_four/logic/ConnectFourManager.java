@@ -23,9 +23,24 @@ import java.util.stream.Collectors;
  */
 public class ConnectFourManager implements GameManager {
 
+    /**
+     * the board.
+     */
     private FullBoard board;
+
+    /**
+     * the game.
+     */
     private FullGame game;
+
+    /**
+     * the player1.
+     */
     private FullPlayer player1;
+
+    /**
+     * the player2.
+     */
     private FullPlayer player2;
 
     /**
