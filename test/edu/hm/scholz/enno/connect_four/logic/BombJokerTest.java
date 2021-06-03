@@ -172,6 +172,25 @@ public class BombJokerTest {
     }
 
     @Test
+    public void bombJokerGetMoveTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+
+        //act
+        List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
+
+        //assert
+        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT);
+        assertEquals(want, have);
+    }
+
+    @Test
     public void bombJokerTestNoOverflow() {
         //arrange
         FullBoard board = Factory.makeBoard();
