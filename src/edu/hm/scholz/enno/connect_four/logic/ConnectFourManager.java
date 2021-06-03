@@ -197,6 +197,9 @@ public class ConnectFourManager implements GameManager {
         return result;
     }
 
+    /**
+     * @return The active player as a FullPlayer.
+     */
     private FullPlayer getActiveFullPLayer() {
         return game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
     }
@@ -205,6 +208,9 @@ public class ConnectFourManager implements GameManager {
         /**
          * All available Moves during the Game.
          *
+         * @param board        The board.
+         * @param game         The game.
+         * @param activePlayer The active player.
          * @return All valid moves.
          */
         private static List<Move> getMovesInRegularGame(Board board, Game game, FullPlayer activePlayer) {
@@ -271,10 +277,10 @@ public class ConnectFourManager implements GameManager {
         /**
          * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively).
          *
-         * @param xCoordinate Selected Coordinate.
+         * @param xCoordinate  Selected Coordinate.
          * @param targetPlayer the player who wants to select a joker.
-         * @param bombJoker the bombJokerJokerCoordinate from the current Player.
-         * @param deleteJoker the bombDeleteJokerCoordinate from the current Player.
+         * @param bombJoker    The bombJokerJokerCoordinate from the current Player.
+         * @param deleteJoker  The bombDeleteJokerCoordinate from the current Player.
          * @return All possible moves.
          */
         private static List<Move> jokerMenuMoves(int xCoordinate, FullPlayer targetPlayer, int bombJoker, int deleteJoker) {
@@ -305,20 +311,17 @@ public class ConnectFourManager implements GameManager {
         /**
          * Finds the accepted Moves on the regular board.
          *
+         * @param board  The board.
          * @param target The first Field of the highlight.
          * @return All possible Moves.
          */
         private static List<Move> boardSelection(Board board, Field target) {
             final List<Move> possibleMoves;
-            final boolean isFull;
             final int firstMatrixYCoordinate = 1;
 
-            if (board.getFields().isEmpty())
-                isFull = false;
-            else
-                isFull = board.getFields().stream()
-                        .filter(field -> field.xCoordinate() == target.xCoordinate())
-                        .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
+            final boolean isFull = board.getFields().stream()
+                    .filter(field -> field.xCoordinate() == target.xCoordinate())
+                    .anyMatch(field -> field.yCoordinate() == firstMatrixYCoordinate);
 
             if (isFull)
                 possibleMoves = List.of(Move.UP, Move.RIGHT, Move.LEFT);
@@ -341,6 +344,9 @@ public class ConnectFourManager implements GameManager {
     private static class WinHelper {
         /**
          * Sets the game state by checking if somebody won the game.
+         *
+         * @param board The board.
+         * @param game  The game.
          */
         private static void setGameState(Board board, FullGame game) {
             final List<Field> fields = board.getFields();
@@ -382,7 +388,7 @@ public class ConnectFourManager implements GameManager {
         }
 
         /**
-         * Proofs if the matrix contains a winning sequence.
+         * Checks if the matrix contains a winning sequence.
          *
          * @param fields all fields that need to be proved.
          * @return if the fields contain a winning sequence.
@@ -390,18 +396,24 @@ public class ConnectFourManager implements GameManager {
         private static boolean containsWinningSequence(List<Field> fields) {
             final boolean result;
 
-            if (winningSequenceRight(fields))
+            if (winningSequenceHorizontal(fields))
                 result = true;
-            else if (winningSequenceUp(fields))
+            else if (winningSequenceVertical(fields))
                 result = true;
-            else if (winningSequenceDiagonalUpLeftDownright(fields))
+            else if (winningSequenceDiagonalDownward(fields))
                 result = true;
-            else result = winningSequenceDiagonalRightUp(fields);
+            else result = winningSequenceDiagonalUpward(fields);
 
             return result;
         }
 
-        private static boolean winningSequenceRight(List<Field> fields) {
+        /**
+         * Checks if the provided list contains a winning sequence in horizontal direction.
+         *
+         * @param fields List to check for winning sequence.
+         * @return Whether the list contains a winning sequence or not.
+         */
+        private static boolean winningSequenceHorizontal(List<Field> fields) {
             final int maxAdderValue = 3;
             final int fieldSize = 8;
 
@@ -412,7 +424,13 @@ public class ConnectFourManager implements GameManager {
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate(), field.owner())));
         }
 
-        private static boolean winningSequenceUp(List<Field> fields) {
+        /**
+         * Checks if the provided list contains a winning sequence in vertical direction.
+         *
+         * @param fields List to check for winning sequence.
+         * @return Whether the list contains a winning sequence or not.
+         */
+        private static boolean winningSequenceVertical(List<Field> fields) {
             final int maxAdderValue = 3;
             final int fieldSize = 8;
 
@@ -423,7 +441,13 @@ public class ConnectFourManager implements GameManager {
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 3, field.owner())));
         }
 
-        private static boolean winningSequenceDiagonalUpLeftDownright(List<Field> fields) {
+        /**
+         * Checks if the provided list contains a winning sequence in diagonal downward direction.
+         *
+         * @param fields List to check for winning sequence.
+         * @return Whether the list contains a winning sequence or not.
+         */
+        private static boolean winningSequenceDiagonalDownward(List<Field> fields) {
             final int minAdderValue = 2;
 
             return fields.stream()
@@ -433,7 +457,13 @@ public class ConnectFourManager implements GameManager {
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() - 3, field.owner())));
         }
 
-        private static boolean winningSequenceDiagonalRightUp(List<Field> fields) {
+        /**
+         * Checks if the provided list contains a winning sequence in diagonal upward direction.
+         *
+         * @param fields List to check for winning sequence.
+         * @return Whether the list contains a winning sequence or not.
+         */
+        private static boolean winningSequenceDiagonalUpward(List<Field> fields) {
             final int maxAdderValue = 3;
             final int minAdderValue = 2;
             final int fieldSize = 8;
