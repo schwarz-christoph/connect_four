@@ -45,4 +45,8 @@ public class TestUtility {
         return Factory.makeField(fieldXCoordinate, fieldYCoordinate, PlayerID.NONE);
     }
 
+    public static boolean equalsListFields(List<Field> fst, List<Field> snd){
+        return fst.size() == snd.size() && fst.containsAll(snd) && snd.containsAll(fst);
+    }
+
 }

@@ -176,7 +176,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -211,7 +212,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -245,7 +247,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -280,7 +283,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -314,7 +318,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertEquals(expectedHighlight, board.getHighlight());
+        List<Field> have = board.getHighlight();
+        assertTrue(TestUtility.equalsListFields(expectedHighlight, have));
     }
 
     @Test
@@ -349,7 +354,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -384,7 +390,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -421,7 +428,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -458,7 +466,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -498,7 +507,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -532,7 +542,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertEquals(expectedHighlight, board.getHighlight());
+        List<Field> have = board.getHighlight();
+        assertTrue(TestUtility.equalsListFields(expectedHighlight, have));
     }
 
 
@@ -568,7 +579,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -606,7 +618,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
@@ -649,7 +662,8 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(expectedFields.containsAll(board.getFields()));
+        List<Field> have = board.getFields();
+        assertTrue(TestUtility.equalsListFields(expectedFields, have));
     }
 
     @Test
