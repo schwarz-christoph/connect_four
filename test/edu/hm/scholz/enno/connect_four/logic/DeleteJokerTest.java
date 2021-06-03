@@ -18,8 +18,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class DeleteJokerTest {
-    @Rule
-    public Timeout globalTimeout = Timeout.millis(1_000);
+//    @Rule
+//    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Test
     public void deleteJokerUsedTest() {
@@ -48,6 +48,37 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
         //assert
         assertTrue(player2.isDeleteJokerUsed());
+    }
+
+    @Test
+    public void deleteJokerChangePlayerTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
+        String boardState = "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "GB......";
+        TestUtility.createBoardState(board, boardState);
+
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+        //assert
+        PlayerID wantActivePlayer = PlayerID.PLAYER_1;
+        PlayerID haveActivePlayer = game.getActivePlayer();
+        assertEquals(wantActivePlayer, haveActivePlayer);
     }
 
     @Test
@@ -145,7 +176,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -180,7 +211,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -214,7 +245,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -249,7 +280,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -318,7 +349,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -353,7 +384,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -390,7 +421,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -427,7 +458,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -464,12 +495,10 @@ public class DeleteJokerTest {
         manager.executeMove(Move.UP);
         manager.executeMove(Move.UP);
         manager.executeMove(Move.UP);
-        manager.executeMove(Move.UP);
-        manager.executeMove(Move.UP);
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -539,7 +568,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -577,7 +606,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test
@@ -620,7 +649,7 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(board.getFields().containsAll(expectedFields));
+        assertTrue(expectedFields.containsAll(board.getFields()));
     }
 
     @Test

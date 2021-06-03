@@ -22,10 +22,6 @@ import java.util.stream.IntStream;
  * @author Enno Scholz (enno.scholz@hm.edu)
  * @version 04-20-2021
  */
-
-/**
- * This class handles the moves of the players and determines what should happen when executing a move.
- */
 class ExecuteMoveHandler {
 
     /**
@@ -41,7 +37,7 @@ class ExecuteMoveHandler {
     private static class Joker {
 
         /**
-         * Contains  necessary methods for correct use of the delete joker.
+         * Contains necessary methods for correct use of the delete joker.
          */
         private static class Delete {
             /**
@@ -54,7 +50,6 @@ class ExecuteMoveHandler {
             private static void createDeleteJokerHighlight(int targetX, int targetY, FullBoard board) {
                 final List<Field> newHighlights;
                 final int fieldSize = 8;
-
 
                 if (targetX == -1 || targetX == fieldSize)
                     //selected whole row
@@ -72,7 +67,6 @@ class ExecuteMoveHandler {
                             .filter(field -> field.xCoordinate() == targetX)
                             .filter(field -> field.yCoordinate() == targetY)
                             .collect(Collectors.toList());
-
 
                 board.setHighlight(newHighlights);
             }
@@ -95,7 +89,6 @@ class ExecuteMoveHandler {
                 } else {
                     //Joker currently in use
 
-
                     if (move == Move.CONFIRM) {
                         executeDeleteJoker(game, board);
                         //Player has used his Joker
@@ -104,21 +97,19 @@ class ExecuteMoveHandler {
                         //Change the Player
                         changePlayer(game);
                     } else {
-                        chooseDeleteJokerDirection(move, board,
-                                fieldSize);
+                        chooseDeleteJokerDirection(move, board);
                     }
-
                 }
             }
 
             /**
              * Determines in which direction the bomb joker is being moved.
              *
-             * @param move      The desired move.
-             * @param board     The current board.
-             * @param fieldSize The size of the board.
+             * @param move  The desired move.
+             * @param board The current board.
              */
-            private static void chooseDeleteJokerDirection(Move move, FullBoard board, int fieldSize) {
+            private static void chooseDeleteJokerDirection(Move move, FullBoard board) {
+                final int fieldSize = 8;
                 final List<Field> highlight = board.getHighlight();
                 final boolean isColumnMultiHighlight;
                 final boolean isRowMultiHighlight;
@@ -257,11 +248,10 @@ class ExecuteMoveHandler {
             /**
              * executes the delete joker and removes an occupied stone from the board.
              *
-             * @param game  the game
-             * @param board that is being used
+             * @param game  The game.
+             * @param board The board.
              */
             private static void executeDeleteJoker(FullGame game, FullBoard board) {
-
                 //Only needed for method call
                 final Field highlight = board.getHighlight().get(0);
 
@@ -298,7 +288,6 @@ class ExecuteMoveHandler {
              * @param activePlayer The currently active player in the game.
              */
             private static void createBombJoker(FullGame game, Move move, FullBoard board, FullPlayer activePlayer) {
-
                 if (game.getActiveJoker() == PlayerActiveJoker.NONE) {
                     //New in Joker
                     game.setActiveJoker(PlayerActiveJoker.BOMB);
@@ -331,9 +320,7 @@ class ExecuteMoveHandler {
              * @param board           The current board.
              */
             private static void executeBombJoker(FullGame game, Field targetHighlight, FullBoard board) {
-
                 final Field lowestFreeField = getLowestFreeField(targetHighlight, board);
-
                 final List<Field> stonesToRemove = getStonesToRemove(board, targetHighlight, game);
 
                 stonesToRemove.forEach(board::removeStone);
@@ -346,7 +333,6 @@ class ExecuteMoveHandler {
             }
 
             private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
-
                 //Get every stone which is in the radius and needs to be updated
                 final List<Field> stonesToUpdate;
                 stonesToUpdate = board.getFields().stream()
@@ -361,7 +347,6 @@ class ExecuteMoveHandler {
 
                     lowestOccupied = stonesToUpdate.stream()
                             .max(Comparator.comparing(Field::yCoordinate)).orElse(null);
-
 
                     Field lowestFreeField = board.getFields().stream()
                             .filter(field -> Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius)
@@ -395,7 +380,6 @@ class ExecuteMoveHandler {
              * @param board       The board.
              */
             private static void createBombJokerHighlight(int xCoordinate, FullBoard board) {
-
                 final Field targetHighlight = Factory.makeField(xCoordinate, 1, PlayerID.NONE);
                 List<Field> bombJokerHighlight = new ArrayList<>(List.of(targetHighlight));
 
@@ -461,7 +445,6 @@ class ExecuteMoveHandler {
          * @return The lowest free Field on the same column as the highlight.
          */
         private static Field getLowestFreeField(Field targetHighlight, FullBoard board) {
-
             final Field highestOccupiedField = board.getFields().stream()
                     .filter(field -> field.xCoordinate() == targetHighlight.xCoordinate())
                     .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
@@ -563,7 +546,6 @@ class ExecuteMoveHandler {
      * @param activePlayer           the currently active player.
      */
     private static void selectJoker(int targetFieldXCoordinate, FullGame game, FullBoard board, FullPlayer activePlayer) {
-
         final int player1BombJoker = 0;
         final int player2BombJoker = 7;
 
@@ -616,7 +598,6 @@ class ExecuteMoveHandler {
      * @param game             the active game.
      */
     private static void decideConfirmMatrix(List<Field> currentHighlight, FullGame game, FullBoard board) {
-
         createStone(currentHighlight, game, board); //Place a stone
         //Switch the player
         changePlayer(game);
