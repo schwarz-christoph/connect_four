@@ -595,7 +595,7 @@ class ExecuteMoveHandler {
      *
      * @param adderX                    Sets how much the xCoordinate is being moved.
      * @param targetFieldXCoordinate    xCoordinate of the highlighted field.
-     * @return
+     * @return the x coordinate with the overflow
      */
     private static int fieldOverflowX(int adderX, int targetFieldXCoordinate) {
         //Player stands at 0 and then goes to the left to comes to rest at Fieldsize -1 or the other way around
