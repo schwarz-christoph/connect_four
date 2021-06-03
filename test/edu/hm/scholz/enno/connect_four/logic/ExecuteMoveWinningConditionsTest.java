@@ -418,6 +418,42 @@ public class ExecuteMoveWinningConditionsTest {
     }
 
     @Test
+    public void executeMoveDiagonalUpperRightTest5() {
+
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
+                Factory.makeField(7, 2, PlayerID.NONE),
+                Factory.makeField(7, 3, PlayerID.NONE),
+                Factory.makeField(7, 4, PlayerID.NONE),
+                Factory.makeField(7, 5, PlayerID.NONE),
+                Factory.makeField(7, 6, PlayerID.NONE),
+                Factory.makeField(7, 7, PlayerID.NONE)));
+
+        //arrange stones
+        String boardState = "........" +
+                "G.....GB" +
+                ".....GBB" +
+                "....GBGG" +
+                "....GBGG" +
+                "....BGBB" +
+                "....BGBG";
+        TestUtility.createBoardState(board, boardState);
+
+        PlayerID wantWinner = PlayerID.NONE;
+
+        //act
+        PlayerID actualWinner = game.getWinner();
+
+        //assert
+        assertEquals(wantWinner, actualWinner);
+    }
+
+    @Test
     public void executeMoveDiagonalUpperLeftTest() {
 
         //arrange
