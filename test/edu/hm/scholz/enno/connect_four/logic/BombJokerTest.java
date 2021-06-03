@@ -1,13 +1,10 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.TestUtility;
-import edu.hm.scholz.enno.connect_four.datastore.Game;
-import edu.hm.scholz.enno.connect_four.datastore.Player;
-import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.*;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
-import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -665,6 +662,39 @@ public class BombJokerTest {
         PlayerID wantNextPlayer = PlayerID.PLAYER_2;
         PlayerID haveNextPlayer = game.getActivePlayer();
         assertEquals(wantNextPlayer, haveNextPlayer);
+    }
+
+    @Test
+    public void bombJokerUsedTestActiveJokerNull(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        String beforeBomb = "........" +
+                "GGG....." +
+                "GGG....." +
+                "BBB....." +
+                "GGG....." +
+                "GGG....." +
+                "GGG.....";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        //Start the game by selecting player 1
+        manager.executeMove(Move.CONFIRM);
+
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.LEFT);
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+
+        //act
+        PlayerActiveJoker want = PlayerActiveJoker.NONE;
+        PlayerActiveJoker have = game.getActiveJoker();
+        assertEquals(want, have);
     }
 
 }

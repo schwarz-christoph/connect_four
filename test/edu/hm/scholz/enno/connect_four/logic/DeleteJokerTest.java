@@ -2,6 +2,7 @@ package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.TestUtility;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -21,7 +22,7 @@ public class DeleteJokerTest {
     public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Test
-    public void deleteJokerUsedTestTest() {
+    public void deleteJokerUsedTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
@@ -47,6 +48,37 @@ public class DeleteJokerTest {
         manager.executeMove(Move.CONFIRM);
         //assert
         assertTrue(player2.isDeleteJokerUsed());
+    }
+
+    @Test
+    public void deleteJokerUsedTestActiveJokerNull() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(6, 0, PlayerID.NONE))); //Delete Joker Player 2
+        String boardState = "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "........" +
+                "GB......";
+        TestUtility.createBoardState(board, boardState);
+
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.CONFIRM);
+        //assert
+        PlayerActiveJoker want = PlayerActiveJoker.NONE;
+        PlayerActiveJoker have = game.getActiveJoker();
+        assertEquals(want, have);
     }
 
     @Test
