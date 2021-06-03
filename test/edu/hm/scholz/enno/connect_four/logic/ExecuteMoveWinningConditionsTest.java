@@ -426,17 +426,17 @@ public class ExecuteMoveWinningConditionsTest {
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
-        board.setHighlight(List.of(Factory.makeField(7, 1, PlayerID.NONE),
-                Factory.makeField(7, 2, PlayerID.NONE),
-                Factory.makeField(7, 3, PlayerID.NONE),
-                Factory.makeField(7, 4, PlayerID.NONE),
-                Factory.makeField(7, 5, PlayerID.NONE),
-                Factory.makeField(7, 6, PlayerID.NONE),
-                Factory.makeField(7, 7, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(1, 1, PlayerID.NONE),
+                Factory.makeField(1, 2, PlayerID.NONE),
+                Factory.makeField(1, 3, PlayerID.NONE),
+                Factory.makeField(1, 4, PlayerID.NONE),
+                Factory.makeField(1, 5, PlayerID.NONE),
+                Factory.makeField(1, 6, PlayerID.NONE),
+                Factory.makeField(1, 7, PlayerID.NONE)));
 
         //arrange stones
-        String boardState = "........" +
-                "G.....GB" +
+        String boardState = "GGGBBBGB" +
+                ".....GB" +
                 ".....GBB" +
                 "....GBGG" +
                 "....GBGG" +
@@ -447,6 +447,7 @@ public class ExecuteMoveWinningConditionsTest {
         PlayerID wantWinner = PlayerID.NONE;
 
         //act
+        manager.executeMove(Move.CONFIRM);
         PlayerID actualWinner = game.getWinner();
 
         //assert
