@@ -6,6 +6,7 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
@@ -20,14 +21,14 @@ public class ExecuteMoveTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
-    @Test (expected = UnsupportedOperationException.class)
-    public void createExecuteMoveHandlerExceptionTest(){
+    @Test(expected = UnsupportedOperationException.class)
+    public void createExecuteMoveHandlerExceptionTest() {
         //arrange, act
         ExecuteMoveHandler executeMoveHandler = new ExecuteMoveHandler();
     }
 
     @Test
-    public void executeMoveTest(){
+    public void executeMoveTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -54,7 +55,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void executeMoveGameNotStartedTest(){
+    public void executeMoveGameNotStartedTest() {
         int xBefore = 1;
 
         //arrange
@@ -78,7 +79,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void executeMoveNotAllowedMoveTest(){
+    public void executeMoveNotAllowedMoveTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -91,7 +92,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void executeMoveAllowedMoveTest(){
+    public void executeMoveAllowedMoveTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -104,7 +105,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerInEndScreenNoPlayerWonTest(){
+    public void playerInEndScreenNoPlayerWonTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -120,7 +121,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerInEndScreenRestartGameNoPlayerWonTest(){
+    public void playerInEndScreenRestartGameNoPlayerWonTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -139,7 +140,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerInEndScreenPlayerWonTest(){
+    public void playerInEndScreenPlayerWonTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -155,7 +156,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerInEndScreenRestartGamePlayerWonTest(){
+    public void playerInEndScreenRestartGamePlayerWonTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -174,7 +175,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerSelectTest(){
+    public void playerSelectTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -188,7 +189,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerSelectAddPlayerTest(){
+    public void playerSelectAddPlayerTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -204,7 +205,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerSelectRemovePlayerTest(){
+    public void playerSelectRemovePlayerTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -222,7 +223,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerSelectStartGameTest(){
+    public void playerSelectStartGameTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -237,7 +238,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerSelectFalseMoveTest(){
+    public void playerSelectFalseMoveTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -251,19 +252,19 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void falseMoveInMatrixTest(){
+    public void falseMoveInMatrixTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
         game.setIsStarted(true);
-        board.setHighlight(List.of(Factory.makeField(0,1, PlayerID.NONE),
-                Factory.makeField(0,2, PlayerID.NONE),
-                Factory.makeField(0,3, PlayerID.NONE),
-                Factory.makeField(0,4, PlayerID.NONE),
-                Factory.makeField(0,5, PlayerID.NONE),
-                Factory.makeField(0,6, PlayerID.NONE),
-                Factory.makeField(0,7, PlayerID.NONE)));
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
+                Factory.makeField(0, 2, PlayerID.NONE),
+                Factory.makeField(0, 3, PlayerID.NONE),
+                Factory.makeField(0, 4, PlayerID.NONE),
+                Factory.makeField(0, 5, PlayerID.NONE),
+                Factory.makeField(0, 6, PlayerID.NONE),
+                Factory.makeField(0, 7, PlayerID.NONE)));
 
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
@@ -275,7 +276,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void playerChangeTest(){
+    public void playerChangeTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -301,7 +302,7 @@ public class ExecuteMoveTest {
     }
 
     @Test
-    public void boardFullTest(){
+    public void boardFullTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
@@ -333,4 +334,49 @@ public class ExecuteMoveTest {
         assertEquals(want, have);
     }
 
+    @Test
+    public void playerDoubleSelectBombJokerTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.NONE)));
+
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        player1.useBombJoker();
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //act
+        List<Move> have = manager.getMoves(game.getActivePlayer());
+
+        //assert
+        List<Move> want = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+        assertEquals(want, have);
+    }
+
+    @Test
+    public void playerDoubleSelectDeleteJokerTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        board.setHighlight(List.of(Factory.makeField(1, 0, PlayerID.NONE)));
+
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(true);
+
+        FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
+        player1.useDeleteJoker();
+        FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game, player1, player2);
+
+        //act
+        List<Move> have = manager.getMoves(game.getActivePlayer());
+
+        //assert
+        List<Move> want = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+        assertEquals(want, have);
+    }
 }

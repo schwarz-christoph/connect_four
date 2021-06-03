@@ -8,6 +8,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,11 +53,12 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * Throws an IllegalArgumentException with the provided message if the provided object is null.
+     *
      * @param object  Object to check.
      * @param message Message to pass to Exception.
      */
     private void throwExceptionOnNull(Object object, String message) {
-        if(object == null)
+        if (object == null)
             throw new IllegalArgumentException(message);
     }
 
@@ -95,14 +97,20 @@ public class ConnectFourManager implements GameManager {
         return result;
     }
 
+
+    private FullPlayer getActiveFullPLayer() {
+        return game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+    }
+
     /**
      * If the Game hast started, no Winner and continues
+     *
      * @param move the move
      * @return if the move was successfully
      */
-    private boolean movesInActiveGame(Move move){
+    private boolean movesInActiveGame(Move move) {
         final boolean result;
-        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+        FullPlayer activePlayer = getActiveFullPLayer();
         final List<Move> allowedMoves = this.getMoves(activePlayer.getIdentifier());
         final boolean allowed = allowedMoves.stream()
                 .anyMatch(allowedMove -> allowedMove.equals(move));
@@ -212,7 +220,7 @@ public class ConnectFourManager implements GameManager {
         final boolean player2Win = containsWinningSequence(player2Fields);
         final boolean boardFull = fields.size() == 8 * 7;
 
-        if(player1Win || player2Win || boardFull) {
+        if (player1Win || player2Win || boardFull) {
             game.setWinner(getWinner(player1Win, player2Win));
             game.setActivePlayer(PlayerID.NONE);
         }
@@ -220,13 +228,14 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * Returns the winner. None if both or none are winning.
+     *
      * @param player1Win Whether Player1 has a winning sequence on board.
      * @param player2Win Whether Player2 has a winning sequence on board.
-     * @return           The PlayerID of the winner or NONE for a tie.
+     * @return The PlayerID of the winner or NONE for a tie.
      */
     private PlayerID getWinner(boolean player1Win, boolean player2Win) {
         final PlayerID winner;
-        if(player1Win ^ player2Win)
+        if (player1Win ^ player2Win)
             winner = player1Win ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
         else
             winner = PlayerID.NONE;
@@ -340,7 +349,7 @@ public class ConnectFourManager implements GameManager {
         else if (game.getActiveJoker() == PlayerActiveJoker.DELETE)
             possibleMoves = List.of(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
         else if (target.yCoordinate() == menuYCoordinate)
-            possibleMoves = menuSelection(target, game.getActivePlayer());
+            possibleMoves = menuSelection(target);
         else if (target.yCoordinate() == firstMatrixYCoordinate)
             possibleMoves = boardSelection(target);
         else
@@ -379,22 +388,43 @@ public class ConnectFourManager implements GameManager {
      * Finds the accepted Moves in the menu.
      *
      * @param target The first Field of the highlight.
-     * @param player The ID of the player which selects the menu
      * @return All possible Moves.
      */
-    private List<Move> menuSelection(Field target, PlayerID player) {
-        final List<Move> possibleMoves;
-        final int targetXCord = target.xCoordinate();
+    private List<Move> menuSelection(Field target) {
+
+        final FullPlayer targetPlayer = getActiveFullPLayer();
+        final int xCoordinate = target.xCoordinate();
 
         final int resetButton = 3;
         final int endButton = 4;
 
-        if(isSelectionInPlayersJokers(targetXCord, player) ||
-                targetXCord == resetButton ||
-                targetXCord == endButton)
+        List<Move> possibleMoves;
+
+        if (xCoordinate == resetButton || xCoordinate == endButton) {
             possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM);
-        else
-            possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+
+        } else {
+
+            final int player1BombJoker = 0;
+            final int player1DeleteJoker = 1;
+
+            final int player2DeleteJoker = 6;
+            final int player2BombJoker = 7;
+
+            final int bombJoker;
+            final int deleteJoker;
+
+            if (targetPlayer.getIdentifier() == PlayerID.PLAYER_1) {
+                bombJoker = player1BombJoker;
+                deleteJoker = player1DeleteJoker;
+            } else {
+                bombJoker = player2BombJoker;
+                deleteJoker = player2DeleteJoker;
+            }
+
+            possibleMoves = jokerMenuMoves(xCoordinate, targetPlayer, bombJoker, deleteJoker);
+        }
+
 
         return possibleMoves;
     }
@@ -403,13 +433,32 @@ public class ConnectFourManager implements GameManager {
      * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively)
      *
      * @param xCoordinate Selected Coordinate.
-     * @param playerID    Selecting Player.
-     * @return            Whether selection is in provided players jokers or not.
+     * @return Whether selection is in provided players jokers or not.
      */
-    private boolean isSelectionInPlayersJokers(int xCoordinate, PlayerID playerID) {
-        final int player1HighestJokerIndex = 1;
-        final int player2LowestJokerIndex = 6;
-        return (xCoordinate <= player1HighestJokerIndex && playerID == PlayerID.PLAYER_1)
-                || (xCoordinate >= player2LowestJokerIndex && playerID == PlayerID.PLAYER_2);
+    private List<Move> jokerMenuMoves(int xCoordinate, FullPlayer targetPlayer, int bombJoker, int deleteJoker) {
+
+        final List<Move> movesWithConfirm = List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM);
+        final List<Move> movesWithoutConfirm = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+
+        final List<Move> possibleMoves;
+
+        if (xCoordinate == bombJoker)
+            //BombJoker
+            if (targetPlayer.isBombJokerUsed())
+                possibleMoves = movesWithoutConfirm;
+            else
+                possibleMoves = movesWithConfirm;
+
+        else if (xCoordinate == deleteJoker)
+            //DeleteJoker
+            if (targetPlayer.isDeleteJokerUsed())
+                possibleMoves = movesWithoutConfirm;
+            else
+                possibleMoves = movesWithConfirm;
+
+        else
+            possibleMoves = movesWithoutConfirm;
+
+        return possibleMoves;
     }
 }
