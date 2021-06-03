@@ -1,6 +1,10 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
-import edu.hm.scholz.enno.connect_four.datastore.*;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
@@ -64,7 +68,7 @@ public class ConnectFourManager implements GameManager {
         final List<Move> possibleMoves;
         if (game.isStarted()) {
             if (game.getWinner() == PlayerID.NONE && game.getActivePlayer() != PlayerID.NONE)
-                possibleMoves = MoveHelper.getMovesInRegularGame(board, game);
+                possibleMoves = MoveHelper.getMovesInRegularGame(board, game, getActiveFullPLayer());
             else
                 possibleMoves = List.of(Move.CONFIRM);
         } else
@@ -102,7 +106,7 @@ public class ConnectFourManager implements GameManager {
      */
     private boolean executeMoveInActiveGame(Move move) {
         final boolean result;
-        final FullPlayer activePlayer = game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+        final FullPlayer activePlayer = getActiveFullPLayer();
         final List<Move> allowedMoves = this.getMoves(activePlayer.getIdentifier());
         final boolean allowed = allowedMoves.stream()
                 .anyMatch(allowedMove -> allowedMove.equals(move));
@@ -193,13 +197,17 @@ public class ConnectFourManager implements GameManager {
         return result;
     }
 
+    private FullPlayer getActiveFullPLayer() {
+        return game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
+    }
+
     private static class MoveHelper {
         /**
          * All available Moves during the Game.
          *
          * @return All valid moves.
          */
-        private static List<Move> getMovesInRegularGame(Board board, Game game) {
+        private static List<Move> getMovesInRegularGame(Board board, Game game, FullPlayer activePlayer) {
             final List<Move> possibleMoves;
             final List<Field> highlight = board.getHighlight();
             final Field target = highlight.get(0);
@@ -212,7 +220,7 @@ public class ConnectFourManager implements GameManager {
             else if (game.getActiveJoker() == PlayerActiveJoker.DELETE)
                 possibleMoves = List.of(Move.CONFIRM, Move.UP, Move.DOWN, Move.RIGHT, Move.LEFT);
             else if (target.yCoordinate() == menuYCoordinate)
-                possibleMoves = menuSelection(target, game.getActivePlayer());
+                possibleMoves = menuSelection(target, activePlayer);
             else if (target.yCoordinate() == firstMatrixYCoordinate)
                 possibleMoves = boardSelection(board, target);
             else
@@ -224,39 +232,74 @@ public class ConnectFourManager implements GameManager {
         /**
          * Finds the accepted Moves in the menu.
          *
-         * @param target The first Field of the highlight.
-         * @param player The ID of the player which selects the menu
+         * @param target       The first Field of the highlight.
+         * @param activePlayer The active player.
          * @return All possible Moves.
          */
-        private static List<Move> menuSelection(Field target, PlayerID player) {
-            final List<Move> possibleMoves;
-            final int targetXCord = target.xCoordinate();
-
+        private static List<Move> menuSelection(Field target, FullPlayer activePlayer) {
+            final int xCoordinate = target.xCoordinate();
             final int resetButton = 3;
             final int endButton = 4;
 
-            if (isSelectionInPlayersJokers(targetXCord, player) ||
-                    targetXCord == resetButton ||
-                    targetXCord == endButton)
+            final List<Move> possibleMoves;
+
+            if (xCoordinate == resetButton || xCoordinate == endButton) {
                 possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM);
-            else
-                possibleMoves = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+
+            } else {
+                final int player1BombJoker = 0;
+                final int player1DeleteJoker = 1;
+                final int player2DeleteJoker = 6;
+                final int player2BombJoker = 7;
+                final int bombJoker;
+                final int deleteJoker;
+
+                if (activePlayer.getIdentifier() == PlayerID.PLAYER_1) {
+                    bombJoker = player1BombJoker;
+                    deleteJoker = player1DeleteJoker;
+                } else {
+                    bombJoker = player2BombJoker;
+                    deleteJoker = player2DeleteJoker;
+                }
+
+                possibleMoves = jokerMenuMoves(xCoordinate, activePlayer, bombJoker, deleteJoker);
+            }
 
             return possibleMoves;
         }
 
         /**
-         * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively)
+         * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively).
          *
          * @param xCoordinate Selected Coordinate.
-         * @param playerID    Selecting Player.
-         * @return Whether selection is in provided players jokers or not.
+         * @param targetPlayer the player who wants to select a joker.
+         * @param bombJoker the bombJokerJokerCoordinate from the current Player.
+         * @param deleteJoker the bombDeleteJokerCoordinate from the current Player.
+         * @return All possible moves.
          */
-        private static boolean isSelectionInPlayersJokers(int xCoordinate, PlayerID playerID) {
-            final int player1HighestJokerIndex = 1;
-            final int player2LowestJokerIndex = 6;
-            return (xCoordinate <= player1HighestJokerIndex && playerID == PlayerID.PLAYER_1)
-                    || (xCoordinate >= player2LowestJokerIndex && playerID == PlayerID.PLAYER_2);
+        private static List<Move> jokerMenuMoves(int xCoordinate, FullPlayer targetPlayer, int bombJoker, int deleteJoker) {
+            final List<Move> movesWithConfirm = List.of(Move.RIGHT, Move.LEFT, Move.DOWN, Move.CONFIRM);
+            final List<Move> movesWithoutConfirm = List.of(Move.RIGHT, Move.LEFT, Move.DOWN);
+            final List<Move> possibleMoves;
+
+            if (xCoordinate == bombJoker)
+                //BombJoker
+                if (targetPlayer.isBombJokerUsed())
+                    possibleMoves = movesWithoutConfirm;
+                else
+                    possibleMoves = movesWithConfirm;
+
+            else if (xCoordinate == deleteJoker)
+                //DeleteJoker
+                if (targetPlayer.isDeleteJokerUsed())
+                    possibleMoves = movesWithoutConfirm;
+                else
+                    possibleMoves = movesWithConfirm;
+
+            else
+                possibleMoves = movesWithoutConfirm;
+
+            return possibleMoves;
         }
 
         /**
