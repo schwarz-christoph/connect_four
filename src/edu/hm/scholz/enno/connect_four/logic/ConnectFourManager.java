@@ -23,9 +23,24 @@ import java.util.stream.Collectors;
  */
 public class ConnectFourManager implements GameManager {
 
+    /**
+     * the board.
+     */
     private FullBoard board;
+
+    /**
+     * the game.
+     */
     private FullGame game;
+
+    /**
+     * the player1.
+     */
     private FullPlayer player1;
+
+    /**
+     * the player2.
+     */
     private FullPlayer player2;
 
     /**
@@ -198,6 +213,7 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
+     * The Active FullPlayer of the game
      * @return The active player as a FullPlayer.
      */
     private FullPlayer getActiveFullPLayer() {
@@ -367,9 +383,10 @@ public class ConnectFourManager implements GameManager {
                     .filter(field -> field.owner() == PlayerID.PLAYER_2)
                     .collect(Collectors.toList());
 
+            final int fieldSize = 8;
             final boolean player1Win = containsWinningSequence(player1Fields);
             final boolean player2Win = containsWinningSequence(player2Fields);
-            final boolean boardFull = fields.size() == 8 * 7;
+            final boolean boardFull = fields.size() == fieldSize * (fieldSize - 1);
 
             if (player1Win || player2Win || boardFull) {
                 game.setWinner(getWinner(player1Win, player2Win));
@@ -427,7 +444,7 @@ public class ConnectFourManager implements GameManager {
                     .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate(), field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate(), field.owner())))
-                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate(), field.owner())));
+                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + maxAdderValue, field.yCoordinate(), field.owner())));
         }
 
         /**
@@ -444,7 +461,7 @@ public class ConnectFourManager implements GameManager {
                     .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 2, field.owner())))
-                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 3, field.owner())));
+                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + maxAdderValue, field.owner())));
         }
 
         /**
@@ -455,12 +472,13 @@ public class ConnectFourManager implements GameManager {
          */
         private static boolean winningSequenceDiagonalDownward(List<Field> fields) {
             final int minAdderValue = 2;
+            final int maxAdderValue = 3;
 
             return fields.stream()
                     .filter(field -> field.xCoordinate() > minAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner())))
-                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() - 3, field.owner())));
+                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner())));
         }
 
         /**
@@ -477,7 +495,7 @@ public class ConnectFourManager implements GameManager {
                     .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
-                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + 3, field.yCoordinate() - 3, field.owner())));
+                    .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner())));
         }
     }
 }
