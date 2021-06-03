@@ -471,7 +471,6 @@ public class ConnectFourManager implements GameManager {
          */
         private static boolean winningSequenceDiagonalUpward(List<Field> fields) {
             final int maxAdderValue = 3;
-            final int minAdderValue = 2;
             final int fieldSize = 8;
 
             return fields.stream()
