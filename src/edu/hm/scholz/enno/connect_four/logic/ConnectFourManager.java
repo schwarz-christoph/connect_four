@@ -430,10 +430,13 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively)
+     * Checks if the provided xCoordinate is in the provided players joker fields (1,2 or 6,7 respectively).
      *
      * @param xCoordinate Selected Coordinate.
-     * @return Whether selection is in provided players jokers or not.
+     * @param targetPlayer the player who wants to selct a joker.
+     * @param bombJoker the bombJokerJokerCoordinate from the current Player.
+     * @param deleteJoker the bombDeleteJokerCoordinate from the current Player.
+     * @return All possible moves.
      */
     private List<Move> jokerMenuMoves(int xCoordinate, FullPlayer targetPlayer, int bombJoker, int deleteJoker) {
 
