@@ -722,4 +722,43 @@ public class BombJokerTest {
         assertEquals(want, have);
     }
 
+    @Test
+    public void bombJokerHighlightTestAllSidesFilledWithMoreBottom(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        game.setIsStarted(true);
+
+        String beforeBomb = "........" +
+                "........" +
+                ".BG.GB.." +
+                ".GB.BG.." +
+                ".BB.BB.." +
+                "GBB.GBGG" +
+                "GBGBGBGB";
+        TestUtility.createBoardState(board, beforeBomb);
+
+        board.setHighlight(List.of(Factory.makeField(0, 0, PlayerID.PLAYER_1)));
+        manager.executeMove(Move.CONFIRM);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+        manager.executeMove(Move.RIGHT);
+
+        String afterBomb = "........" +
+                           "........" +
+                           "........" +
+                           ".B...B.." +
+                           ".G...G.." +
+                           "GBG.GBGG" +
+                           "GBB.BBGB";
+        List<Field> want = TestUtility.getOccupiedFieldList(afterBomb);
+
+        //act
+        manager.executeMove(Move.CONFIRM);
+        List<Field> actual = board.getFields();
+
+        //assert
+        assertTrue(want.containsAll(actual));
+    }
 }
