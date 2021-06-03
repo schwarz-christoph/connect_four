@@ -358,10 +358,11 @@ class ExecuteMoveHandler {
                         final int yGround = 7;
                         fallSize = yGround - lowestToUpdate.yCoordinate();
                     } else {
-                        highestOccupied = Factory.makeField(
+                        //Take highest occupied and move this field one up to receive the next free field
+                        Field lowestFreeField = Factory.makeField(
                                 highestOccupied.xCoordinate(), highestOccupied.yCoordinate() - 1, highestOccupied.owner());
 
-                        fallSize = highestOccupied.yCoordinate() - lowestToUpdate.yCoordinate();
+                        fallSize = lowestFreeField.yCoordinate() - lowestToUpdate.yCoordinate();
                     }
 
                     //Replace old stone positions with updated ones by fallsize
