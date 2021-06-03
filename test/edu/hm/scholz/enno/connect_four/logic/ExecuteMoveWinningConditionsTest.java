@@ -362,7 +362,7 @@ public class ExecuteMoveWinningConditionsTest {
 
         //arrange stones
         String boardState = "........" +
-                "......GB" +
+                "G.....GB" +
                 ".....GBB" +
                 "....GBGG" +
                 "....GBGG" +
