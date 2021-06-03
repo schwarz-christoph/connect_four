@@ -238,6 +238,20 @@ public class ExecuteMoveTest {
     }
 
     @Test
+    public void canExecuteMove() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        boolean have = manager.executeMove(Move.CONFIRM);
+
+        //assert
+        assertTrue(have);
+    }
+
+    @Test
     public void playerSelectFalseMoveTest() {
         //arrange
         FullBoard board = Factory.makeBoard();

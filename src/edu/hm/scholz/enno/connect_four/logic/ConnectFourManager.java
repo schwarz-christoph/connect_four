@@ -428,7 +428,6 @@ public class ConnectFourManager implements GameManager {
 
             return fields.stream()
                     .filter(field -> field.xCoordinate() > minAdderValue)
-                    .filter(field -> field.yCoordinate() > minAdderValue)
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner())))
                     .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner())))
                     .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - 3, field.yCoordinate() - 3, field.owner())));
