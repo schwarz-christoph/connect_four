@@ -204,6 +204,9 @@ public class ConnectFourManager implements GameManager {
         return game.getActivePlayer() == PlayerID.PLAYER_1 ? player1 : player2;
     }
 
+    /**
+     * Nested class that contains methods for getting Moves.
+     */
     private static class MoveHelper {
         /**
          * All available Moves during the Game.
@@ -341,6 +344,9 @@ public class ConnectFourManager implements GameManager {
         }
     }
 
+    /**
+     * Nested class that contains methods for determining the winner of the game.
+     */
     private static class WinHelper {
         /**
          * Sets the game state by checking if somebody won the game.
