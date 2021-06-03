@@ -29,7 +29,7 @@ import java.util.stream.IntStream;
 class ExecuteMoveHandler {
 
     /**
-     * The constructor of this class shouldn't be called, if it is then throw an UnsupportedOperationException
+     * The constructor of this class shouldn't be called, if it is then throw an UnsupportedOperationException.
      */
     ExecuteMoveHandler() {
         throw new UnsupportedOperationException("Class only for static usage, do not create Objects.");
