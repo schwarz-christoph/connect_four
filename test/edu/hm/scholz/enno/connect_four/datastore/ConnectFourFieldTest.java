@@ -26,6 +26,22 @@ public class ConnectFourFieldTest {
         assertEquals(wantX, haveX);
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void xCoordinateOutOfBoundsNegativeTest() {
+        //arrange
+        final int x = -1;
+        final int y = 1;
+        final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void xCoordinateOutOfBoundsTest() {
+        //arrange
+        final int x = 8;
+        final int y = 1;
+        final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
+    }
+
     @Test
     public void yCoordinateTest() {
         //arrange
@@ -38,6 +54,22 @@ public class ConnectFourFieldTest {
 
         //assert
         assertEquals(wantY, haveY);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void yCoordinateOutOfBoundsNegativeTest() {
+        //arrange
+        final int x = 1;
+        final int y = -1;
+        final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void yCoordinateOutOfBoundsTest() {
+        //arrange
+        final int x = 1;
+        final int y = 8;
+        final Field subjectUnderTestField = Factory.makeField(x, y, PlayerID.PLAYER_1);
     }
 
     @Test
@@ -53,6 +85,14 @@ public class ConnectFourFieldTest {
 
         //assert
         assertEquals(wantID, haveID);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void ownerNullTest() {
+        //arrange
+        final int x = 1;
+        final int y = 2;
+        final Field subjectUnderTestField = Factory.makeField(x, y, null);
     }
 
     @Test
@@ -73,7 +113,7 @@ public class ConnectFourFieldTest {
         //arrange
         final int x = 1;
         final int y = 2;
-        final int secondX = 42;
+        final int secondX = 5;
         final PlayerID wantID = PlayerID.PLAYER_1;
         final Field subjectUnderTestField = Factory.makeField(x, y, wantID);
         final Field secondField = Factory.makeField(secondX, y, wantID);

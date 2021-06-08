@@ -34,6 +34,10 @@ final class FullConnectFourPlayer extends AbstractConnectFourObservable implemen
      * @param identifier The player ID.
      */
     FullConnectFourPlayer(PlayerID identifier) {
+        if(identifier == null){
+            throw new IllegalArgumentException("Player ID can't be null.");
+        }
+
         this.identifier = identifier;
         this.bombJokerUsed = false;
     }

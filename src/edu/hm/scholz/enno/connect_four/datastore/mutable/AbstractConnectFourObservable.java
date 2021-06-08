@@ -6,7 +6,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.Observer;
 import edu.hm.scholz.enno.connect_four.datastore.Player;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,33 +29,25 @@ abstract class AbstractConnectFourObservable implements Observable {
      * The constructor of the observable.
      */
     AbstractConnectFourObservable() {
-        this.observers = Collections.emptyList();
+        this.observers = new ArrayList<>();
     }
 
     @Override
     public void register(Observer observer) {
+        if(observer == null) {
+            throw new IllegalArgumentException("Observer can't be null.");
+        }
+
         observers.add(observer);
     }
 
     @Override
-    public void notifyObservers(Game game) {
-        for(Observer observer : observers) {
-            observer.updatePlayerSelect(game);
-            observer.updateWinner(game);
+    public void notifyObservers(Board board, Game game, Player player1, Player player2) {
+        if(game == null) {
+            throw new IllegalArgumentException("Observable can't be null.");
         }
-    }
-
-    @Override
-    public void notifyObservers(Board board, Player player) {
         for(Observer observer : observers) {
-            observer.updateMatrix(board, player);
-        }
-    }
-
-    @Override
-    public void notifyObservers(Board board) {
-        for(Observer observer : observers) {
-            observer.updateCursor(board);
+            observer.update(board, game, player1, player2);
         }
     }
 }

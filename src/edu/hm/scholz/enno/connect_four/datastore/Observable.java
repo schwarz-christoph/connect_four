@@ -14,29 +14,17 @@ public interface Observable {
     /**
      * To register changes.
      *
-     * @param observer The observer to register.
+     * @param observer The observer to register. Can't be null.
      */
     void register(Observer observer);
 
     /**
      * Communicates changes of the matrix to the registered observers.
      *
-     * @param board  Reference to datastore object.
-     * @param player Reference to datastore object.
+     * @param board   Reference to a board datastore object. Can't be null.
+     * @param game    Reference to a game datastore object. Can't be null.
+     * @param player1 Reference to a player datastore object. Can't be null.
+     * @param player2 Reference to another player datastore object. Can't be null.
      */
-    void notifyObservers(Board board, Player player);
-
-    /**
-     * Communicates changes of the Highlight to the registered observers.
-     *
-     * @param board Reference to datastore object.
-     */
-    void notifyObservers(Board board);
-
-    /**
-     * Communicates changes of the player select screen or the game winner to the registered observers.
-     *
-     * @param game Reference to datastore object.
-     */
-    void notifyObservers(Game game);
+    void notifyObservers(Board board, Game game, Player player1, Player player2);
 }

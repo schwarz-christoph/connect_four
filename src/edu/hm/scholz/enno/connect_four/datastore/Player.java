@@ -9,7 +9,7 @@ package edu.hm.scholz.enno.connect_four.datastore;
  * @version 04-01-2021
  */
 
-public interface Player {
+public interface Player extends Observable {
 
     @SuppressWarnings("PMD.CommentRequired")
     PlayerID getIdentifier();

@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.datastore;
 
+
 /**
  * A field.
  *
@@ -13,4 +14,15 @@ package edu.hm.scholz.enno.connect_four.datastore;
  */
 
 public record ConnectFourField(int xCoordinate, int yCoordinate, PlayerID owner) implements Field {
+    public ConnectFourField {
+        final int fieldSize = 8;
+        if(xCoordinate < 0 || xCoordinate >= fieldSize)
+            throw new IllegalArgumentException("xCoordinate can't be less than 0 or greater than FieldSize.");
+
+        if(yCoordinate < 0 || yCoordinate >= fieldSize)
+            throw new IllegalArgumentException("yCoordinate can't be less than 0 or greater than FieldSize.");
+
+        if(owner == null)
+            throw new IllegalArgumentException("Owner can't be null.");
+    }
 }

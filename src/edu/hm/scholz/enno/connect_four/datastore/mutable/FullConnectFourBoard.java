@@ -15,7 +15,7 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-final class FullConnectFourBoard  extends AbstractConnectFourObservable implements FullBoard {
+final class FullConnectFourBoard extends AbstractConnectFourObservable implements FullBoard {
 
     /**
      * A list of occupied fields.
@@ -36,6 +36,10 @@ final class FullConnectFourBoard  extends AbstractConnectFourObservable implemen
 
     @Override
     public void placeStone(Field field) {
+        if(field == null) {
+            throw new IllegalArgumentException("Field cant be null");
+        }
+
         allOccupiedFields.add(field);
     }
 
@@ -46,6 +50,10 @@ final class FullConnectFourBoard  extends AbstractConnectFourObservable implemen
 
     @Override
     public void setHighlight(List<Field> fields) {
+        if(fields == null) {
+            throw new IllegalArgumentException("Highlight cant be null");
+        }
+
         highlight = fields;
     }
 

@@ -9,7 +9,7 @@ package edu.hm.scholz.enno.connect_four.datastore;
  * @version 04-01-2021
  */
 
-public interface Game {
+public interface Game extends Observable {
 
     @SuppressWarnings("PMD.CommentRequired")
     Board getBoard();
@@ -25,4 +25,7 @@ public interface Game {
 
     @SuppressWarnings("PMD.CommentRequired")
     int getPLayerCount();
+
+    @SuppressWarnings("PMD.CommentRequired")
+    PlayerActiveJoker getActiveJoker();
 }

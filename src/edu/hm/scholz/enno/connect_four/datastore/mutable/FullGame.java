@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 
@@ -12,16 +13,31 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
  * @version 04-01-2021
  */
 
-public interface FullGame extends Game {
-    @SuppressWarnings("PMD.CommentRequired")
+public interface FullGame extends Game{
+    /**
+     * Sets the active Player.
+     * @param activePlayer the active player
+     * @throws IllegalArgumentException if the activePlayer is null
+     */
     void setActivePlayer(PlayerID activePlayer);
 
-    @SuppressWarnings("PMD.CommentRequired")
+    /**
+     * Set the winner of the game.
+     * @param winner Winner of the game. Can't be null.
+     * @throws IllegalArgumentException if the winner is null
+     */
     void setWinner(PlayerID winner);
 
     @SuppressWarnings("PMD.CommentRequired")
     void setIsStarted(boolean isStarted);
 
-    @SuppressWarnings("PMD.CommentRequired")
+    /**
+     * Set the playerCount of the game.
+     * @param playerCount Amount of players. Needs to be between 1 and maxPlayerCount (specified in settings).
+     * @throws IllegalArgumentException if the player count is to low or high
+     */
     void setPlayerCount(int playerCount);
+
+    @SuppressWarnings("PMD.CommentRequired")
+    void setActiveJoker(PlayerActiveJoker activeJoker);
 }

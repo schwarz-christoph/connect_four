@@ -1,6 +1,7 @@
 package edu.hm.scholz.enno.connect_four.datastore.mutable;
 
 import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 
 /**
@@ -40,25 +41,48 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     private boolean startedGame;
 
     /**
+     * Status of joker usage. True when joker is being used, otherwise false.
+     */
+    private PlayerActiveJoker playerActiveJoker;
+
+    /**
      * Make a Game.
      *
      * @param startingPlayer Player who starts.
      * @param board          The Board of the Game.
+     * @throws IllegalArgumentException if the board, ir the player is null
      */
     FullConnectFourGame(PlayerID startingPlayer, Board board) {
+        if (board == null) {
+            throw new IllegalArgumentException("Board can't be null.");
+        }
+
+        if(startingPlayer == null){
+            throw new IllegalArgumentException("Player can't be null.");
+        }
+
         this.board = board;
         this.currentPlayer = startingPlayer;
         this.gameWinner = PlayerID.NONE;
         this.humanPlayers = 1; //Default value for one player
+        this.playerActiveJoker = PlayerActiveJoker.NONE;
     }
 
     @Override
     public void setActivePlayer(PlayerID activePlayer) {
+        if (activePlayer == null){
+            throw new IllegalArgumentException("activePlayer cant be null");
+        }
+
         currentPlayer = activePlayer;
     }
 
     @Override
     public void setWinner(PlayerID winner) {
+        if (winner == null){
+            throw new IllegalArgumentException("winner cant be null");
+        }
+
         gameWinner = winner;
     }
 
@@ -69,7 +93,17 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
 
     @Override
     public void setPlayerCount(int playerCount) {
+
+        if(playerCount < 1 || playerCount > 2){
+            throw new IllegalArgumentException("Player Count must be between 1 and maxPlayerCount");
+        }
+
         humanPlayers = playerCount;
+    }
+
+    @Override
+    public void setActiveJoker(PlayerActiveJoker isJokerInUse) {
+        this.playerActiveJoker = isJokerInUse;
     }
 
     @Override
@@ -95,5 +129,10 @@ final class FullConnectFourGame extends AbstractConnectFourObservable implements
     @Override
     public int getPLayerCount() {
         return humanPlayers;
+    }
+
+    @Override
+    public PlayerActiveJoker getActiveJoker() {
+        return playerActiveJoker;
     }
 }

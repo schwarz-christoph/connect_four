@@ -20,6 +20,23 @@ public class FullConnectFourBoardTest {
     final PlayerID player1 = PlayerID.PLAYER_1;
     final PlayerID player2 = PlayerID.PLAYER_2;
 
+    @Test (expected = IllegalArgumentException.class)
+    public void placeStoneIsNull(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+
+        //act
+        board.placeStone(null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void setHighlightIsNull(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+
+        //act
+        board.setHighlight(null);
+    }
 
     @Test
     public void placeSingleStoneTest() {

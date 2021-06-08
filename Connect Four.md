@@ -353,13 +353,13 @@ Wenn die ganze Matrix voll ist ohne das ein Spieler eine Sequenz von 4 Steinen l
   0 1 2 3 4 5 6 7 
  +===============+
 0|G B G B G B G B|
-0|B G B G B G B G|
-0|G B G B G B G B|
-0|B G B G B G B G|
-0|G B G B G B G B|
-0|B G B G B G B G|
-0|G B G B G B G B|
-0|B G B G B G B G|
+1|G B G B G B G B|
+2|G B G B G B G B|
+3|G B G B G B G B|
+4|G B G B G B G B|
+5|G B G B G B G B|
+6|G B G B G B G B|
+7|G B G B G B G B|
  +===============+
 ```
 *Spieler 1 hat gewonnen.*

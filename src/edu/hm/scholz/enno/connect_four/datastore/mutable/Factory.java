@@ -69,4 +69,5 @@ public interface Factory {
     static FullPlayer makePlayer(PlayerID identifier) {
         return new FullConnectFourPlayer(identifier);
     }
+
 }

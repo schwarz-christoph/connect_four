@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.datastore;
 
+
 import java.util.List;
 
 /**
@@ -11,11 +12,12 @@ import java.util.List;
  * @version 04-01-2021
  */
 
-public interface Board {
+public interface Board extends Observable {
 
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getFields();
 
     @SuppressWarnings("PMD.CommentRequired")
     List<Field> getHighlight();
+
 }
