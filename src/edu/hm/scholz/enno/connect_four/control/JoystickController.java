@@ -26,8 +26,8 @@ public class JoystickController implements Control{
     }
 
     @Override
-    public void step() {
-
+    public boolean step() {
+        throw new UnsupportedOperationException("Ned benutzen du depp");
     }
 
     @Override
