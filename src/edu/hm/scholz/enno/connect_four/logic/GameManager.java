@@ -21,9 +21,9 @@ public interface GameManager {
     List<Move> getMoves(PlayerID playerID);
 
     /**
-     * Executes the provided move, updates the datastore and notifies the observers.
+     * Executes the provided move, updates the datastore, notifies the observers and returns the next active player.
      * @param move Move to execute.
-     * @return if the move was successfully.
+     * @return The next active player. Can be the same player as before the turn.
      */
-    boolean executeMove(Move move);
+    PlayerID executeMove(Move move);
 }

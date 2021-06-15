@@ -40,7 +40,7 @@ public class LoopMain {
         final GameManager rules = LogicFactory.makeGameManager(board, game, player1, player2);
 
         // Liste von Views
-        final List<View> views = List.of(new ConnectFourPixelGridView(board, game, player1, player2, ui));
+        final List<View> views = List.of(new ConnectFourPixelGridView());
 
         // Liste von Controls, eine fuer jeden Spieler
         final List<Control> controls = List.of(
