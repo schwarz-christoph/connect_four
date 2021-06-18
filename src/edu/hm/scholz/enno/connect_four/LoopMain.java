@@ -28,7 +28,7 @@ public class LoopMain {
      */
     public static void main(String... args) throws IOException {
         // I/O fuer Views und Controls
-        final UI ui = UI.make();
+        final UI ui = UI.make("awt", 8);
 
         // Datastore
         final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
@@ -40,7 +40,7 @@ public class LoopMain {
         final GameManager rules = LogicFactory.makeGameManager(board, game, player1, player2);
 
         // Liste von Views
-        final List<View> views = List.of(new ConnectFourPixelGridView());
+        final List<View> views = List.of(new ConnectFourPixelGridView(ui));
 
         // Liste von Controls, eine fuer jeden Spieler
         final List<Control> controls = List.of(
