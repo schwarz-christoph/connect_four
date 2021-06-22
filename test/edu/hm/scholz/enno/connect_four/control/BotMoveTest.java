@@ -1,10 +1,18 @@
 package edu.hm.scholz.enno.connect_four.control;
 
+import edu.hm.scholz.enno.connect_four.TestUtility;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
+import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
+import static org.junit.Assert.assertEquals;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(Parameterized.class)
@@ -15,58 +23,58 @@ public class BotMoveTest {
     @Parameterized.Parameters(name = "Bot Move: {0} get List: {2}")
     public static Iterable<Object[]> testCasesBotMovesTest() {
         return List.of(new Object[][]{
-                {BotMove.BOT_COLUMN_0, "........" +
+                {BotMove.BOT_COLUMN_0, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
-                {BotMove.BOT_COLUMN_1, "........" +
+                {BotMove.BOT_COLUMN_1, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
-                {BotMove.BOT_COLUMN_2, "........" +
+                {BotMove.BOT_COLUMN_2, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
-                {BotMove.BOT_COLUMN_3, "........" +
+                {BotMove.BOT_COLUMN_3, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
-                {BotMove.BOT_COLUMN_4, "........" +
+                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
+                {BotMove.BOT_COLUMN_4, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
-                {BotMove.BOT_COLUMN_5, "........" +
+                {BotMove.BOT_COLUMN_5, ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT, Move.LEFT)},
+                        List.of(Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
                 {BotMove.BOT_COLUMN_6, "........" +
                         ".......H" +
@@ -75,87 +83,87 @@ public class BotMoveTest {
                         ".......H" +
                         ".......H" +
                         ".......H",
-                        List.of(Move.LEFT)},
-
-                {BotMove.BOT_COLUMN_7, ".......H" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........",
-                        List.of(Move.DOWN)},
-
-                {BotMove.BOT_COLUMN_0, "H......." +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........" +
-                        "........",
-                        List.of(Move.DOWN)},
-
-                {BotMove.BOT_COLUMN_1, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT)},
-
-                {BotMove.BOT_COLUMN_2, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT)},
-
-                {BotMove.BOT_COLUMN_3, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT)},
-                {BotMove.BOT_COLUMN_4, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
-
-                {BotMove.BOT_COLUMN_5, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
-
-                {BotMove.BOT_COLUMN_6, "........" +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H......." +
-                        "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
+                        List.of(Move.LEFT, Move.CONFIRM)},
 
                 {BotMove.BOT_COLUMN_7, "........" +
+                        ".......H" +
+                        ".......H" +
+                        ".......H" +
+                        ".......H" +
+                        ".......H" +
+                        ".......H",
+                        List.of(Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_0, "H......." +
                         "H......." +
                         "H......." +
                         "H......." +
                         "H......." +
                         "H......." +
                         "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
+                        List.of(Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_1, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_2, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_3, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
+                {BotMove.BOT_COLUMN_4, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_5, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_6, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
+
+                {BotMove.BOT_COLUMN_7, "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H......." +
+                        "H.......",
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
 
                 {BotMove.BOT_BOMB_JOKER, "........" +
                         ".....H.." +
@@ -164,7 +172,7 @@ public class BotMoveTest {
                         ".....H.." +
                         ".....H.." +
                         ".....H..",
-                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
 
                 {BotMove.BOT_DELETE_JOKER, "........" +
                         ".....H.." +
@@ -173,24 +181,33 @@ public class BotMoveTest {
                         ".....H.." +
                         ".....H.." +
                         ".....H..",
-                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
+                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
         });
     }
 
-    private final BotMove move;
-    private final String field;
-    private final List<Move> resultMoves;
+    private final BotMove botMove;
+    private final String fieldString;
+    private final List<Move> wantMoves;
 
-    public BotMoveTest(BotMove move, String field, List<Move> resultMoves){
-        this.move = move;
-        this.field = field;
-        this.resultMoves = resultMoves;
+    public BotMoveTest(BotMove botMove, String fieldString, List<Move> wantMoves){
+        this.botMove = botMove;
+        this.fieldString = fieldString;
+        this.wantMoves = wantMoves;
     }
 
     @Test
-    public void translate() {
+    public void translateTest() {
 
+        //arrange
+        List<Move> result;
+        FullBoard board = Factory.makeBoard();
+        board.setHighlight(TestUtility.getHighlightedFieldList(fieldString));
+        Game game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
+        //act
+        result = BotMove.translate(botMove, game, PlayerID.PLAYER_1);
 
+        //assert
+        assertEquals(wantMoves, result);
     }
 }

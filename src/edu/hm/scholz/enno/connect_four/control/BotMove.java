@@ -18,15 +18,22 @@ public enum BotMove {
         int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
 
         List<Move> result = new ArrayList<>();
-        result.add(getMoveYCoordinate(move, game));
+
+        Move yMove = getMoveYCoordinate(move, game);
+
+        if(yMove != null){
+            result.add(yMove);
+        }
+
+
 
 
         if (targetCordX < currentXCord)
-            IntStream.range(0, currentXCord + 1 - targetCordX)
+            IntStream.range(0, currentXCord - targetCordX)
                     .forEach(n -> result.add(Move.LEFT));
 
         else if (targetCordX > currentXCord)
-            IntStream.range(0, targetCordX + 1 - currentXCord)
+            IntStream.range(0, targetCordX - currentXCord)
                     .forEach(n -> result.add(Move.RIGHT));
 
         return result;
@@ -50,7 +57,7 @@ public enum BotMove {
         } else {
             //Go to Matrix (1-7)
             targetCordY = 1;
-            if(targetCordY != currentYCord){
+            if(targetCordY > currentYCord){
                 result = Move.DOWN;
             }else{
                 result = null;
