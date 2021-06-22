@@ -10,6 +10,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -165,7 +166,7 @@ public class ConnectFourManager implements GameManager {
         final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
         final FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
 
-        board.getFields().forEach(board::removeStone);
+        new ArrayList<>(board.getFields()).forEach(board::removeStone);
         board.setHighlight(List.of(Factory.makeField(2, 0, PlayerID.NONE)));
         game.setActivePlayer(PlayerID.PLAYER_1);
         game.setWinner(PlayerID.NONE);
