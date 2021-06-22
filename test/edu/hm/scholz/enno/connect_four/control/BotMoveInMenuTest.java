@@ -66,10 +66,10 @@ public class BotMoveInMenuTest {
         BotMove botMove = BotMove.BOT_BOMB_JOKER;
         FullBoard board = Factory.makeBoard();
         board.setHighlight(TestUtility.getHighlightedFieldList(fieldString));
-        Game game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        Game game = Factory.makeGame(PlayerID.PLAYER_2, board);
 
         //act
-        result = BotMove.translate(botMove, game, PlayerID.PLAYER_1);
+        result = BotMove.translate(botMove, game, PlayerID.PLAYER_2);
 
         //assert
         assertEquals(wantMoves, result);
@@ -88,13 +88,13 @@ public class BotMoveInMenuTest {
                 ".....H.." +
                 ".....H.." +
                 ".....H..";
-        BotMove botMove = BotMove.BOT_BOMB_JOKER;
+        BotMove botMove = BotMove.BOT_DELETE_JOKER;
         FullBoard board = Factory.makeBoard();
         board.setHighlight(TestUtility.getHighlightedFieldList(fieldString));
-        Game game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        Game game = Factory.makeGame(PlayerID.PLAYER_2, board);
 
         //act
-        result = BotMove.translate(botMove, game, PlayerID.PLAYER_1);
+        result = BotMove.translate(botMove, game, PlayerID.PLAYER_2);
 
         //assert
         assertEquals(wantMoves, result);
