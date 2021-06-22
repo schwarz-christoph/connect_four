@@ -6,15 +6,17 @@ import edu.hm.scholz.enno.connect_four.datastore.*;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public record ConnectFourPixelGridView(UI ui) implements View {
+public record ConnectFourPixelGridView(UI ui, Game game) implements View {
 
     final static boolean HIGHLIGHTED = true;
     final static boolean NOT_HIGHLIGHTED = false;
     final static boolean NOT_GREYED_OUT = false;
 
     public ConnectFourPixelGridView {
-        if (ui == null)
-            throw new IllegalArgumentException("UI cannot be null.");
+        if (ui == null || game == null)
+            throw new IllegalArgumentException("Arguments cannot be null.");
+
+        game.register(this);
     }
 
     @Override
@@ -36,7 +38,7 @@ public record ConnectFourPixelGridView(UI ui) implements View {
 
     private void updateEndScreen(Game game) {
         IntStream.range(0, 8).forEach(xIndex -> IntStream.range(0, 8)
-                .forEach(yIndex -> setColor(xIndex, yIndex, getEndScreenRGBCode(xIndex, game.getWinner()))));
+                .forEach(yIndex -> ui().set(xIndex, yIndex, getEndScreenRGBCode(xIndex, game.getWinner()))));
     }
 
     private int getEndScreenRGBCode(int xCoordinate, PlayerID winner) {
@@ -54,8 +56,8 @@ public record ConnectFourPixelGridView(UI ui) implements View {
     }
 
     private void updateRegularGame(Board board, Game game, Player player1, Player player2) {
-        updateMenu(board, game, player1, player2);
-        IntStream.range(1, 8).forEach(xIndex -> IntStream.range(0, 8)
+        updateMenu(board, player1, player2);
+        IntStream.range(0, 8).forEach(xIndex -> IntStream.range(1, 8)
                 .forEach(yIndex -> updateField(board, game, xIndex, yIndex)));
     }
 
@@ -71,9 +73,8 @@ public record ConnectFourPixelGridView(UI ui) implements View {
         final boolean isFieldHighlighted = board.getHighlight().stream()
                 .filter(field -> field.xCoordinate() == xCoordinate)
                 .anyMatch(field -> field.yCoordinate() == yCoordinate);
-
-
-        setColor(xCoordinate, yCoordinate, getRegularGameRGBCode(occupyingPlayer, isFieldHighlighted, game));
+        
+        ui().set(xCoordinate, yCoordinate, getRegularGameRGBCode(occupyingPlayer, isFieldHighlighted, game));
     }
 
     private int getRegularGameRGBCode(PlayerID player, boolean isHighlighted, Game game) {
@@ -91,7 +92,7 @@ public record ConnectFourPixelGridView(UI ui) implements View {
         };
     }
 
-    private void updateMenu(Board board, Game game, Player player1, Player player2) {
+    private void updateMenu(Board board, Player player1, Player player2) {
         final Optional<Field> menuHighlightFieldOptional = board.getHighlight().stream()
                 .filter(field -> field.yCoordinate() == 0)
                 .findFirst();
@@ -112,18 +113,18 @@ public record ConnectFourPixelGridView(UI ui) implements View {
                 Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
                 Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
         final int color_Player2DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
-                getIsHighlighted(6, menuHighlightXCoordinate), player1.isDeleteJokerUsed());
+                getIsHighlighted(6, menuHighlightXCoordinate), player2.isDeleteJokerUsed());
         final int color_Player2BombJoker = Colors.BOMB_JOKER.getRGBCode(
-                getIsHighlighted(7, menuHighlightXCoordinate), player1.isBombJokerUsed());
+                getIsHighlighted(7, menuHighlightXCoordinate), player2.isBombJokerUsed());
 
-        setColor(0, 0, color_Player1BombJoker);
-        setColor(1, 0, color_Player1DeleteJoker);
-        setColor(2, 0, color_Player1EmptyField);
-        setColor(3, 0, color_EndGameField);
-        setColor(4, 0, color_RestartGameField);
-        setColor(5, 0, color_Player2EmptyField);
-        setColor(6, 0, color_Player2DeleteJoker);
-        setColor(7, 0, color_Player2BombJoker);
+        ui().set(0, 0, color_Player1BombJoker);
+        ui().set(1, 0, color_Player1DeleteJoker);
+        ui().set(2, 0, color_Player1EmptyField);
+        ui().set(3, 0, color_EndGameField);
+        ui().set(4, 0, color_RestartGameField);
+        ui().set(5, 0, color_Player2EmptyField);
+        ui().set(6, 0, color_Player2DeleteJoker);
+        ui().set(7, 0, color_Player2BombJoker);
     }
 
     private boolean getIsHighlighted(int fieldXCoordinate, int highlightXCoordinate) {
@@ -132,7 +133,7 @@ public record ConnectFourPixelGridView(UI ui) implements View {
 
     private void updatePlayerSelect(Game game) {
         IntStream.range(0, 8).forEach(xIndex -> IntStream.range(0, 8)
-                .forEach(yIndex -> setColor(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
+                .forEach(yIndex -> ui().set(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
     }
 
     private int getPlayerSelectRGBCode(int xCoordinate, int playerCount) {
@@ -149,10 +150,5 @@ public record ConnectFourPixelGridView(UI ui) implements View {
         }
 
         return rgbCode;
-    }
-
-    private void setColor(int x, int y, int rgb) {
-        final int maxYIndex = 7;
-        ui().set(x, maxYIndex - y, rgb);
     }
 }
