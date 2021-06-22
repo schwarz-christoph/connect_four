@@ -18,22 +18,16 @@ public enum BotMove {
         int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
 
         List<Move> result = new ArrayList<>();
-
-        Move yMove = getMoveYCoordinate(move, game);
-
-        if(yMove != null){
-            result.add(yMove);
-        }
-
-
-
+        final Move toggleMenu = getMoveYCoordinate(move, game);
+        if(toggleMenu != null)
+            result.add(toggleMenu);
 
         if (targetCordX < currentXCord)
-            IntStream.range(0, currentXCord - targetCordX)
+            IntStream.range(0, currentXCord + 1 - targetCordX)
                     .forEach(n -> result.add(Move.LEFT));
 
         else if (targetCordX > currentXCord)
-            IntStream.range(0, targetCordX - currentXCord)
+            IntStream.range(0, targetCordX + 1 - currentXCord)
                     .forEach(n -> result.add(Move.RIGHT));
 
         return result;
@@ -68,8 +62,7 @@ public enum BotMove {
     }
 
     private static int getCoordinates(BotMove move, PlayerID player) {
-
-        int targetCordX;
+        final int targetCordX;
 
         if (move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER) {
             int bombJokerPlayer1 = 0;

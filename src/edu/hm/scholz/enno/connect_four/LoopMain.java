@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import edu.hm.cs.rs.se2.ui.UI;
+import edu.hm.scholz.enno.connect_four.control.Bot;
 import edu.hm.scholz.enno.connect_four.control.Control;
 import edu.hm.scholz.enno.connect_four.control.JoystickController;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
@@ -43,8 +44,16 @@ public class LoopMain {
 
         // Liste von Controls, eine fuer jeden Spieler
         final List<Control> controls = List.of(
-                new JoystickController(rules, ui, PlayerID.PLAYER_1),
-                new JoystickController(rules, ui, PlayerID.PLAYER_2));
+                new Bot(game, rules, PlayerID.PLAYER_1),
+                new Bot(game, rules, PlayerID.PLAYER_2));
+//                new JoystickController(rules, ui, PlayerID.PLAYER_1),
+//                new JoystickController(rules, ui, PlayerID.PLAYER_2));
+
+        //Bot vs Bot setup required
+        game.setActivePlayer(PlayerID.PLAYER_1);
+        game.setPlayerCount(2);
+        game.setIsStarted(true);
+        board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE)));
 
         // Initiales update, Views zeigen Startzustand
         views.forEach(view -> view.update(board, game, player1, player2));
