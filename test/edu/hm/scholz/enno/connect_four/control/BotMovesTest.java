@@ -159,7 +159,23 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
 
+                {BotMoves.BOT_BOMB_JOKER, "........" +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H..",
+                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
 
+                {BotMoves.BOT_DELETE_JOKER, "........" +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H.." +
+                        ".....H..",
+                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
         });
     }
 
