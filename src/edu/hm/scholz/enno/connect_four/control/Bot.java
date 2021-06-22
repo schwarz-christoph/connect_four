@@ -25,32 +25,24 @@ public class Bot implements Control{
         this.isRunning = true;
     }
 
-    public BotMove chooseMove(){
-        BotMove move;
-
-
-
-        return move;
-    }
-
     @Override
     public boolean step() {
         final boolean stepSuccessful;
         if(isRunning){
             PlayerID activePlayerID = playerID;
             while (playerID == activePlayerID){
-                BotMove move = chooseMove();
-                List<Move> steps = BotMove.translate(move, game, playerID);
+                final BotMove move = BotMove.getWeightedRandomMove();
+                final List<Move> steps = BotMove.translate(move, game, playerID);
 
-                for (Move nextStep : steps) {
+                for (final Move nextStep : steps) {
                     activePlayerID = manager.executeMove(nextStep);
                 }
             }
             stepSuccessful = true;
-        }else{
+        } else
             stepSuccessful = false;
-        }
-        return false;
+
+        return stepSuccessful;
     }
 
     @Override
