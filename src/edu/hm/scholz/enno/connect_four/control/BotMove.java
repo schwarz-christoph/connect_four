@@ -45,11 +45,11 @@ public enum BotMove {
             result.add(toggleMenu);
 
         if (targetCordX < currentXCord)
-            IntStream.range(0, currentXCord + 1 - targetCordX)
+            IntStream.range(0, currentXCord - targetCordX)
                     .forEach(n -> result.add(Move.LEFT));
 
         else if (targetCordX > currentXCord)
-            IntStream.range(0, targetCordX + 1 - currentXCord)
+            IntStream.range(0, targetCordX - currentXCord)
                     .forEach(n -> result.add(Move.RIGHT));
 
         result.add(Move.CONFIRM);
