@@ -6,7 +6,6 @@ import java.util.List;
 import edu.hm.cs.rs.se2.ui.UI;
 import edu.hm.scholz.enno.connect_four.control.Control;
 import edu.hm.scholz.enno.connect_four.control.JoystickController;
-import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
