@@ -5,21 +5,43 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum BotMove {
-    BOT_COLUMN_0, BOT_COLUMN_1, BOT_COLUMN_2, BOT_COLUMN_3, BOT_COLUMN_4, BOT_COLUMN_5, BOT_COLUMN_6, BOT_COLUMN_7, BOT_BOMB_JOKER, BOT_DELETE_JOKER;
+    BOT_COLUMN_0(4),
+    BOT_COLUMN_1(9),
+    BOT_COLUMN_2(14),
+    BOT_COLUMN_3(19),
+    BOT_COLUMN_4(24),
+    BOT_COLUMN_5(29),
+    BOT_COLUMN_6(34),
+    BOT_COLUMN_7(39),
+    BOT_BOMB_JOKER(40),
+    BOT_DELETE_JOKER(41),
+    INVALID(42);
+
+    private final int selectValue;
+
+    BotMove(int selectValue) {
+        this.selectValue = selectValue;
+    }
+
+    public static BotMove getWeightedRandomMove() {
+        final double weightedNumber = Math.random() * BotMove.INVALID.selectValue;
+        final Optional<BotMove> moveOptional = Arrays.stream(BotMove.values()).filter(move -> move.selectValue > weightedNumber).findFirst();
+        return moveOptional.orElse(INVALID);
+    }
 
     public static List<Move> translate(BotMove move, Game game, PlayerID player) {
-
         final int targetCordX = getCoordinates(move, player);
-
-        int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
+        final int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
 
         List<Move> result = new ArrayList<>();
         final Move toggleMenu = getMoveYCoordinate(move, game);
-        if(toggleMenu != null)
+        if (toggleMenu != null)
             result.add(toggleMenu);
 
         if (targetCordX < currentXCord)
@@ -35,7 +57,7 @@ public enum BotMove {
         return result;
     }
 
-    private static Move getMoveYCoordinate(BotMove move, Game game){
+    private static Move getMoveYCoordinate(BotMove move, Game game) {
 
         final int targetCordY;
         final Move result;
@@ -44,18 +66,18 @@ public enum BotMove {
         if (move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER) {
             //Go to Menu (0)
             targetCordY = 0;
-            if(targetCordY != currentYCord){
+            if (targetCordY != currentYCord) {
                 result = Move.UP;
-            }else{
+            } else {
                 result = null;
             }
 
         } else {
             //Go to Matrix (1-7)
             targetCordY = 1;
-            if(targetCordY > currentYCord){
+            if (targetCordY > currentYCord) {
                 result = Move.DOWN;
-            }else{
+            } else {
                 result = null;
             }
         }
@@ -93,7 +115,7 @@ public enum BotMove {
         return targetCordX;
     }
 
-    private static int getMatrixXCoordinate(BotMove move){
+    private static int getMatrixXCoordinate(BotMove move) {
         return switch (move) {
             case BOT_COLUMN_0 -> 0;
             case BOT_COLUMN_1 -> 1;
