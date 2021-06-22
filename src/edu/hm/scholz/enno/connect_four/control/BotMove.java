@@ -30,6 +30,8 @@ public enum BotMove {
             IntStream.range(0, targetCordX + 1 - currentXCord)
                     .forEach(n -> result.add(Move.RIGHT));
 
+        result.add(Move.CONFIRM);
+
         return result;
     }
 
