@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-public enum BotMoves {
+public enum BotMove {
     BOT_COLUMN_0, BOT_COLUMN_1, BOT_COLUMN_2, BOT_COLUMN_3, BOT_COLUMN_4, BOT_COLUMN_5, BOT_COLUMN_6, BOT_COLUMN_7, BOT_BOMB_JOKER, BOT_DELETE_JOKER;
 
-    public static List<Move> translate(BotMoves move, Game game, PlayerID player) {
+    public static List<Move> translate(BotMove move, Game game, PlayerID player) {
 
         final int targetCordX = getCoordinates(move, player);
 
@@ -32,13 +32,13 @@ public enum BotMoves {
         return result;
     }
 
-    private static Move getMoveYCoordinate(BotMoves move, Game game){
+    private static Move getMoveYCoordinate(BotMove move, Game game){
 
         final int targetCordY;
         final Move result;
         final int currentYCord = game.getBoard().getHighlight().get(0).yCoordinate();
 
-        if (move == BotMoves.BOT_BOMB_JOKER || move == BotMoves.BOT_DELETE_JOKER) {
+        if (move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER) {
             //Go to Menu (0)
             targetCordY = 0;
             if(targetCordY != currentYCord){
@@ -60,11 +60,11 @@ public enum BotMoves {
         return result;
     }
 
-    private static int getCoordinates(BotMoves move, PlayerID player) {
+    private static int getCoordinates(BotMove move, PlayerID player) {
 
         int targetCordX;
 
-        if (move == BotMoves.BOT_BOMB_JOKER || move == BotMoves.BOT_DELETE_JOKER) {
+        if (move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER) {
             int bombJokerPlayer1 = 0;
             int deleteJokerPlayer1 = 1;
 
@@ -91,7 +91,7 @@ public enum BotMoves {
         return targetCordX;
     }
 
-    private static int getMatrixXCoordinate(BotMoves move){
+    private static int getMatrixXCoordinate(BotMove move){
         return switch (move) {
             case BOT_COLUMN_0 -> 0;
             case BOT_COLUMN_1 -> 1;

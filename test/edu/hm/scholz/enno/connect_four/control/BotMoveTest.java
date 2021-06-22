@@ -7,17 +7,15 @@ import org.junit.runners.Parameterized;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
-
 @RunWith(Parameterized.class)
-public class BotMovesTest {
+public class BotMoveTest {
 //    @Rule
 //    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Parameterized.Parameters(name = "Bot Move: {0} get List: {2}")
     public static Iterable<Object[]> testCasesBotMovesTest() {
         return List.of(new Object[][]{
-                {BotMoves.BOT_COLUMN_0, "........" +
+                {BotMove.BOT_COLUMN_0, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -26,7 +24,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_1, "........" +
+                {BotMove.BOT_COLUMN_1, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -35,7 +33,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_2, "........" +
+                {BotMove.BOT_COLUMN_2, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -44,7 +42,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_3, "........" +
+                {BotMove.BOT_COLUMN_3, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -52,7 +50,7 @@ public class BotMovesTest {
                         ".......H" +
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
-                {BotMoves.BOT_COLUMN_4, "........" +
+                {BotMove.BOT_COLUMN_4, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -61,7 +59,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_5, "........" +
+                {BotMove.BOT_COLUMN_5, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -70,7 +68,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_6, "........" +
+                {BotMove.BOT_COLUMN_6, "........" +
                         ".......H" +
                         ".......H" +
                         ".......H" +
@@ -79,7 +77,7 @@ public class BotMovesTest {
                         ".......H",
                         List.of(Move.LEFT)},
 
-                {BotMoves.BOT_COLUMN_7, ".......H" +
+                {BotMove.BOT_COLUMN_7, ".......H" +
                         "........" +
                         "........" +
                         "........" +
@@ -88,7 +86,7 @@ public class BotMovesTest {
                         "........",
                         List.of(Move.DOWN)},
 
-                {BotMoves.BOT_COLUMN_0, "H......." +
+                {BotMove.BOT_COLUMN_0, "H......." +
                         "........" +
                         "........" +
                         "........" +
@@ -97,7 +95,7 @@ public class BotMovesTest {
                         "........",
                         List.of(Move.DOWN)},
 
-                {BotMoves.BOT_COLUMN_1, "........" +
+                {BotMove.BOT_COLUMN_1, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -106,7 +104,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT)},
 
-                {BotMoves.BOT_COLUMN_2, "........" +
+                {BotMove.BOT_COLUMN_2, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -115,7 +113,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT)},
 
-                {BotMoves.BOT_COLUMN_3, "........" +
+                {BotMove.BOT_COLUMN_3, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -123,7 +121,7 @@ public class BotMovesTest {
                         "H......." +
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT)},
-                {BotMoves.BOT_COLUMN_4, "........" +
+                {BotMove.BOT_COLUMN_4, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -132,7 +130,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
 
-                {BotMoves.BOT_COLUMN_5, "........" +
+                {BotMove.BOT_COLUMN_5, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -141,7 +139,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
 
-                {BotMoves.BOT_COLUMN_6, "........" +
+                {BotMove.BOT_COLUMN_6, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -150,7 +148,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
 
-                {BotMoves.BOT_COLUMN_7, "........" +
+                {BotMove.BOT_COLUMN_7, "........" +
                         "H......." +
                         "H......." +
                         "H......." +
@@ -159,7 +157,7 @@ public class BotMovesTest {
                         "H.......",
                         List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT)},
 
-                {BotMoves.BOT_BOMB_JOKER, "........" +
+                {BotMove.BOT_BOMB_JOKER, "........" +
                         ".....H.." +
                         ".....H.." +
                         ".....H.." +
@@ -168,7 +166,7 @@ public class BotMovesTest {
                         ".....H..",
                         List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT)},
 
-                {BotMoves.BOT_DELETE_JOKER, "........" +
+                {BotMove.BOT_DELETE_JOKER, "........" +
                         ".....H.." +
                         ".....H.." +
                         ".....H.." +
@@ -179,8 +177,19 @@ public class BotMovesTest {
         });
     }
 
+    private final BotMove move;
+    private final String field;
+    private final List<Move> resultMoves;
+
+    public BotMoveTest(BotMove move, String field, List<Move> resultMoves){
+        this.move = move;
+        this.field = field;
+        this.resultMoves = resultMoves;
+    }
+
     @Test
     public void translate() {
+
 
 
     }

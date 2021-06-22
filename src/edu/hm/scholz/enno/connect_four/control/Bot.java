@@ -25,8 +25,8 @@ public class Bot implements Control{
         this.isRunning = true;
     }
 
-    public BotMoves chooseMove(){
-        BotMoves move;
+    public BotMove chooseMove(){
+        BotMove move;
 
 
 
@@ -39,8 +39,8 @@ public class Bot implements Control{
         if(isRunning){
             PlayerID activePlayerID = playerID;
             while (playerID == activePlayerID){
-                BotMoves move = chooseMove();
-                List<Move> steps = BotMoves.translate(move, game, playerID);
+                BotMove move = chooseMove();
+                List<Move> steps = BotMove.translate(move, game, playerID);
 
                 for (Move nextStep : steps) {
                     activePlayerID = manager.executeMove(nextStep);
