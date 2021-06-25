@@ -44,10 +44,10 @@ public class LoopMain {
 
         // Liste von Controls, eine fuer jeden Spieler
         final List<Control> controls = List.of(
-                new Bot(game, rules, PlayerID.PLAYER_1),
-                new Bot(game, rules, PlayerID.PLAYER_2));
-//                new JoystickController(rules, ui, PlayerID.PLAYER_1),
-//                new JoystickController(rules, ui, PlayerID.PLAYER_2));
+//                new Bot(game, rules, PlayerID.PLAYER_1),
+//                new Bot(game, rules, PlayerID.PLAYER_2));
+                new JoystickController(rules, ui, PlayerID.PLAYER_1),
+                new JoystickController(rules, ui, PlayerID.PLAYER_2));
 
         //Bot vs Bot setup required
         game.setActivePlayer(PlayerID.PLAYER_1);
