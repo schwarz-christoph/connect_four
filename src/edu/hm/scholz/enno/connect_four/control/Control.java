@@ -1,6 +1,13 @@
 package edu.hm.scholz.enno.connect_four.control;
 
-
+/**
+ * Controller that handles the moves
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 06-25-2021
+ */
 public interface Control extends Runnable{
 
     /**

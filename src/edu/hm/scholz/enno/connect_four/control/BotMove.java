@@ -20,23 +20,37 @@ public enum BotMove {
     BOT_DELETE_JOKER(41),
     INVALID(42);
 
+    /**
+     *  The integer value of the move the bot makes
+     */
     private final int selectValue;
 
     BotMove(int selectValue) {
         this.selectValue = selectValue;
     }
 
+    /**
+     * Determines a move based on weights
+     * @return determined move
+     */
     public static BotMove getWeightedRandomMove() {
         final double weightedNumber = Math.random() * BotMove.INVALID.selectValue;
         final Optional<BotMove> moveOptional = Arrays.stream(BotMove.values()).filter(move -> move.selectValue > weightedNumber).findFirst();
         return moveOptional.orElse(INVALID);
     }
 
+    /**
+     *
+     * @param move Destination of the desired location the bot wants to go to
+     * @param game The current game.
+     * @param player PlayerID of the current bot
+     * @return List of moves necessary to get to the desired location of the bot
+     */
     public static List<Move> translate(BotMove move, Game game, PlayerID player) {
         final int targetCordX = getCoordinates(move, player);
         final int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
 
-        List<Move> result = new ArrayList<>();
+        final List<Move> result = new ArrayList<>();
         final Move toggleMenu = getMoveYCoordinate(move, game);
         if (toggleMenu != null)
             result.add(toggleMenu);
@@ -90,11 +104,11 @@ public enum BotMove {
         final int targetCordX;
 
         if (move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER) {
-            int bombJokerPlayer1 = 0;
-            int deleteJokerPlayer1 = 1;
+            final int bombJokerPlayer1 = 0;
+            final int deleteJokerPlayer1 = 1;
 
-            int deleteJokerPlayer2 = 6;
-            int bombJokerPlayer2 = 7;
+            final int deleteJokerPlayer2 = 6;
+            final int bombJokerPlayer2 = 7;
 
             if (player == PlayerID.PLAYER_1) {
                 if (move == BOT_BOMB_JOKER) {

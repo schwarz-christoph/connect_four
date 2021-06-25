@@ -1,21 +1,20 @@
 package edu.hm.scholz.enno.connect_four.view;
 
-import edu.hm.scholz.enno.connect_four.datastore.Board;
-import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.Observer;
-import edu.hm.scholz.enno.connect_four.datastore.Player;
 
-
+/**
+ * A View with the ability to shut down the game
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 06-25-2021
+ */
 public interface View extends Observer {
 
     /**
      * Close the view
      */
     default void shut() {
-
-    }
-
-    static View make(Game game, Board board, Player player1, Player player2){
-        throw new UnsupportedOperationException("Ned benutzen du depp");
     }
 }

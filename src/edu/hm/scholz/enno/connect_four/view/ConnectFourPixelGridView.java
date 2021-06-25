@@ -1,15 +1,31 @@
 package edu.hm.scholz.enno.connect_four.view;
 
 import edu.hm.cs.rs.se2.ui.UI;
-import edu.hm.scholz.enno.connect_four.datastore.*;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 public record ConnectFourPixelGridView(UI ui, Game game) implements View {
 
+    /**
+     * Constant for highlighted
+     */
     final static boolean HIGHLIGHTED = true;
+
+    /**
+     * Constant for not highlighted
+     */
     final static boolean NOT_HIGHLIGHTED = false;
+
+    /**
+     * Constant for not greyed out
+     */
     final static boolean NOT_GREYED_OUT = false;
 
     public ConnectFourPixelGridView {
@@ -34,6 +50,11 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
             updatePlayerSelect(game);
         }
         ui().render();
+    }
+
+    @Override
+    public void shut() {
+        ui().shut();
     }
 
     private void updateEndScreen(Game game) {
@@ -78,11 +99,11 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     }
 
     private int getRegularGameRGBCode(PlayerID player, boolean isHighlighted, Game game) {
-        final int activePlayerHighlightColor = game.getActivePlayer() == PlayerID.PLAYER_1 ?
+        final int playerHighlightColor = game.getActivePlayer() == PlayerID.PLAYER_1 ?
                 Colors.PLAYER_1.getRGBCode(HIGHLIGHTED, NOT_GREYED_OUT) :
                 Colors.PLAYER_2.getRGBCode(HIGHLIGHTED, NOT_GREYED_OUT);
         final int highlightColor = game.getActiveJoker() == PlayerActiveJoker.NONE ?
-                activePlayerHighlightColor :
+                playerHighlightColor :
                 Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
 
         return switch (player) {
@@ -93,38 +114,38 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     }
 
     private void updateMenu(Board board, Player player1, Player player2) {
-        final Optional<Field> menuHighlightFieldOptional = board.getHighlight().stream()
+        final Optional<Field> menuHighlightOptional = board.getHighlight().stream()
                 .filter(field -> field.yCoordinate() == 0)
                 .findFirst();
-        final int menuHighlightXCoordinate = menuHighlightFieldOptional.map(Field::xCoordinate).orElse(-1);
+        final int menuHighlightXCoordinate = menuHighlightOptional.map(Field::xCoordinate).orElse(-1);
 
-        final int color_Player1BombJoker = Colors.BOMB_JOKER.getRGBCode(
+        final int colorPlayer1BombJoker = Colors.BOMB_JOKER.getRGBCode(
                 getIsHighlighted(0, menuHighlightXCoordinate), player1.isBombJokerUsed());
-        final int color_Player1DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
+        final int colorPlayer1DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
                 getIsHighlighted(1, menuHighlightXCoordinate), player1.isDeleteJokerUsed());
-        final int color_Player1EmptyField = getIsHighlighted(2, menuHighlightXCoordinate) ?
+        final int colorPlayer1EmptyField = getIsHighlighted(2, menuHighlightXCoordinate) ?
                 Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
                 Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
-        final int color_EndGameField = Colors.END_GAME.getRGBCode(
+        final int colorEndGameField = Colors.END_GAME.getRGBCode(
                 getIsHighlighted(3, menuHighlightXCoordinate), NOT_GREYED_OUT);
-        final int color_RestartGameField = Colors.RESTART_GAME.getRGBCode(
+        final int colorRestartGameField = Colors.RESTART_GAME.getRGBCode(
                 getIsHighlighted(4, menuHighlightXCoordinate), NOT_GREYED_OUT);
-        final int color_Player2EmptyField = getIsHighlighted(5, menuHighlightXCoordinate) ?
+        final int colorPlayer2EmptyField = getIsHighlighted(5, menuHighlightXCoordinate) ?
                 Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
                 Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
-        final int color_Player2DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
+        final int colorPlayer2DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
                 getIsHighlighted(6, menuHighlightXCoordinate), player2.isDeleteJokerUsed());
-        final int color_Player2BombJoker = Colors.BOMB_JOKER.getRGBCode(
+        final int colorPlayer2BombJoker = Colors.BOMB_JOKER.getRGBCode(
                 getIsHighlighted(7, menuHighlightXCoordinate), player2.isBombJokerUsed());
 
-        ui().set(0, 0, color_Player1BombJoker);
-        ui().set(1, 0, color_Player1DeleteJoker);
-        ui().set(2, 0, color_Player1EmptyField);
-        ui().set(3, 0, color_EndGameField);
-        ui().set(4, 0, color_RestartGameField);
-        ui().set(5, 0, color_Player2EmptyField);
-        ui().set(6, 0, color_Player2DeleteJoker);
-        ui().set(7, 0, color_Player2BombJoker);
+        ui().set(0, 0, colorPlayer1BombJoker);
+        ui().set(1, 0, colorPlayer1DeleteJoker);
+        ui().set(2, 0, colorPlayer1EmptyField);
+        ui().set(3, 0, colorEndGameField);
+        ui().set(4, 0, colorRestartGameField);
+        ui().set(5, 0, colorPlayer2EmptyField);
+        ui().set(6, 0, colorPlayer2DeleteJoker);
+        ui().set(7, 0, colorPlayer2BombJoker);
     }
 
     private boolean getIsHighlighted(int fieldXCoordinate, int highlightXCoordinate) {
