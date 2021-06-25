@@ -32,7 +32,12 @@ public class BotTheorieTest {
 
     private static int testRun;
 
-    @DataPoints("rep") public static List<Integer> repeat = IntStream.range(0, 1_000).boxed().collect(Collectors.toList());
+    private static final int testRunCount = 1_000;
+    private static int player1Winn;
+    private static int player2Winn;
+    private static int playerNoneWinn;
+
+    @DataPoints("rep") public static List<Integer> repeat = IntStream.range(0, testRunCount).boxed().collect(Collectors.toList());
 
     @Theory
     public void theorieTest(@FromDataPoints("rep")int repeats){
@@ -72,7 +77,21 @@ public class BotTheorieTest {
         // Views und Controls abbauen
         controls.forEach(Control::close);
         views.forEach(View::shut);
-        System.out.println(testRun++);
+        System.out.println(testRun++ + " | Winner: " + game.getWinner());
+
+        //Only for counting specific wins -------------------------------------------------------------------------------------------------------------
+        if(game.getWinner() == PlayerID.PLAYER_1){
+            player1Winn++;
+        }else if(game.getWinner() == PlayerID.PLAYER_2){
+            player2Winn++;
+        }else{
+            playerNoneWinn++;
+        }
+
+        if(testRun == testRunCount){
+            System.out.println("| Player 1 Win: " + player1Winn + " | Player 2 Win: " + player2Winn + " | Player None Win: " + playerNoneWinn + " |");
+        }
+        //---------------------------------------------------------------------------------------------------------------------------------------------
         assertTrue(valiView.isValidGame());
     }
 }
