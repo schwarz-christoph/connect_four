@@ -1,5 +1,8 @@
 package edu.hm.scholz.enno.connect_four.view;
 
+/**
+ * Implements the colors for the menu and players
+ */
 public enum Colors {
     PLAYER_1(0, 100, 0),
     PLAYER_2(0, 0, 100),
@@ -10,12 +13,31 @@ public enum Colors {
     HIGHLIGHT(255, 255, 255),
     EMPTY(0, 0, 0);
 
+    /**
+     * Integer value for color red
+     */
     private final int red;
+
+    /**
+     * Integer value for color green
+     */
     private final int green;
+
+    /**
+     * Integer value for color blue
+     */
     private final int blue;
-    //color offset for highlighted/greyed out fields
+
+    /**
+     * color offset for highlighted/greyed out fields
+     */
     private static final int OFFSET = 50;
 
+    /**
+     * @param red   Integer value for red
+     * @param green Integer value for green
+     * @param blue  Integer value for blue
+     */
     Colors(int red, int green, int blue) {
         this.red = red;
         this.green = green;
@@ -34,12 +56,19 @@ public enum Colors {
         return blue;
     }
 
+    /**
+     * Returns the RGB Value based on if something is highlighted
+     *
+     * @param isHighlighted if something
+     * @param isGreyed      signals if something is going to be deleted by a joker
+     * @return corresponding rgb value
+     */
     public int getRGBCode(boolean isHighlighted, boolean isGreyed) {
         final int offSetMultiplier;
-        if(isHighlighted)
+        if (isHighlighted)
             offSetMultiplier = 1;
         else {
-            if(isGreyed)
+            if (isGreyed)
                 offSetMultiplier = -1;
             else
                 offSetMultiplier = 0;
