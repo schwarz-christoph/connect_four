@@ -30,7 +30,7 @@ public class Bot implements Control{
         final boolean stepSuccessful;
         if(isRunning){
             PlayerID activePlayerID = playerID;
-            while (playerID == activePlayerID){
+            while (playerID == activePlayerID && game.getActivePlayer() != PlayerID.NONE){
                 final BotMove move = BotMove.getWeightedRandomMove();
                 final List<Move> steps = BotMove.translate(move, game, playerID);
 
