@@ -30,7 +30,7 @@ public class BotTheoriesTest {
 
     private static int testRun;
 
-    private static final int testRunCount = 1_000;
+    private static final int testRunCount = 10_000;
     private static int player1Winn;
     private static int player2Winn;
     private static int playerNoneWinn;

@@ -4,10 +4,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public enum BotMove {
@@ -53,6 +50,10 @@ public enum BotMove {
                     .forEach(n -> result.add(Move.RIGHT));
 
         result.add(Move.CONFIRM);
+
+        if(move == BotMove.BOT_DELETE_JOKER || move == BotMove.BOT_BOMB_JOKER){
+            result.addAll(appendDeleteJokerMoves());
+        }
 
         return result;
     }
@@ -126,6 +127,19 @@ public enum BotMove {
             case BOT_COLUMN_6 -> 6;
             default -> 7;
         };
+    }
+
+    private static List<Move> appendDeleteJokerMoves(){
+        List<Move> result = new ArrayList<>();
+
+        Random rand = new Random();
+        Move randomMove = Move.LEFT;
+        while (randomMove != Move.CONFIRM) {
+            final int randomInt = rand.nextInt(Move.values().length);
+            randomMove = Move.values()[randomInt];
+            result.add(randomMove);
+        }
+        return result;
     }
 }
 
