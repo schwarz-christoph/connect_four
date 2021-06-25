@@ -45,34 +45,34 @@ public class BotTheoriesTest {
         final FullBoard board = Factory.makeBoard();
         final FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
 
-        // Logik
+        // Logic
         final GameManager rules = LogicFactory.makeGameManager(board, game, player1, player2);
 
-        // Liste von Views
+        // The ValidatingView
         final ValidatingView valiView = new ValidatingView(game);
         final List<View> views = List.of(valiView);
 
-        // Liste von Controls, eine fuer jeden Spieler
+        // Bot Controls for Test
         final List<Control> controls = List.of(
                 new Bot(game, rules, PlayerID.PLAYER_1),
                 new Bot(game, rules, PlayerID.PLAYER_2));
 
-        //Bot vs Bot setup required
+        // Bot vs Bot setup
         game.setActivePlayer(PlayerID.PLAYER_1);
         game.setPlayerCount(2);
         game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE)));
 
-        // Initiales update, Views zeigen Startzustand
+        // Initial update for view
         views.forEach(view -> view.update(board, game, player1, player2));
 
-        // Fortfahren bis das Spiel beendet ist
+        // Running game
         while(game.getActivePlayer() != PlayerID.NONE)
             controls.stream()
                     .filter(Control::running) // noch beteiligte Spieler herausfiltern
                     .forEach(Control::step); // jeder Spieler zieht
 
-        // Views und Controls abbauen
+        // Shut controls and view
         controls.forEach(Control::close);
         views.forEach(View::shut);
         System.out.println(testRun++ + " | Winner: " + game.getWinner());
