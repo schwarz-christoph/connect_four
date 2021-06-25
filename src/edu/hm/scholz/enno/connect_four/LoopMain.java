@@ -26,7 +26,7 @@ public class LoopMain {
     /** Entry point.
      * @param args Kommandozeilenargumente: keine.
      */
-    public static void main(String... args) throws IOException {
+    public static void main(String... args) {
         // I/O fuer Views und Controls
         final UI ui = UI.make("awt", 8);
 
@@ -44,9 +44,9 @@ public class LoopMain {
 
         // Liste von Controls, eine fuer jeden Spieler
         final List<Control> controls = List.of(
-//                new Bot(game, rules, PlayerID.PLAYER_1),
-//                new Bot(game, rules, PlayerID.PLAYER_2));
-                new JoystickController(rules, ui, PlayerID.PLAYER_1),
+                new Bot(game, rules, PlayerID.PLAYER_1),
+                //new Bot(game, rules, PlayerID.PLAYER_2));
+                //new JoystickController(rules, ui, PlayerID.PLAYER_1),
                 new JoystickController(rules, ui, PlayerID.PLAYER_2));
 
         //Bot vs Bot setup required

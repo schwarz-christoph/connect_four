@@ -1,6 +1,12 @@
 package edu.hm.scholz.enno.connect_four.view;
 
-import edu.hm.scholz.enno.connect_four.datastore.*;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
+import edu.hm.scholz.enno.connect_four.datastore.Observer;
 
 import java.util.Optional;
 import java.util.stream.IntStream;
@@ -13,8 +19,8 @@ public class TextDump implements Observer {
     @Override
     public void update(Board board, Game game, Player player1, Player player2) {
         final String gameText;
-        if(game.isStarted()) {
-            if(game.getActivePlayer() == PlayerID.NONE) {
+        if (game.isStarted()) {
+            if (game.getActivePlayer() == PlayerID.NONE) {
                 // end screen
                 gameText = getEndScreenString(game);
             } else {
@@ -137,7 +143,7 @@ public class TextDump implements Observer {
         builder.append(frameLine);
 
         final String matrixString;
-        if(game.getPLayerCount() == 1) {
+        if (game.getPLayerCount() == 1) {
             matrixString = "|G G G G         |\n";
         } else {
             matrixString = "|G G G G B B B B |\n";

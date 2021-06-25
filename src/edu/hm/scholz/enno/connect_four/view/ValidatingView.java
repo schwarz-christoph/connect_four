@@ -1,12 +1,16 @@
 package edu.hm.scholz.enno.connect_four.view;
 
-import edu.hm.scholz.enno.connect_four.datastore.*;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
+import edu.hm.scholz.enno.connect_four.datastore.Board;
+import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
+import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ValidatingView implements View{
+public class ValidatingView implements View {
 
     private boolean isValidGame = false;
 
@@ -19,7 +23,7 @@ public class ValidatingView implements View{
 
     @Override
     public void update(Board board, Game game, Player player1, Player player2) {
-        if(game.getActivePlayer() == PlayerID.NONE){
+        if (game.getActivePlayer() == PlayerID.NONE) {
             validateGame(board, game);
         }
     }
@@ -33,7 +37,7 @@ public class ValidatingView implements View{
         return isValidGame;
     }
 
-    private void validateGame(Board board, Game game){
+    private void validateGame(Board board, Game game) {
         final PlayerID wantPlayerID;
         final boolean winnerPlayer1 = validateWinner(board, PlayerID.PLAYER_1);
         final boolean winnerPlayer2 = validateWinner(board, PlayerID.PLAYER_2);
@@ -45,16 +49,16 @@ public class ValidatingView implements View{
         else
             wantPlayerID = PlayerID.NONE;
 
-        if(game.getWinner() == wantPlayerID){
+        if (game.getWinner() == wantPlayerID) {
             isValidGame = true;
         }
 
-        if(boardFull){
+        if (boardFull) {
             isValidGame = game.getActivePlayer() == PlayerID.NONE;
         }
     }
 
-    private boolean validateWinner(Board board, PlayerID wantPlayerID){
+    private boolean validateWinner(Board board, PlayerID wantPlayerID) {
         final List<Field> fields = board.getFields();
 
         final List<Field> playerFields = fields.stream()
