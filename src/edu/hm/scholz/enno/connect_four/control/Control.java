@@ -12,10 +12,8 @@ public interface Control extends Runnable {
 
     /**
      * Execute a Move.
-     *
-     * @return true if the move was valid and executed, false instead.
      */
-    boolean step();
+    void step();
 
     /**
      * Close the controller.
