@@ -7,11 +7,9 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
-import edu.hm.scholz.enno.connect_four.view.ConnectFourPixelGridView;
 import edu.hm.scholz.enno.connect_four.view.ValidatingView;
 import edu.hm.scholz.enno.connect_four.view.View;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.experimental.theories.DataPoints;
 import org.junit.experimental.theories.FromDataPoints;
 import org.junit.experimental.theories.Theories;
@@ -26,7 +24,7 @@ import java.util.stream.IntStream;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(Theories.class)
-public class BotTheorieTest {
+public class BotTheoriesTest {
     @Rule
     public Timeout globalTimeout = Timeout.millis(1_000);
 
@@ -40,7 +38,7 @@ public class BotTheorieTest {
     @DataPoints("rep") public static List<Integer> repeat = IntStream.range(0, testRunCount).boxed().collect(Collectors.toList());
 
     @Theory
-    public void theorieTest(@FromDataPoints("rep")int repeats){
+    public void theoriesTest(@FromDataPoints("rep")int repeats){
         // Datastore
         final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
         final FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
