@@ -34,6 +34,7 @@ public enum Colors {
     private final int blue;
 
     /**
+     * Constructor for the colors.
      * @param red   Integer value for red.
      * @param green Integer value for green.
      * @param blue  Integer value for blue.
@@ -57,7 +58,7 @@ public enum Colors {
     }
 
     /**
-     * Returns the RGB Value based on if something is highlighted
+     * Returns the RGB Value based on if something is highlighted.
      *
      * @param isHighlighted if something.
      * @param isGreyed      signals if something is going to be deleted by a joker.
