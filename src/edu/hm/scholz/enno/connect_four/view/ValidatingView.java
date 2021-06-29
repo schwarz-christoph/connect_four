@@ -12,12 +12,11 @@ import java.util.stream.Collectors;
 /**
  * View for theory tests.
  */
-public class ValidatingView implements View{
-
-    private boolean isValidGame;
+public record ValidatingView(Game game) implements View {
 
     /**
      * Validates the view and registers changes
+     *
      * @param game the current game
      * @throws IllegalArgumentException if the game is null
      */
@@ -25,35 +24,35 @@ public class ValidatingView implements View{
         if (game == null)
             throw new IllegalArgumentException("Arguments cannot be null.");
 
+        this.game = game;
+
         game.register(this);
     }
 
     @Override
     public void update(Board board, Game game, Player player1, Player player2) {
-        if (game.getActivePlayer() == PlayerID.NONE) {
-            validateGame(board, game);
-        }
+        //Do nothing
     }
 
-    /**
-     * Shuts down the view.
-     */
     @Override
     public void shut() {
         View.super.shut();
     }
 
-    public boolean getIsValidGame() {
-        return isValidGame;
-    }
-
-    private void validateGame(Board board, Game game) {
+    /**
+     * Validates the game
+     * @return if the final game state is valid
+     */
+    public boolean validateGame() {
+        boolean isValidGame = false;
+        final Board board = game.getBoard();
         final PlayerID wantPlayerID;
         final boolean winnerPlayer1 = validateWinner(board, PlayerID.PLAYER_1);
         final boolean winnerPlayer2 = validateWinner(board, PlayerID.PLAYER_2);
         final List<Field> fields = board.getFields();
         final int fieldSize = 8;
         final boolean boardFull = fields.size() == fieldSize * (fieldSize - 1);
+
         if (winnerPlayer1 ^ winnerPlayer2) // ^ = exclusive or
             wantPlayerID = winnerPlayer1 ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
         else
@@ -63,11 +62,18 @@ public class ValidatingView implements View{
             isValidGame = true;
         }
 
-        if (boardFull) {
+        if (isValidGame) {
             isValidGame = game.getActivePlayer() == PlayerID.NONE;
         }
+        return isValidGame;
     }
 
+    /**
+     * Validate the winner
+     * @param board the board of the game
+     * @param wantPlayerID the playerID witch should win
+     * @return if the player has stones in a winning order
+     */
     private boolean validateWinner(Board board, PlayerID wantPlayerID) {
         final List<Field> fields = board.getFields();
 
@@ -78,6 +84,11 @@ public class ValidatingView implements View{
         return containsWinningSequence(playerFields);
     }
 
+    /**
+     * Winning sequence test
+     * @param fields the fields of one player
+     * @return if the winning sequence is in the field
+     */
     private static boolean containsWinningSequence(List<Field> fields) {
         final boolean result;
 
@@ -92,7 +103,11 @@ public class ValidatingView implements View{
         return result;
     }
 
-
+    /**
+     * Winning sequence horizontal
+     * @param fields the fields witch should be proofed
+     * @return if the winning sequence is horizontal
+     */
     private static boolean winningSequenceHorizontal(List<Field> fields) {
         final int maxAdderValue = 3;
         final int fieldSize = 8;
@@ -104,6 +119,11 @@ public class ValidatingView implements View{
                 .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate(), field.owner()));
     }
 
+    /**
+     * Winning sequence vertical
+     * @param fields the fields witch should be proofed
+     * @return if the winning sequence is vertical
+     */
     private static boolean winningSequenceVertical(List<Field> fields) {
         final int maxAdderValue = 3;
         final int fieldSize = 8;
@@ -115,6 +135,11 @@ public class ValidatingView implements View{
                 .anyMatch(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + maxAdderValue, field.owner()));
     }
 
+    /**
+     * Winning sequence diagonal downward
+     * @param fields the fields witch should be proofed
+     * @return if the winning sequence is diagonal downward
+     */
     private static boolean winningSequenceDiagonalDownward(List<Field> fields) {
         final int minAdderValue = 2;
         final int maxAdderValue = 3;
@@ -126,6 +151,11 @@ public class ValidatingView implements View{
                 .anyMatch(field -> containsFields(fields, field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
     }
 
+    /**
+     * Winning sequence diagonal upward
+     * @param fields the fields witch should be proofed
+     * @return if the winning sequence is diagonal upward
+     */
     private static boolean winningSequenceDiagonalUpward(List<Field> fields) {
         final int maxAdderValue = 3;
         final int fieldSize = 8;
@@ -136,8 +166,16 @@ public class ValidatingView implements View{
                 .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner()))
                 .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
     }
-    
-    private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate, PlayerID owner){
+
+    /**
+     * containsFields.
+     * @param fieldList the list of fields witch should contain the field
+     * @param xCoordinate the xCoordinate of the searched field
+     * @param yCoordinate the yCoordinate of the searched field
+     * @param owner the owner of the searched field
+     * @return if the field is contained in the list
+     */
+    private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate, PlayerID owner) {
         return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate && field.owner() == owner);
     }
 }
