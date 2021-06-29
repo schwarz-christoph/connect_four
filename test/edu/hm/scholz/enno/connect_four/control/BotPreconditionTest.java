@@ -9,6 +9,8 @@ import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
+
 public class BotPreconditionTest {
 
     @Test (expected = IllegalArgumentException.class)
@@ -30,6 +32,16 @@ public class BotPreconditionTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
+    public void botPlayerIDNoneTest() {
+
+        //act
+        FullGame game = Factory.makeGame(PlayerID.NONE);
+        FullBoard board = Factory.makeBoard();
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        Bot testBot = new Bot(game, manager, null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
     public void botGameNullTest() {
 
         //act
@@ -37,5 +49,20 @@ public class BotPreconditionTest {
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
         Bot testBot = new Bot(null, manager, PlayerID.PLAYER_1);
+    }
+
+    @Test
+    public void botPlayerSelectTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        Bot testBot = new Bot(game, manager, PlayerID.PLAYER_1);
+
+        //act
+        testBot.step();
+
+        //assert
+        assertTrue(game.isStarted());
     }
 }
