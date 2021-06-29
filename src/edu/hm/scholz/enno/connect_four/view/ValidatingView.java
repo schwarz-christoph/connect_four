@@ -12,7 +12,9 @@ import java.util.stream.Collectors;
 /**
  * View for theory tests.
  */
-public record ValidatingView(Game game) implements View {
+public class ValidatingView implements View {
+
+    private final Game game;
 
     /**
      * Validates the view and registers changes

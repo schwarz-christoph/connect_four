@@ -8,7 +8,7 @@ import org.junit.Test;
 public class ValidatingViewTest {
 
     @Test(expected = IllegalArgumentException.class)
-    public void PreconditionValidatingViewTest(){
+    public void PreconditionValidatingViewTest() {
         Game game = Factory.makeGame(PlayerID.PLAYER_1);
         ValidatingView view = new ValidatingView(null);
     }
