@@ -27,12 +27,12 @@ public class ConnectFourManager implements GameManager {
     /**
      * the board.
      */
-    final private FullBoard board;
+    private final FullBoard board;
 
     /**
      * the game.
      */
-    final private FullGame game;
+    private final FullGame game;
 
     /**
      * the player1.

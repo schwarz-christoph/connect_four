@@ -15,15 +15,15 @@ import java.util.stream.Collectors;
 public class ValidatingView implements View{
 
     /**
-     * The current game
+     * The current game.
      */
     private final Game game;
 
     /**
-     * Validates the view and registers changes
+     * Validates the view and registers changes.
      *
-     * @param game the current game
-     * @throws IllegalArgumentException if the game is null
+     * @param game the current game.
+     * @throws IllegalArgumentException if the game is null.
      */
     public ValidatingView(Game game) {
         if (game == null)
@@ -36,7 +36,7 @@ public class ValidatingView implements View{
 
     @Override
     public void update(Board board, Game game, Player player1, Player player2) {
-        //Do nothing
+        //Do nothing.
     }
 
     /**
@@ -48,8 +48,8 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Validates the game
-     * @return if the final game state is valid
+     * Validates the game.
+     * @return if the final game state is valid.
      */
     public boolean validateGame() {
         boolean isValidGame = false;
@@ -63,12 +63,12 @@ public class ValidatingView implements View{
         else
             wantPlayerID = PlayerID.NONE;
 
-        // Cant be tested because should always be true if the game was works properly
+        // Cant be tested because should always be true if the game was works properly.
         if (game.getWinner() == wantPlayerID) {
             isValidGame = true;
         }
 
-        // Cant be tested because should always be true if the game works properly
+        // Cant be tested because should always be true if the game works properly.
         if (isValidGame) {
             isValidGame = game.getActivePlayer() == PlayerID.NONE;
         }
@@ -76,10 +76,10 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Validate the winner
-     * @param board the board of the game
-     * @param wantPlayerID the playerID witch should win
-     * @return if the player has stones in a winning order
+     * Validate the winner.
+     * @param board the board of the game.
+     * @param wantPlayerID the playerID witch should win.
+     * @return if the player has stones in a winning order.
      */
     private boolean validateWinner(Board board, PlayerID wantPlayerID) {
         final List<Field> fields = board.getFields();
@@ -92,9 +92,9 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Winning sequence test
-     * @param fields the fields of one player
-     * @return if the winning sequence is in the field
+     * Winning sequence test.
+     * @param fields the fields of one player.
+     * @return if the winning sequence is in the field.
      */
     private static boolean containsWinningSequence(List<Field> fields) {
         final boolean result;
@@ -111,9 +111,9 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Winning sequence horizontal
-     * @param fields the fields witch should be proofed
-     * @return if the winning sequence is horizontal
+     * Winning sequence horizontal.
+     * @param fields the fields witch should be proofed.
+     * @return if the winning sequence is horizontal.
      */
     private static boolean winningSequenceHorizontal(List<Field> fields) {
         final int maxAdderValue = 3;
@@ -127,9 +127,9 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Winning sequence vertical
-     * @param fields the fields witch should be proofed
-     * @return if the winning sequence is vertical
+     * Winning sequence vertical.
+     * @param fields the fields witch should be proofed.
+     * @return if the winning sequence is vertical.
      */
     private static boolean winningSequenceVertical(List<Field> fields) {
         final int maxAdderValue = 3;
@@ -143,9 +143,9 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Winning sequence diagonal downward
-     * @param fields the fields witch should be proofed
-     * @return if the winning sequence is diagonal downward
+     * Winning sequence diagonal downward.
+     * @param fields the fields witch should be proofed.
+     * @return if the winning sequence is diagonal downward.
      */
     private static boolean winningSequenceDiagonalDownward(List<Field> fields) {
         final int minAdderValue = 2;
@@ -159,9 +159,9 @@ public class ValidatingView implements View{
     }
 
     /**
-     * Winning sequence diagonal upward
-     * @param fields the fields witch should be proofed
-     * @return if the winning sequence is diagonal upward
+     * Winning sequence diagonal upward.
+     * @param fields the fields witch should be proofed.
+     * @return if the winning sequence is diagonal upward.
      */
     private static boolean winningSequenceDiagonalUpward(List<Field> fields) {
         final int maxAdderValue = 3;
@@ -176,10 +176,10 @@ public class ValidatingView implements View{
 
     /**
      * containsFields.
-     * @param fieldList the list of fields witch should contain the field
-     * @param xCoordinate the xCoordinate of the searched field
-     * @param yCoordinate the yCoordinate of the searched field
-     * @return if the field is contained in the list
+     * @param fieldList the list of fields witch should contain the field.
+     * @param xCoordinate the xCoordinate of the searched field.
+     * @param yCoordinate the yCoordinate of the searched field.
+     * @return if the field is contained in the list.
      */
     private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate) {
         return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate);

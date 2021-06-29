@@ -13,34 +13,14 @@ import java.util.Map;
 public class JoystickController implements Control {
 
     /**
-     * Integer value of the char move right.
+     * Map of the Integer values of the characters to the correct move.
+     * 'r' = 114
+     * 'l' = 108
+     * 'u' = 117
+     * 'd' = 100
+     * 'm' = 109
      */
-    static final int LETTER_R = 'r';
-
-    /**
-     * Integer value of the char left.
-     */
-    static final int LETTER_L = 'l';
-
-    /**
-     * Integer value of the char up.
-     */
-    static final int LETTER_U = 'u';
-
-    /**
-     * Integer value of the char down.
-     */
-    static final int LETTER_D = 'd';
-
-    /**
-     * Integer value of the char middle.
-     */
-    static final int LETTER_M = 'm';
-
-    /**
-     * Map of the Integer values to the correct move.
-     */
-    static final Map<Integer, Move> MOVE_CHAR_MAP = Map.of(LETTER_R, Move.RIGHT, LETTER_L, Move.LEFT, LETTER_U, Move.UP, LETTER_D, Move.DOWN, LETTER_M, Move.CONFIRM);
+    static final Map<Integer, Move> MOVE_CHAR_MAP = Map.of(114, Move.RIGHT, 108, Move.LEFT, 117, Move.UP, 100, Move.DOWN, 109, Move.CONFIRM);
 
     /**
      * The game.
