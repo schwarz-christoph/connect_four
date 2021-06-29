@@ -177,6 +177,6 @@ public class ValidatingView implements View {
      * @return if the field is contained in the list
      */
     private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate, PlayerID owner) {
-        return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate && field.owner() == owner);
+        return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate);
     }
 }
