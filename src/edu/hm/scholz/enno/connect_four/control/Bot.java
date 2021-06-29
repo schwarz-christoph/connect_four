@@ -45,7 +45,7 @@ public class Bot implements Control {
     public Bot(Game game, GameManager manager, PlayerID playerID) {
         if (manager == null || playerID == null || playerID == PlayerID.NONE)
             throw new IllegalArgumentException("IllegalArgument for Bot");
-        
+
 
         this.game = game;
         this.manager = manager;
@@ -53,11 +53,6 @@ public class Bot implements Control {
         this.isRunning = true;
     }
 
-    /**
-     * Tries to execute every step the bot is doing, when its his current turn.
-     *
-     * @return if the step was executed successfully.
-     */
     @Override
     public void step() {
         if (isRunning) {

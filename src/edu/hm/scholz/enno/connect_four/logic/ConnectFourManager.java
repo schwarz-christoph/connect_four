@@ -95,14 +95,8 @@ public class ConnectFourManager implements GameManager {
     @Override
     public PlayerID executeMove(Move move) {
         if (game.isStarted()) {
-            if (game.getActivePlayer() == PlayerID.NONE) {
-                if (move == Move.CONFIRM) {
-                    //Restarts the game in the End screen
-                    restart();
-                }
-            } else {
+            if (game.getActivePlayer() != PlayerID.NONE)
                 executeMoveInActiveGame(move);
-            }
         } else
             executePlayerSelectScreen(move);
 
@@ -213,6 +207,7 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * The Active FullPlayer of the game.
+     *
      * @return The active player as a FullPlayer.
      */
     private FullPlayer getActiveFullPLayer() {

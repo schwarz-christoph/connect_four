@@ -69,12 +69,13 @@ public class JoystickController implements Control {
     private boolean isRunning;
     /**
      * Constructor for the player Controller.
+     *
      * @param manager  The current manager of the game.
      * @param ui       The ui the game runs on.
      * @param playerID The playerID of the current player.
      */
     public JoystickController(Game game, GameManager manager, UI ui, PlayerID playerID) {
-        if(game == null || manager == null || ui == null || playerID == PlayerID.NONE || playerID == null)
+        if (game == null || manager == null || ui == null || playerID == PlayerID.NONE || playerID == null)
             throw new IllegalArgumentException("IllegalArgument for JoystickController");
 
         this.game = game;
@@ -105,6 +106,11 @@ public class JoystickController implements Control {
         isRunning = false;
     }
 
+    /**
+     * Waits for an input event and executes the corresponding move.
+     *
+     * @return The active player after executing the move.
+     */
     private PlayerID executeSingleMove() {
         final int moveCode = ui.event(true);
         final Move move = MOVE_CHAR_MAP.get(moveCode);

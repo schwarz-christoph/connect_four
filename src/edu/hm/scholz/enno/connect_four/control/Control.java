@@ -11,7 +11,7 @@ package edu.hm.scholz.enno.connect_four.control;
 public interface Control extends Runnable {
 
     /**
-     * Execute a Move.
+     * Executes moves until the turn ends.
      */
     void step();
 

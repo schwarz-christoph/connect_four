@@ -85,7 +85,7 @@ public class LoopMain {
         views.forEach(view -> view.update(board, game, player1, player2));
 
         // Liste von Controls, eine fuer jeden Spieler
-        final boolean isBotVsBot = true;
+        final boolean isBotVsBot = false;
         final List<Control> controls = getControllers(game, rules, ui, isBotVsBot);
 
         // Fortfahren bis das Spiel beendet ist
@@ -94,9 +94,11 @@ public class LoopMain {
                     .filter(Control::running) // noch beteiligte Spieler herausfiltern
                     .forEach(Control::step); // jeder Spieler zieht
 
+        if(!isBotVsBot)
+            controls.stream().findFirst().get().step();
+
         // Views und Controls abbauen
         controls.forEach(Control::close);
         views.forEach(View::shut);
     }
-
 }
