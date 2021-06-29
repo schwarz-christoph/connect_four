@@ -51,7 +51,6 @@ public record ValidatingView(Game game) implements View {
         final boolean winnerPlayer2 = validateWinner(board, PlayerID.PLAYER_2);
         final List<Field> fields = board.getFields();
         final int fieldSize = 8;
-        final boolean boardFull = fields.size() == fieldSize * (fieldSize - 1);
 
         if (winnerPlayer1 ^ winnerPlayer2) // ^ = exclusive or
             wantPlayerID = winnerPlayer1 ? PlayerID.PLAYER_1 : PlayerID.PLAYER_2;
