@@ -12,8 +12,11 @@ import java.util.stream.Collectors;
 /**
  * View for theory tests.
  */
-public class ValidatingView implements View {
+public class ValidatingView implements View{
 
+    /**
+     * The current game
+     */
     private final Game game;
 
     /**
@@ -36,6 +39,9 @@ public class ValidatingView implements View {
         //Do nothing
     }
 
+    /**
+     * Shuts down the view.
+     */
     @Override
     public void shut() {
         View.super.shut();
