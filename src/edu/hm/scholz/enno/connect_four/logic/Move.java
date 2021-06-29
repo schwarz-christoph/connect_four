@@ -1,6 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * All the moves that can be made.
@@ -14,29 +14,30 @@ public enum Move {
     UP, DOWN, LEFT, RIGHT, CONFIRM;
 
     /**
+     * A mapping of enum value to move name (character).
+     */
+    static final Map<Move, Character> MOVE_NAMES = Map.of(UP, 'U', DOWN, 'D', LEFT, 'L', RIGHT, 'R', CONFIRM, 'C');
+
+    /**
+     * A mapping of enum value to description (string).
+     */
+    static final Map<Move, String> MOVE_DESCRIPTIONS = Map.of(
+            UP, "Select field above",
+            DOWN, "Select field below",
+            LEFT, "Select left field",
+            RIGHT, "Select right field",
+            CONFIRM, "Confirm selected field");
+
+    /**
      * Get a move with a single unique char.
      * @return the move which corresponds to the char
      */
     public char getMoveName() {
-        final HashMap<Move, Character> moveNames = new HashMap<>();
-        moveNames.put(UP, 'U');
-        moveNames.put(DOWN, 'D');
-        moveNames.put(LEFT, 'L');
-        moveNames.put(RIGHT, 'R');
-        moveNames.put(CONFIRM, 'C');
-        
-        return moveNames.get(this);
+        return MOVE_NAMES.get(this);
     }
 
     @Override
     public String toString() {
-        final HashMap<Move, String> moveDescriptions = new HashMap<>();
-        moveDescriptions.put(UP, "Select field above");
-        moveDescriptions.put(DOWN, "Select field below");
-        moveDescriptions.put(LEFT, "Select left field");
-        moveDescriptions.put(RIGHT, "Select right field");
-        moveDescriptions.put(CONFIRM, "Confirm selected field");
-
-        return moveDescriptions.get(this);
+        return MOVE_DESCRIPTIONS.get(this);
     }
 }
