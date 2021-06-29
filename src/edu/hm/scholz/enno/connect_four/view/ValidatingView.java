@@ -14,8 +14,13 @@ import java.util.stream.Collectors;
  */
 public class ValidatingView implements View{
 
-    private boolean isValidGame = false;
+    private boolean isValidGame;
 
+    /**
+     * Validates the view and registers changes
+     * @param game the current game
+     * @throws IllegalArgumentException if the game is null
+     */
     public ValidatingView(Game game) {
         if (game == null)
             throw new IllegalArgumentException("Arguments cannot be null.");
@@ -30,12 +35,15 @@ public class ValidatingView implements View{
         }
     }
 
+    /**
+     * Shuts down the view.
+     */
     @Override
     public void shut() {
         View.super.shut();
     }
 
-    public boolean isValidGame() {
+    public boolean getIsValidGame() {
         return isValidGame;
     }
 

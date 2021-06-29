@@ -90,6 +90,6 @@ public class BotTheoriesTest {
             System.out.println("| Player 1 Win: " + player1Winn + " | Player 2 Win: " + player2Winn + " | Player None Win: " + playerNoneWinn + " |");
         }
         //---------------------------------------------------------------------------------------------------------------------------------------------
-        assertTrue(valiView.isValidGame());
+        assertTrue(valiView.getIsValidGame());
     }
 }
