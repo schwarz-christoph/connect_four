@@ -8,25 +8,38 @@ import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
 public record ConnectFourPixelGridView(UI ui, Game game) implements View {
 
     /**
-     * Constant for highlighted
+     * Constant for highlighted.
      */
-    final static boolean HIGHLIGHTED = true;
+    static final boolean HIGHLIGHTED = true;
 
     /**
-     * Constant for not highlighted
+     * Constant for not highlighted.
      */
-    final static boolean NOT_HIGHLIGHTED = false;
+    static final boolean NOT_HIGHLIGHTED = false;
 
     /**
-     * Constant for not greyed out
+     * Constant for not greyed out.
      */
-    final static boolean NOT_GREYED_OUT = false;
+    static final boolean NOT_GREYED_OUT = false;
+
+    /**
+     * xCoordinate of the left Border.
+     */
+    static final int LEFT_BORDER = 0;
+
+    /**
+     * xCoordinate of the right Border.
+     */
+    static final int RIGHT_BORDER = 8;
 
     public ConnectFourPixelGridView {
         if (ui == null || game == null)
@@ -58,7 +71,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     }
 
     private void updateEndScreen(Game game) {
-        IntStream.range(0, 8).forEach(xIndex -> IntStream.range(0, 8)
+        IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
                 .forEach(yIndex -> ui().set(xIndex, yIndex, getEndScreenRGBCode(xIndex, game.getWinner()))));
     }
 
@@ -78,7 +91,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
 
     private void updateRegularGame(Board board, Game game, Player player1, Player player2) {
         updateMenu(board, player1, player2);
-        IntStream.range(0, 8).forEach(xIndex -> IntStream.range(1, 8)
+        IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER + 1, RIGHT_BORDER)
                 .forEach(yIndex -> updateField(board, game, xIndex, yIndex)));
     }
 
@@ -94,7 +107,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
         final boolean isFieldHighlighted = board.getHighlight().stream()
                 .filter(field -> field.xCoordinate() == xCoordinate)
                 .anyMatch(field -> field.yCoordinate() == yCoordinate);
-        
+
         ui().set(xCoordinate, yCoordinate, getRegularGameRGBCode(occupyingPlayer, isFieldHighlighted, game));
     }
 
@@ -114,38 +127,69 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     }
 
     private void updateMenu(Board board, Player player1, Player player2) {
+        final List<Integer> xCoordinatesColumns = new ArrayList<>();
+        IntStream.range(0, RIGHT_BORDER)
+                .forEach(xCoordinatesColumns::add);
+        final Iterator<Integer> xCoordinateIterator = xCoordinatesColumns.listIterator();
+        final List<Integer> rgbValues = new ArrayList<>();
+
         final Optional<Field> menuHighlightOptional = board.getHighlight().stream()
                 .filter(field -> field.yCoordinate() == 0)
                 .findFirst();
         final int menuHighlightXCoordinate = menuHighlightOptional.map(Field::xCoordinate).orElse(-1);
 
-        final int colorPlayer1BombJoker = Colors.BOMB_JOKER.getRGBCode(
-                getIsHighlighted(0, menuHighlightXCoordinate), player1.isBombJokerUsed());
-        final int colorPlayer1DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
-                getIsHighlighted(1, menuHighlightXCoordinate), player1.isDeleteJokerUsed());
-        final int colorPlayer1EmptyField = getIsHighlighted(2, menuHighlightXCoordinate) ?
-                Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
-                Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
-        final int colorEndGameField = Colors.END_GAME.getRGBCode(
-                getIsHighlighted(3, menuHighlightXCoordinate), NOT_GREYED_OUT);
-        final int colorRestartGameField = Colors.RESTART_GAME.getRGBCode(
-                getIsHighlighted(4, menuHighlightXCoordinate), NOT_GREYED_OUT);
-        final int colorPlayer2EmptyField = getIsHighlighted(5, menuHighlightXCoordinate) ?
-                Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
-                Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
-        final int colorPlayer2DeleteJoker = Colors.DELETE_JOKER.getRGBCode(
-                getIsHighlighted(6, menuHighlightXCoordinate), player2.isDeleteJokerUsed());
-        final int colorPlayer2BombJoker = Colors.BOMB_JOKER.getRGBCode(
-                getIsHighlighted(7, menuHighlightXCoordinate), player2.isBombJokerUsed());
+        //color for player 1 bomb joker
+        rgbValues.add(
+            Colors.BOMB_JOKER.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), player1.isBombJokerUsed())
+        ) ;
 
-        ui().set(0, 0, colorPlayer1BombJoker);
-        ui().set(1, 0, colorPlayer1DeleteJoker);
-        ui().set(2, 0, colorPlayer1EmptyField);
-        ui().set(3, 0, colorEndGameField);
-        ui().set(4, 0, colorRestartGameField);
-        ui().set(5, 0, colorPlayer2EmptyField);
-        ui().set(6, 0, colorPlayer2DeleteJoker);
-        ui().set(7, 0, colorPlayer2BombJoker);
+        //color for player 1 delete joker
+        rgbValues.add(
+            Colors.DELETE_JOKER.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), player1.isDeleteJokerUsed())
+        );
+
+        //color empty field between player 1 joker and restart and end
+        rgbValues.add(
+            getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate) ?
+                Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
+                Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT)
+        );
+
+        //color for end game button
+        rgbValues.add(
+            Colors.END_GAME.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), NOT_GREYED_OUT)
+        );
+
+        //color for restart game button
+        rgbValues.add(
+            Colors.RESTART_GAME.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), NOT_GREYED_OUT)
+        );
+
+        //color empty field between player 2 joker and restart and end
+        rgbValues.add(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate) ?
+                    Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT) :
+                    Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT)
+        );
+
+        //color for player 2 delete joker
+        rgbValues.add(
+            Colors.DELETE_JOKER.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), player2.isDeleteJokerUsed())
+        );
+
+        //color for player 2 bomb joker
+        rgbValues.add(
+            Colors.BOMB_JOKER.getRGBCode(
+                getIsHighlighted(xCoordinateIterator.next(), menuHighlightXCoordinate), player2.isBombJokerUsed())
+        );
+
+        IntStream.range(0, RIGHT_BORDER)
+                .forEach(xCoordinate -> ui().set(xCoordinate, 0, rgbValues.get(xCoordinate)));
     }
 
     private boolean getIsHighlighted(int fieldXCoordinate, int highlightXCoordinate) {
@@ -153,14 +197,15 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     }
 
     private void updatePlayerSelect(Game game) {
-        IntStream.range(0, 8).forEach(xIndex -> IntStream.range(0, 8)
+        IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
                 .forEach(yIndex -> ui().set(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
     }
 
     private int getPlayerSelectRGBCode(int xCoordinate, int playerCount) {
         final int rgbCode;
+        final int partingLine = 4;
 
-        if (xCoordinate < 4) {
+        if (xCoordinate < partingLine) {
             rgbCode = Colors.PLAYER_1.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
         } else {
             if (playerCount == 1) {
