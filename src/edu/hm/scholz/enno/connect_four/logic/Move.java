@@ -1,5 +1,7 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import java.util.HashMap;
+
 /**
  * All the moves that can be made.
  * @author Christoph Schwarz (schwarz4@hm.edu)
@@ -16,29 +18,25 @@ public enum Move {
      * @return the move which corresponds to the char
      */
     public char getMoveName() {
-        final char moveChar;
-        moveChar = switch (this) {
-            case UP -> 'U';
-            case DOWN -> 'D';
-            case LEFT -> 'L';
-            case RIGHT -> 'R';
-            default -> 'C';
-        };
+        final HashMap<Move, Character> moveNames = new HashMap<>();
+        moveNames.put(UP, 'U');
+        moveNames.put(DOWN, 'D');
+        moveNames.put(LEFT, 'L');
+        moveNames.put(RIGHT, 'R');
+        moveNames.put(CONFIRM, 'C');
         
-        return moveChar;
+        return moveNames.get(this);
     }
 
     @Override
     public String toString() {
-        final String moveDescription;
-        moveDescription = switch (this) {
-            case UP -> "Select field above";
-            case DOWN ->  "Select field below";
-            case LEFT ->  "Select left field";
-            case RIGHT ->  "Select right field";
-            default ->  "Confirm selected field"; //Confirm
-        };
+        final HashMap<Move, String> moveDescriptions = new HashMap<>();
+        moveDescriptions.put(UP, "Select field above");
+        moveDescriptions.put(DOWN, "Select field below");
+        moveDescriptions.put(LEFT, "Select left field");
+        moveDescriptions.put(RIGHT, "Select right field");
+        moveDescriptions.put(CONFIRM, "Confirm selected field");
 
-        return moveDescription;
+        return moveDescriptions.get(this);
     }
 }

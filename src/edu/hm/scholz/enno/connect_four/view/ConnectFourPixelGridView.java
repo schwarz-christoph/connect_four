@@ -8,10 +8,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerActiveJoker;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public record ConnectFourPixelGridView(UI userInterface, Game game) implements View {
@@ -112,6 +109,8 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
     }
 
     private int getRegularGameRGBCode(PlayerID player, boolean isHighlighted, Game game) {
+
+
         final int playerHighlightColor = game.getActivePlayer() == PlayerID.PLAYER_1 ?
                 Colors.PLAYER_1.getRGBCode(HIGHLIGHTED, NOT_GREYED_OUT) :
                 Colors.PLAYER_2.getRGBCode(HIGHLIGHTED, NOT_GREYED_OUT);
@@ -119,11 +118,16 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
                 playerHighlightColor :
                 Colors.HIGHLIGHT.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
 
-        return switch (player) {
-            case PLAYER_1 -> Colors.PLAYER_1.getRGBCode(isHighlighted, NOT_GREYED_OUT);
-            case PLAYER_2 -> Colors.PLAYER_2.getRGBCode(isHighlighted, NOT_GREYED_OUT);
-            default -> isHighlighted ? highlightColor : Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
-        };
+        final int player1Color = Colors.PLAYER_1.getRGBCode(isHighlighted, NOT_GREYED_OUT);
+        final int player2Color = Colors.PLAYER_2.getRGBCode(isHighlighted, NOT_GREYED_OUT);
+        final int playerNoneColor = isHighlighted ? highlightColor : Colors.EMPTY.getRGBCode(NOT_HIGHLIGHTED, NOT_GREYED_OUT);
+
+        final HashMap<PlayerID, Integer> playerColors = new HashMap<>();
+        playerColors.put(PlayerID.PLAYER_1, player1Color);
+        playerColors.put(PlayerID.PLAYER_2, player2Color);
+        playerColors.put(PlayerID.NONE, playerNoneColor);
+
+        return playerColors.get(player);
     }
 
     private void updateMenu(Board board, Player player1, Player player2) {
