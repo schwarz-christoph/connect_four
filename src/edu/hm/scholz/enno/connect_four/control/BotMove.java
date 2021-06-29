@@ -4,7 +4,11 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 public enum BotMove {
@@ -83,10 +87,10 @@ public enum BotMove {
         if (destination == BotMove.BOT_BOMB_JOKER || destination == BotMove.BOT_DELETE_JOKER) {
             //Go to Menu (0)
             targetCordY = 0;
-            if (targetCordY != currentYCord) {
-                result = Move.UP;
-            } else {
+            if (targetCordY == currentYCord) {
                 result = null;
+            } else {
+                result = Move.UP;
             }
 
         } else {

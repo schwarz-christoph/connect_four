@@ -5,7 +5,6 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.Move;
-
 import java.util.Map;
 
 /**
@@ -72,10 +71,16 @@ public class JoystickController implements Control {
      *
      * @param manager  The current manager of the game.
      * @param ui       The ui the game runs on.
+     * @param game     The current game.
      * @param playerID The playerID of the current player.
      */
     public JoystickController(Game game, GameManager manager, UI ui, PlayerID playerID) {
-        if (game == null || manager == null || ui == null || playerID == PlayerID.NONE || playerID == null)
+        isNotNull(game);
+        isNotNull(manager);
+        isNotNull(ui);
+        isNotNull(playerID);
+
+        if (playerID == PlayerID.NONE)
             throw new IllegalArgumentException("IllegalArgument for JoystickController");
 
         this.game = game;
@@ -83,6 +88,11 @@ public class JoystickController implements Control {
         this.ui = ui;
         this.playerID = playerID;
         this.isRunning = true;
+    }
+
+    private void isNotNull(Object object){
+        if(object == null)
+            throw new IllegalArgumentException("IllegalArgument for JoystickController");
     }
 
     @Override
