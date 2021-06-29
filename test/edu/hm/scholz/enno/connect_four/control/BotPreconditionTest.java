@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.control;
 
+import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
@@ -9,7 +10,7 @@ import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class BotPreconditionTest {
 
@@ -35,10 +36,11 @@ public class BotPreconditionTest {
     public void botPlayerIDNoneTest() {
 
         //act
-        FullGame game = Factory.makeGame(PlayerID.NONE);
+        PlayerID player = PlayerID.NONE;
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1);
         FullBoard board = Factory.makeBoard();
         GameManager manager = LogicFactory.makeGameManager(board, game);
-        Bot testBot = new Bot(game, manager, null);
+        Bot testBot = new Bot(game, manager, player);
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -64,5 +66,21 @@ public class BotPreconditionTest {
 
         //assert
         assertTrue(game.isStarted());
+    }
+
+    @Test
+    public void botIsNotRunningTest() {
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+        Bot testBot = new Bot(game, manager, PlayerID.PLAYER_1);
+
+        //act
+        testBot.close();
+        testBot.step();
+
+        //assert
+        assertFalse(game.isStarted());
     }
 }
