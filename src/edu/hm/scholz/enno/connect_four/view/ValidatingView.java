@@ -4,9 +4,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.Player;
-import edu.hm.scholz.enno.connect_four.datastore.Board;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
-import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 
 import java.util.List;
@@ -94,9 +92,9 @@ public class ValidatingView implements View{
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate(), field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate(), field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + maxAdderValue, field.yCoordinate(), field.owner())));
+                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate(), field.owner()))
+                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate(), field.owner()))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate(), field.owner()));
     }
 
     private static boolean winningSequenceVertical(List<Field> fields) {
@@ -105,9 +103,9 @@ public class ValidatingView implements View{
 
         return fields.stream()
                 .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 1, field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + 2, field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate(), field.yCoordinate() + maxAdderValue, field.owner())));
+                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 1, field.owner()))
+                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 2, field.owner()))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + maxAdderValue, field.owner()));
     }
 
     private static boolean winningSequenceDiagonalDownward(List<Field> fields) {
@@ -116,9 +114,9 @@ public class ValidatingView implements View{
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() > minAdderValue)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner())));
+                .filter(field -> containsFields(fields, field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner()))
+                .filter(field -> containsFields(fields, field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner()))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
     }
 
     private static boolean winningSequenceDiagonalUpward(List<Field> fields) {
@@ -127,8 +125,12 @@ public class ValidatingView implements View{
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner())))
-                .filter(field -> fields.contains(Factory.makeField(field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner())))
-                .anyMatch(field -> fields.contains(Factory.makeField(field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner())));
+                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner()))
+                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner()))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
+    }
+    
+    private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate, PlayerID owner){
+        return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate && field.owner() == owner);
     }
 }
