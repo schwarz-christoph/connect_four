@@ -52,7 +52,6 @@ public class ValidatingView implements View{
      * @return if the final game state is valid.
      */
     public boolean validateGame() {
-        boolean isValidGame = false;
         final Board board = game.getBoard();
         final PlayerID wantPlayerID;
         final boolean winnerPlayer1 = validateWinner(board, PlayerID.PLAYER_1);
@@ -63,16 +62,7 @@ public class ValidatingView implements View{
         else
             wantPlayerID = PlayerID.NONE;
 
-        // Cant be tested because should always be true if the game was works properly.
-        if (game.getWinner() == wantPlayerID) {
-            isValidGame = true;
-        }
-
-        // Cant be tested because should always be true if the game works properly.
-        if (isValidGame) {
-            isValidGame = game.getActivePlayer() == PlayerID.NONE;
-        }
-        return isValidGame;
+        return game.getWinner() == wantPlayerID;
     }
 
     /**
