@@ -13,11 +13,6 @@ import java.util.List;
 public class RestartEndTest {
 
     @Test
-    public void endTest(){
-
-    }
-
-    @Test
     public void RestartTestIsStarted(){
         //arrange
         FullBoard board = Factory.makeBoard();
