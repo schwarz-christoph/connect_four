@@ -26,13 +26,4 @@ public interface Control extends Runnable {
      * @return true if the player is in the game, false instead.
      */
     boolean running();
-
-    /**
-     * Starts the controller.
-     * Returns if the controller ends.
-     */
-    @Override
-    default void run() {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
 }
