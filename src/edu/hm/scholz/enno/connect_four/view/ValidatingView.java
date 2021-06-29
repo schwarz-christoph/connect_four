@@ -115,9 +115,9 @@ public class ValidatingView implements View {
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate(), field.owner()))
-                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate(), field.owner()))
-                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate(), field.owner()));
+                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate()))
+                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate()))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate()));
     }
 
     /**
@@ -131,9 +131,9 @@ public class ValidatingView implements View {
 
         return fields.stream()
                 .filter(field -> field.yCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 1, field.owner()))
-                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 2, field.owner()))
-                .anyMatch(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + maxAdderValue, field.owner()));
+                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 1))
+                .filter(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + 2))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate(), field.yCoordinate() + maxAdderValue));
     }
 
     /**
@@ -147,9 +147,9 @@ public class ValidatingView implements View {
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() > minAdderValue)
-                .filter(field -> containsFields(fields, field.xCoordinate() - 1, field.yCoordinate() - 1, field.owner()))
-                .filter(field -> containsFields(fields, field.xCoordinate() - 2, field.yCoordinate() - 2, field.owner()))
-                .anyMatch(field -> containsFields(fields, field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
+                .filter(field -> containsFields(fields, field.xCoordinate() - 1, field.yCoordinate() - 1))
+                .filter(field -> containsFields(fields, field.xCoordinate() - 2, field.yCoordinate() - 2))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() - maxAdderValue, field.yCoordinate() - maxAdderValue));
     }
 
     /**
@@ -163,9 +163,9 @@ public class ValidatingView implements View {
 
         return fields.stream()
                 .filter(field -> field.xCoordinate() < fieldSize - maxAdderValue)
-                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate() - 1, field.owner()))
-                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate() - 2, field.owner()))
-                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue, field.owner()));
+                .filter(field -> containsFields(fields, field.xCoordinate() + 1, field.yCoordinate() - 1))
+                .filter(field -> containsFields(fields, field.xCoordinate() + 2, field.yCoordinate() - 2))
+                .anyMatch(field -> containsFields(fields, field.xCoordinate() + maxAdderValue, field.yCoordinate() - maxAdderValue));
     }
 
     /**
@@ -173,10 +173,9 @@ public class ValidatingView implements View {
      * @param fieldList the list of fields witch should contain the field
      * @param xCoordinate the xCoordinate of the searched field
      * @param yCoordinate the yCoordinate of the searched field
-     * @param owner the owner of the searched field
      * @return if the field is contained in the list
      */
-    private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate, PlayerID owner) {
+    private static boolean containsFields(List<Field> fieldList, int xCoordinate, int yCoordinate) {
         return fieldList.stream().anyMatch(field -> field.xCoordinate() == xCoordinate && field.yCoordinate() == yCoordinate);
     }
 }
