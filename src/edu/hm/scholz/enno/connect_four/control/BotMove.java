@@ -133,24 +133,7 @@ public enum BotMove {
     }
 
     private static int getMatrixXCoordinate(BotMove destination) {
-        final int rightBorder = 8;
-        final List<Integer> xCoordinatesColumns = new ArrayList<>();
-
-        //X Coordinates for column 0-7
-        IntStream.range(0, rightBorder)
-                .forEach(xCoordinatesColumns::add);
-
-        //Coordinates for the rest of BotMoves
-        xCoordinatesColumns.add(rightBorder - 1);
-        xCoordinatesColumns.add(rightBorder - 1);
-        xCoordinatesColumns.add(rightBorder - 1);
-
-        final List<BotMove> botMoves = new ArrayList<>(Arrays.asList(BotMove.values()));
-        final Iterator<Integer> xCoordinateIterator = xCoordinatesColumns.listIterator();
-        final HashMap<BotMove, Integer> columnXCoordinate = new HashMap<>();
-        botMoves.forEach(botMove -> columnXCoordinate.put(botMove, xCoordinateIterator.next()));
-
-        return columnXCoordinate.get(destination);
+        return Arrays.asList(BotMove.values()).indexOf(destination);
     }
 
     private static List<Move> appendDeleteJokerMoves() {
