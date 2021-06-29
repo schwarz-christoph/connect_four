@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class GetMovesPlayerSelectAndEndScreenTest {
     @Rule
@@ -51,5 +52,21 @@ public class GetMovesPlayerSelectAndEndScreenTest {
 
         //assert
         assertEquals(expectedMoves, actualMoves);
+    }
+
+    @Test
+    public void movesInPlayerSelectScreenFalseMoveTest(){
+        //arrange
+        FullBoard board = Factory.makeBoard();
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        game.setIsStarted(false);
+
+        GameManager manager = LogicFactory.makeGameManager(board, game);
+
+        //act
+        PlayerID currentPlayer = manager.executeMove(Move.UP);
+
+        //assert
+        assertEquals(currentPlayer, PlayerID.PLAYER_1);
     }
 }
