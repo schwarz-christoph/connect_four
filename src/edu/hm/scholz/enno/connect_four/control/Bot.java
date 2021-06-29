@@ -79,6 +79,11 @@ public class Bot implements Control {
         return isRunning;
     }
 
+    /**
+     * Executes all moves in provided list.
+     * @param moveList Moves to execute.
+     * @return Return value of the last executed move.
+     */
     private PlayerID executeMoveList(List<Move> moveList) {
         PlayerID activePlayerID = null;
         for (final Move nextStep : moveList) {
