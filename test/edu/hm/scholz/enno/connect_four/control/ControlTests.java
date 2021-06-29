@@ -7,7 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({BotMoveInMenuTest.class,
         BotMoveJokerTest.class,
         BotMoveTest.class,
-        BotTheoriesTest.class,
+        BotTheoriesTestMultiThread.class,
         BotPreconditionTest.class})
 public class ControlTests {
 }
