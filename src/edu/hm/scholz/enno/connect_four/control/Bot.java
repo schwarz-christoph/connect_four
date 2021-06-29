@@ -43,7 +43,7 @@ public class Bot implements Control {
      * @throws IllegalArgumentException if a parameter is not viable.
      */
     public Bot(Game game, GameManager manager, PlayerID playerID) {
-        if (manager == null || playerID == null || playerID == PlayerID.NONE)
+        if (manager == null || playerID == null || game == null || playerID == PlayerID.NONE)
             throw new IllegalArgumentException("IllegalArgument for Bot");
 
 
