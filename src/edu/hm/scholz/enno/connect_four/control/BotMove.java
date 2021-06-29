@@ -4,10 +4,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
@@ -71,15 +68,13 @@ public enum BotMove {
 
         result.add(Move.CONFIRM);
 
-        if (destination == BotMove.BOT_DELETE_JOKER || destination == BotMove.BOT_BOMB_JOKER) {
+        if (isJokerMove(destination))
             result.addAll(appendDeleteJokerMoves());
-        }
 
         return result;
     }
 
     private static Move getMoveYCoordinate(BotMove destination, Game game) {
-
         final int targetCordY;
         final Move result;
         final int currentYCord = game.getBoard().getHighlight().get(0).yCoordinate();
@@ -109,29 +104,16 @@ public enum BotMove {
     private static int getCoordinates(BotMove destination, PlayerID player) {
         final int targetCordX;
 
-        if (destination == BotMove.BOT_BOMB_JOKER || destination == BotMove.BOT_DELETE_JOKER) {
-            final int bombJokerPlayer1 = 0;
-            final int deleteJokerPlayer1 = 1;
+        final Map<BotMove, Integer> player1JokerMap = Map.of(BOT_BOMB_JOKER, 0, BOT_DELETE_JOKER, 1);
+        final Map<BotMove, Integer> player2JokerMap = Map.of(BOT_BOMB_JOKER, 7, BOT_DELETE_JOKER, 6);
 
-            final int deleteJokerPlayer2 = 6;
-            final int bombJokerPlayer2 = 7;
-
-            if (player == PlayerID.PLAYER_1) {
-                if (destination == BOT_BOMB_JOKER) {
-                    targetCordX = bombJokerPlayer1;
-                } else {
-                    targetCordX = deleteJokerPlayer1;
-                }
-            } else {
-                if (destination == BOT_BOMB_JOKER) {
-                    targetCordX = bombJokerPlayer2;
-                } else {
-                    targetCordX = deleteJokerPlayer2;
-                }
-            }
-        } else {
+        if (isJokerMove(destination)) {
+            if (player == PlayerID.PLAYER_1)
+                targetCordX = player1JokerMap.get(destination);
+            else
+                targetCordX = player2JokerMap.get(destination);
+        } else
             targetCordX = getMatrixXCoordinate(destination);
-        }
 
         return targetCordX;
     }
@@ -150,6 +132,10 @@ public enum BotMove {
             result.add(randomMove);
         }
         return result;
+    }
+
+    private static boolean isJokerMove(BotMove move) {
+        return move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER;
     }
 }
 

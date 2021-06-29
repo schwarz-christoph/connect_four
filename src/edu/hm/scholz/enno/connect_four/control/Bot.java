@@ -62,9 +62,7 @@ public class Bot implements Control {
                     final BotMove move = BotMove.getWeightedRandomMove();
                     final List<Move> steps = BotMove.translate(move, game, playerID);
 
-                    for (final Move nextStep : steps) {
-                        activePlayerID = manager.executeMove(nextStep);
-                    }
+                    activePlayerID = executeMoveList(steps);
                 }
             } else
                 manager.executeMove(Move.CONFIRM);
@@ -79,5 +77,13 @@ public class Bot implements Control {
     @Override
     public boolean running() {
         return isRunning;
+    }
+
+    private PlayerID executeMoveList(List<Move> moveList) {
+        PlayerID activePlayerID = null;
+        for (final Move nextStep : moveList) {
+            activePlayerID = manager.executeMove(nextStep);
+        }
+        return activePlayerID;
     }
 }
