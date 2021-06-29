@@ -5,7 +5,6 @@ import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
-import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 
 import java.util.List;
 import java.util.stream.Collectors;
