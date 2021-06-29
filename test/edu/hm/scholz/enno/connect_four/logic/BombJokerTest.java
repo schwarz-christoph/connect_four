@@ -366,7 +366,15 @@ public class BombJokerTest {
         manager.executeMove(Move.CONFIRM);
         manager.executeMove(Move.CONFIRM);
 
-        List<Field> want = List.of(Factory.makeField(0, 1, PlayerID.NONE));
+        String highlightString = "H......." +
+                "H......." +
+                "H......." +
+                "H......." +
+                "H......." +
+                "H......." +
+                "H.......";
+
+        List<Field> want = TestUtility.getHighlightedFieldList(highlightString);
 
         //act
         List<Field> have = board.getHighlight();
@@ -390,7 +398,15 @@ public class BombJokerTest {
         manager.executeMove(Move.RIGHT);
         manager.executeMove(Move.CONFIRM);
 
-        List<Field> want = List.of(Factory.makeField(3, 1, PlayerID.NONE));
+        String highlightString = "...H...." +
+                "...H...." +
+                "...H...." +
+                "...H...." +
+                "...H...." +
+                "...H...." +
+                "...H....";
+
+        List<Field> want = TestUtility.getHighlightedFieldList(highlightString);
 
         //act
         List<Field> have = board.getHighlight();

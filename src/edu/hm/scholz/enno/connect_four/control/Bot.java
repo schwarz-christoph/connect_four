@@ -43,9 +43,9 @@ public class Bot implements Control {
      * @throws IllegalArgumentException if a parameter is not viable.
      */
     public Bot(Game game, GameManager manager, PlayerID playerID) {
-        if (manager == null || playerID == null || playerID == PlayerID.NONE) {
+        if (manager == null || playerID == null || playerID == PlayerID.NONE)
             throw new IllegalArgumentException("IllegalArgument for Bot");
-        }
+
 
         this.game = game;
         this.manager = manager;
@@ -53,29 +53,22 @@ public class Bot implements Control {
         this.isRunning = true;
     }
 
-    /**
-     * Tries to execute every step the bot is doing, when its his current turn.
-     *
-     * @return if the step was executed successfully.
-     */
     @Override
-    public boolean step() {
-        final boolean stepSuccessful;
+    public void step() {
         if (isRunning) {
-            PlayerID activePlayerID = playerID;
-            while (playerID == activePlayerID && game.getActivePlayer() != PlayerID.NONE) {
-                final BotMove move = BotMove.getWeightedRandomMove();
-                final List<Move> steps = BotMove.translate(move, game, playerID);
+            if (game.isStarted()) {
+                PlayerID activePlayerID = playerID;
+                while (playerID == activePlayerID && game.getActivePlayer() != PlayerID.NONE) {
+                    final BotMove move = BotMove.getWeightedRandomMove();
+                    final List<Move> steps = BotMove.translate(move, game, playerID);
 
-                for (final Move nextStep : steps) {
-                    activePlayerID = manager.executeMove(nextStep);
+                    for (final Move nextStep : steps) {
+                        activePlayerID = manager.executeMove(nextStep);
+                    }
                 }
-            }
-            stepSuccessful = true;
-        } else
-            stepSuccessful = false;
-
-        return stepSuccessful;
+            } else
+                manager.executeMove(Move.CONFIRM);
+        }
     }
 
     @Override

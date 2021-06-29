@@ -1,6 +1,7 @@
 package edu.hm.scholz.enno.connect_four.control;
 
 import edu.hm.cs.rs.se2.ui.UI;
+import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.GameManager;
 import edu.hm.scholz.enno.connect_four.logic.Move;
@@ -43,6 +44,11 @@ public class JoystickController implements Control {
     static final Map<Integer, Move> MOVE_CHAR_MAP = Map.of(LETTER_R, Move.RIGHT, LETTER_L, Move.LEFT, LETTER_U, Move.UP, LETTER_D, Move.DOWN, LETTER_M, Move.CONFIRM);
 
     /**
+     * The game.
+     */
+    private final Game game;
+
+    /**
      * Manager of the current game.
      */
     private final GameManager manager;
@@ -61,17 +67,18 @@ public class JoystickController implements Control {
      * Signals if the game is still running.
      */
     private boolean isRunning;
-
     /**
      * Constructor for the player Controller.
+     *
      * @param manager  The current manager of the game.
      * @param ui       The ui the game runs on.
      * @param playerID The playerID of the current player.
      */
-    public JoystickController(GameManager manager, UI ui, PlayerID playerID) {
-        if(manager == null || ui == null || playerID == PlayerID.NONE || playerID == null)
+    public JoystickController(Game game, GameManager manager, UI ui, PlayerID playerID) {
+        if (game == null || manager == null || ui == null || playerID == PlayerID.NONE || playerID == null)
             throw new IllegalArgumentException("IllegalArgument for JoystickController");
 
+        this.game = game;
         this.manager = manager;
         this.ui = ui;
         this.playerID = playerID;
@@ -84,25 +91,29 @@ public class JoystickController implements Control {
     }
 
     @Override
-    public boolean step() {
-        final boolean stepSuccessful;
-        if(isRunning) {
+    public void step() {
+        if (isRunning) {
+            final boolean gameStatus = game.isStarted();
             PlayerID activePlayer = playerID;
-            while(playerID == activePlayer) {
-                final int moveCode = ui.event(true);
-                final Move move = MOVE_CHAR_MAP.get(moveCode);
-                activePlayer = manager.executeMove(move);
-            }
-            stepSuccessful = true;
-        } else {
-            stepSuccessful = false;
-        }
 
-        return stepSuccessful;
+            while (gameStatus == game.isStarted() && playerID == activePlayer)
+                activePlayer = executeSingleMove();
+        }
     }
 
     @Override
     public void close() {
         isRunning = false;
+    }
+
+    /**
+     * Waits for an input event and executes the corresponding move.
+     *
+     * @return The active player after executing the move.
+     */
+    private PlayerID executeSingleMove() {
+        final int moveCode = ui.event(true);
+        final Move move = MOVE_CHAR_MAP.get(moveCode);
+        return manager.executeMove(move);
     }
 }

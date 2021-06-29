@@ -11,11 +11,9 @@ package edu.hm.scholz.enno.connect_four.control;
 public interface Control extends Runnable {
 
     /**
-     * Execute a Move.
-     *
-     * @return true if the move was valid and executed, false instead.
+     * Executes moves until the turn ends.
      */
-    boolean step();
+    void step();
 
     /**
      * Close the controller.
