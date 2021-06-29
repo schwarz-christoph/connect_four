@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({AbstractConnectFourObservableTest.class,
         FullConnectFourBoardTest.class,
         FullConnectFourGameTest.class,
-        FullConnectFourPlayerTest.class})
+        FullConnectFourPlayerTest.class,
+        ConnectFourFieldTest.class})
 public class DatastoreTest {
 }
