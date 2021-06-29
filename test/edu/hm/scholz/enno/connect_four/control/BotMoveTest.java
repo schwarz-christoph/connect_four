@@ -6,19 +6,20 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.logic.Move;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.Timeout;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RunWith(Parameterized.class)
 public class BotMoveTest {
-//    @Rule
-//    public Timeout globalTimeout = Timeout.millis(1_000);
+    @Rule
+    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Parameterized.Parameters(name = "Bot Move: {0} get List: {2}")
     public static Iterable<Object[]> testCasesBotMovesTest() {
@@ -163,25 +164,7 @@ public class BotMoveTest {
                         "H......." +
                         "H......." +
                         "H.......",
-                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)},
-
-                {BotMove.BOT_BOMB_JOKER, "........" +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H..",
-                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
-
-                {BotMove.BOT_DELETE_JOKER, "........" +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H.." +
-                        ".....H..",
-                        List.of(Move.UP, Move.LEFT, Move.LEFT, Move.LEFT, Move.LEFT, Move.CONFIRM)},
+                        List.of(Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.RIGHT, Move.CONFIRM)}
         });
     }
 

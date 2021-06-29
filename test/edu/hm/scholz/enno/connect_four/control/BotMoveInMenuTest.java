@@ -9,6 +9,7 @@ import edu.hm.scholz.enno.connect_four.logic.Move;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 
@@ -72,7 +73,8 @@ public class BotMoveInMenuTest {
         result = BotMove.translate(botMove, game, PlayerID.PLAYER_2);
 
         //assert
-        assertEquals(wantMoves, result);
+        List<Move> resultMovesToJoker = result.stream().limit(wantMoves.size()).collect(Collectors.toList());
+        assertEquals(wantMoves, resultMovesToJoker);
     }
 
     @Test
@@ -97,6 +99,7 @@ public class BotMoveInMenuTest {
         result = BotMove.translate(botMove, game, PlayerID.PLAYER_2);
 
         //assert
-        assertEquals(wantMoves, result);
+        List<Move> resultMovesToJoker = result.stream().limit(wantMoves.size()).collect(Collectors.toList());
+        assertEquals(wantMoves, resultMovesToJoker);
     }
 }
