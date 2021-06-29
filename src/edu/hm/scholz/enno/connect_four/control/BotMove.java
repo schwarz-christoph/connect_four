@@ -135,22 +135,20 @@ public enum BotMove {
     private static int getMatrixXCoordinate(BotMove destination) {
         final int rightBorder = 8;
         final List<Integer> xCoordinatesColumns = new ArrayList<>();
+
+        //X Coordinates for column 0-7
         IntStream.range(0, rightBorder)
                 .forEach(xCoordinatesColumns::add);
-        final Iterator<Integer> xCoordinateIterator = xCoordinatesColumns.listIterator();
 
-        HashMap<BotMove, Integer> columnXCoordinate = new HashMap<>();
-        columnXCoordinate.put(BOT_COLUMN_0, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_1, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_2, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_3, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_4, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_5, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_6, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_COLUMN_7, xCoordinateIterator.next());
-        columnXCoordinate.put(BOT_BOMB_JOKER, rightBorder - 1);
-        columnXCoordinate.put(BOT_DELETE_JOKER, rightBorder - 1);
-        columnXCoordinate.put(INVALID, rightBorder - 1);
+        //Coordinates for the rest of BotMoves
+        xCoordinatesColumns.add(rightBorder - 1);
+        xCoordinatesColumns.add(rightBorder - 1);
+        xCoordinatesColumns.add(rightBorder - 1);
+
+        final List<BotMove> botMoves = new ArrayList<>(Arrays.asList(BotMove.values()));
+        final Iterator<Integer> xCoordinateIterator = xCoordinatesColumns.listIterator();
+        final HashMap<BotMove, Integer> columnXCoordinate = new HashMap<>();
+        botMoves.forEach(botMove -> columnXCoordinate.put(botMove, xCoordinateIterator.next()));
 
         return columnXCoordinate.get(destination);
     }
