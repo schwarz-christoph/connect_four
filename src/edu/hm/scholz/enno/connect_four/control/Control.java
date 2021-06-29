@@ -8,7 +8,7 @@ package edu.hm.scholz.enno.connect_four.control;
  * @author Enno Scholz (enno.scholz@hm.edu)
  * @version 06-25-2021
  */
-public interface Control extends Runnable {
+public interface Control {
 
     /**
      * Executes moves until the turn ends.
