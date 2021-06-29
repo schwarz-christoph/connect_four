@@ -4,7 +4,11 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 public enum BotMove {
@@ -21,7 +25,7 @@ public enum BotMove {
     INVALID(42);
 
     /**
-     *  The integer value of the move the bot makes
+     * The integer value of the move the bot makes.
      */
     private final int selectValue;
 
@@ -30,8 +34,9 @@ public enum BotMove {
     }
 
     /**
-     * Determines a move based on weights
-     * @return determined move
+     * Determines a move based on weights.
+     *
+     * @return determined move.
      */
     public static BotMove getWeightedRandomMove() {
         final double weightedNumber = Math.random() * BotMove.INVALID.selectValue;
@@ -40,11 +45,10 @@ public enum BotMove {
     }
 
     /**
-     *
-     * @param move Destination of the desired location the bot wants to go to
-     * @param game The current game.
-     * @param player PlayerID of the current bot
-     * @return List of moves necessary to get to the desired location of the bot
+     * @param move   Destination of the desired location the bot wants to go to.
+     * @param game   The current game.
+     * @param player PlayerID of the current bot.
+     * @return List of moves necessary to get to the desired location of the bot.
      */
     public static List<Move> translate(BotMove move, Game game, PlayerID player) {
         final int targetCordX = getCoordinates(move, player);
@@ -65,7 +69,7 @@ public enum BotMove {
 
         result.add(Move.CONFIRM);
 
-        if(move == BotMove.BOT_DELETE_JOKER || move == BotMove.BOT_BOMB_JOKER){
+        if (move == BotMove.BOT_DELETE_JOKER || move == BotMove.BOT_BOMB_JOKER) {
             result.addAll(appendDeleteJokerMoves());
         }
 
@@ -143,10 +147,10 @@ public enum BotMove {
         };
     }
 
-    private static List<Move> appendDeleteJokerMoves(){
-        List<Move> result = new ArrayList<>();
+    private static List<Move> appendDeleteJokerMoves() {
+        final List<Move> result = new ArrayList<>();
 
-        Random rand = new Random();
+        final Random rand = new Random();
         Move randomMove = Move.LEFT;
         while (randomMove != Move.CONFIRM) {
             final int randomInt = rand.nextInt(Move.values().length);

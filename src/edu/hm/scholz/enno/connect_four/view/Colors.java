@@ -1,7 +1,7 @@
 package edu.hm.scholz.enno.connect_four.view;
 
 /**
- * Implements the colors for the menu and players
+ * Implements the colors for the menu and players.
  */
 public enum Colors {
     PLAYER_1(0, 100, 0),
@@ -14,29 +14,29 @@ public enum Colors {
     EMPTY(0, 0, 0);
 
     /**
-     * Integer value for color red
-     */
-    private final int red;
-
-    /**
-     * Integer value for color green
-     */
-    private final int green;
-
-    /**
-     * Integer value for color blue
-     */
-    private final int blue;
-
-    /**
-     * color offset for highlighted/greyed out fields
+     * color offset for highlighted/greyed out fields.
      */
     private static final int OFFSET = 50;
 
     /**
-     * @param red   Integer value for red
-     * @param green Integer value for green
-     * @param blue  Integer value for blue
+     * Integer value for color red.
+     */
+    private final int red;
+
+    /**
+     * Integer value for color green.
+     */
+    private final int green;
+
+    /**
+     * Integer value for color blue.
+     */
+    private final int blue;
+
+    /**
+     * @param red   Integer value for red.
+     * @param green Integer value for green.
+     * @param blue  Integer value for blue.
      */
     Colors(int red, int green, int blue) {
         this.red = red;
@@ -59,9 +59,9 @@ public enum Colors {
     /**
      * Returns the RGB Value based on if something is highlighted
      *
-     * @param isHighlighted if something
-     * @param isGreyed      signals if something is going to be deleted by a joker
-     * @return corresponding rgb value
+     * @param isHighlighted if something.
+     * @param isGreyed      signals if something is going to be deleted by a joker.
+     * @return corresponding rgb value.
      */
     public int getRGBCode(boolean isHighlighted, boolean isGreyed) {
         final int offSetMultiplier;
@@ -79,6 +79,9 @@ public enum Colors {
         final int adjustedGreen = Math.min(Math.max(getGreen() + colorOffset, 0), 255);
         final int adjustedBlue = Math.min(Math.max(getBlue() + colorOffset, 0), 255);
 
-        return (adjustedRed << 16) + (adjustedGreen << 8) + adjustedBlue;
+        final int rgbShiftRed = 16;
+        final int rgbShiftGreen = 8;
+
+        return (adjustedRed << rgbShiftRed) + (adjustedGreen << rgbShiftGreen) + adjustedBlue;
     }
 }

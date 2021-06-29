@@ -17,13 +17,17 @@ import edu.hm.scholz.enno.connect_four.logic.LogicFactory;
 import edu.hm.scholz.enno.connect_four.view.ConnectFourPixelGridView;
 import edu.hm.scholz.enno.connect_four.view.View;
 
-/** Einfaches Hauptprogramm einer MVC-Anwendung.
+/**
+ * Einfaches Hauptprogramm einer MVC-Anwendung.
  * Steuert den Ablauf.
+ *
  * @author R. Schiedermeier, rs@cs.hm.edu
  * @version 2021-03-07
  */
 public class LoopMain {
-    /** Entry point.
+    /**
+     * Entry point.
+     *
      * @param args Kommandozeilenargumente: keine.
      */
     public static void main(String... args) {
@@ -59,7 +63,7 @@ public class LoopMain {
         views.forEach(view -> view.update(board, game, player1, player2));
 
         // Fortfahren bis das Spiel beendet ist
-        while(game.getActivePlayer() != PlayerID.NONE)
+        while (game.getActivePlayer() != PlayerID.NONE)
             controls.stream()
                     .filter(Control::running) // noch beteiligte Spieler herausfiltern
                     .forEach(Control::step); // jeder Spieler zieht
