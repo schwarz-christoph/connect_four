@@ -4,11 +4,7 @@ import edu.hm.scholz.enno.connect_four.datastore.Game;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 public enum BotMove {
@@ -46,9 +42,10 @@ public enum BotMove {
 
     /**
      * Translates the desired destination into the necessary moves to reach it.
-     * @param destination   Destination of the desired location the bot wants to go to.
-     * @param game   The current game.
-     * @param player PlayerID of the current bot.
+     *
+     * @param destination Destination of the desired location the bot wants to go to.
+     * @param game        The current game.
+     * @param player      PlayerID of the current bot.
      * @return List of moves necessary to get to the desired location of the bot.
      */
     public static List<Move> translate(BotMove destination, Game game, PlayerID player) {
@@ -136,16 +133,26 @@ public enum BotMove {
     }
 
     private static int getMatrixXCoordinate(BotMove destination) {
-        return switch (destination) {
-            case BOT_COLUMN_0 -> 0;
-            case BOT_COLUMN_1 -> 1;
-            case BOT_COLUMN_2 -> 2;
-            case BOT_COLUMN_3 -> 3;
-            case BOT_COLUMN_4 -> 4;
-            case BOT_COLUMN_5 -> 5;
-            case BOT_COLUMN_6 -> 6;
-            default -> 7;
-        };
+        final int rightBorder = 8;
+        final List<Integer> xCoordinatesColumns = new ArrayList<>();
+        IntStream.range(0, rightBorder)
+                .forEach(xCoordinatesColumns::add);
+        final Iterator<Integer> xCoordinateIterator = xCoordinatesColumns.listIterator();
+
+        HashMap<BotMove, Integer> columnXCoordinate = new HashMap<>();
+        columnXCoordinate.put(BOT_COLUMN_0, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_1, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_2, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_3, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_4, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_5, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_6, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_COLUMN_7, xCoordinateIterator.next());
+        columnXCoordinate.put(BOT_BOMB_JOKER, rightBorder - 1);
+        columnXCoordinate.put(BOT_DELETE_JOKER, rightBorder - 1);
+        columnXCoordinate.put(INVALID, rightBorder - 1);
+
+        return columnXCoordinate.get(destination);
     }
 
     private static List<Move> appendDeleteJokerMoves() {
