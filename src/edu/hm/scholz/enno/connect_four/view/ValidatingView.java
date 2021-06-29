@@ -55,10 +55,12 @@ public record ValidatingView(Game game) implements View {
         else
             wantPlayerID = PlayerID.NONE;
 
+        // Cant be tested because should always be true if the game was works properly
         if (game.getWinner() == wantPlayerID) {
             isValidGame = true;
         }
 
+        // Cant be tested because should always be true if the game works properly
         if (isValidGame) {
             isValidGame = game.getActivePlayer() == PlayerID.NONE;
         }
