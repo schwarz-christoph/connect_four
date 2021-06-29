@@ -145,7 +145,7 @@ public class ExecuteMoveTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        List<Move> want = List.of(Move.RIGHT, Move.LEFT, Move.DOWN); //Moves in regular game
+        List<Move> want = List.of(Move.CONFIRM); //Moves in regular game
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
@@ -181,7 +181,7 @@ public class ExecuteMoveTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        List<Move> want = List.of(Move.RIGHT, Move.LEFT, Move.DOWN); //Moves in regular game
+        List<Move> want = List.of(Move.CONFIRM); //Moves in regular game
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
