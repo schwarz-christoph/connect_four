@@ -15,7 +15,7 @@ public interface UI extends PixelGrid, Joystick {
      * @return Ein UI-Objekt.
      */
     static UI make() {
-        return make(System.getProperty("ui", "console"),
+        return make(System.getProperty("userInterface", "console"),
                     Integer.parseInt(System.getProperty("size", "8")));
     }
 

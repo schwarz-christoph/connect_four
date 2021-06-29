@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
-public record ConnectFourPixelGridView(UI ui, Game game) implements View {
+public record ConnectFourPixelGridView(UI userInterface, Game game) implements View {
 
     /**
      * Constant for highlighted.
@@ -42,7 +42,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
     static final int RIGHT_BORDER = 8;
 
     public ConnectFourPixelGridView {
-        if (ui == null || game == null)
+        if (userInterface == null || game == null)
             throw new IllegalArgumentException("Arguments cannot be null.");
 
         game.register(this);
@@ -62,17 +62,17 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
             // player select screen
             updatePlayerSelect(game);
         }
-        ui().render();
+        userInterface().render();
     }
 
     @Override
     public void shut() {
-        ui().shut();
+        userInterface().shut();
     }
 
     private void updateEndScreen(Game game) {
         IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
-                .forEach(yIndex -> ui().set(xIndex, yIndex, getEndScreenRGBCode(xIndex, game.getWinner()))));
+                .forEach(yIndex -> userInterface().set(xIndex, yIndex, getEndScreenRGBCode(xIndex, game.getWinner()))));
     }
 
     private int getEndScreenRGBCode(int xCoordinate, PlayerID winner) {
@@ -108,7 +108,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
                 .filter(field -> field.xCoordinate() == xCoordinate)
                 .anyMatch(field -> field.yCoordinate() == yCoordinate);
 
-        ui().set(xCoordinate, yCoordinate, getRegularGameRGBCode(occupyingPlayer, isFieldHighlighted, game));
+        userInterface().set(xCoordinate, yCoordinate, getRegularGameRGBCode(occupyingPlayer, isFieldHighlighted, game));
     }
 
     private int getRegularGameRGBCode(PlayerID player, boolean isHighlighted, Game game) {
@@ -189,7 +189,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
         );
 
         IntStream.range(0, RIGHT_BORDER)
-                .forEach(xCoordinate -> ui().set(xCoordinate, 0, rgbValues.get(xCoordinate)));
+                .forEach(xCoordinate -> userInterface().set(xCoordinate, 0, rgbValues.get(xCoordinate)));
     }
 
     private boolean getIsHighlighted(int fieldXCoordinate, int highlightXCoordinate) {
@@ -198,7 +198,7 @@ public record ConnectFourPixelGridView(UI ui, Game game) implements View {
 
     private void updatePlayerSelect(Game game) {
         IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
-                .forEach(yIndex -> ui().set(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
+                .forEach(yIndex -> userInterface().set(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
     }
 
     private int getPlayerSelectRGBCode(int xCoordinate, int playerCount) {

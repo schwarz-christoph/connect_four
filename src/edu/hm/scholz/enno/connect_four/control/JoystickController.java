@@ -35,7 +35,7 @@ public class JoystickController implements Control {
     /**
      * Ui the controller is running on.
      */
-    private final UI ui;
+    private final UI userInterface;
 
     /**
      * PlayerID of the current player.
@@ -50,14 +50,14 @@ public class JoystickController implements Control {
      * Constructor for the player Controller.
      *
      * @param manager  The current manager of the game.
-     * @param ui       The ui the game runs on.
+     * @param userInterface       The userInterface the game runs on.
      * @param game     The current game.
      * @param playerID The playerID of the current player.
      */
-    public JoystickController(Game game, GameManager manager, UI ui, PlayerID playerID) {
+    public JoystickController(Game game, GameManager manager, UI userInterface, PlayerID playerID) {
         isNotNull(game);
         isNotNull(manager);
-        isNotNull(ui);
+        isNotNull(userInterface);
         isNotNull(playerID);
 
         if (playerID == PlayerID.NONE)
@@ -65,7 +65,7 @@ public class JoystickController implements Control {
 
         this.game = game;
         this.manager = manager;
-        this.ui = ui;
+        this.userInterface = userInterface;
         this.playerID = playerID;
         this.isRunning = true;
     }
@@ -102,7 +102,7 @@ public class JoystickController implements Control {
      * @return The active player after executing the move.
      */
     private PlayerID executeSingleMove() {
-        final int moveCode = ui.event(true);
+        final int moveCode = userInterface.event(true);
         final Move move = MOVE_CHAR_MAP.get(moveCode);
         return manager.executeMove(move);
     }
