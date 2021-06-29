@@ -5,6 +5,7 @@ import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.logic.Move;
 
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
 public enum BotMove {
@@ -139,10 +140,9 @@ public enum BotMove {
     private static List<Move> appendDeleteJokerMoves() {
         final List<Move> result = new ArrayList<>();
 
-        final Random rand = new Random();
-        Move randomMove = Move.LEFT;
+        Move randomMove = null;
         while (randomMove != Move.CONFIRM) {
-            final int randomInt = rand.nextInt(Move.values().length);
+            final int randomInt = ThreadLocalRandom.current().nextInt(Move.values().length);
             randomMove = Move.values()[randomInt];
             result.add(randomMove);
         }
