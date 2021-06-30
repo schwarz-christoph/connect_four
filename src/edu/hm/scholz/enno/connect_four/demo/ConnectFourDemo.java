@@ -12,6 +12,14 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Demo of the game without a view or control.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 04-01-2021
+ */
 public class ConnectFourDemo {
     public static void main(String... args) {
         FullBoard board = Factory.makeBoard();

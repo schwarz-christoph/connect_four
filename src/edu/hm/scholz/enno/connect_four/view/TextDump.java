@@ -11,6 +11,14 @@ import edu.hm.scholz.enno.connect_four.datastore.Observer;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
+/**
+ * A text dump view that prints the game state to the console.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
+ */
 public class TextDump implements Observer {
 
     private final String indexLine = "  0 1 2 3 4 5 6 7  \n";

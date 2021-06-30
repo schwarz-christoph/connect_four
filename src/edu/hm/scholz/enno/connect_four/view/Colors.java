@@ -2,6 +2,11 @@ package edu.hm.scholz.enno.connect_four.view;
 
 /**
  * Implements the colors for the menu and players.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
  */
 public enum Colors {
     PLAYER_1(0, 100, 0),

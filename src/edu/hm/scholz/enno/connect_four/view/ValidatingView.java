@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 
 /**
  * View for theory tests.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
  */
 public class ValidatingView implements View{
 

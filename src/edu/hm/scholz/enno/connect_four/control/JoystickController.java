@@ -9,6 +9,11 @@ import java.util.Map;
 
 /**
  * Implements the Controller for a player.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
  */
 public class JoystickController implements Control {
 

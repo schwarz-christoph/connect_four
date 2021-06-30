@@ -16,6 +16,11 @@ import java.util.stream.IntStream;
 /**
  * The view for the game.
  *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
+ *
  * @param userInterface The userInterface the view should run on.
  * @param game          The currently active game.
  */

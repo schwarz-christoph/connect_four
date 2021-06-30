@@ -10,6 +10,11 @@ import java.util.List;
 /**
  * Class that implements the Controller for the bots.
  * Determines their move random based on weights.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
  */
 public class Bot implements Control {
 
