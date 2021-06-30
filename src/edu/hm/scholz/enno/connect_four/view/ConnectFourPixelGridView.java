@@ -49,8 +49,6 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
     /**
      * Constructor of the view.
      *
-     * @param userInterface The user interface the game should run on.
-     * @param game          The game the view should run on.
      * @throws IllegalArgumentException if one of the parameters was null.
      */
     public ConnectFourPixelGridView {
