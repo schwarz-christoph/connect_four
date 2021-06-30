@@ -14,9 +14,10 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 /**
- * The view for the game
- * @param userInterface the userInterface the view should run on
- * @param game the currently active game
+ * The view for the game.
+ *
+ * @param userInterface The userInterface the view should run on.
+ * @param game          The currently active game.
  */
 public record ConnectFourPixelGridView(UI userInterface, Game game) implements View {
 
@@ -47,9 +48,10 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Constructor of the view.
-     * @param userInterface the user interface the game should run on.
-     * @param game          the game the view should run on.
-     * @throws IllegalArgumentException if one of the parameters was null
+     *
+     * @param userInterface The user interface the game should run on.
+     * @param game          The game the view should run on.
+     * @throws IllegalArgumentException if one of the parameters was null.
      */
     public ConnectFourPixelGridView {
         if (userInterface == null || game == null)
@@ -81,8 +83,9 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
     }
 
     /**
-     * Updates the endscreen after someone won or the game ended in a draw.
-     * @param game the currently active game
+     * Updates the end screen after someone won or the game ended in a draw.
+     *
+     * @param game The currently active game.
      */
     private void updateEndScreen(Game game) {
         IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
@@ -91,9 +94,10 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Gives the color of the player that won the game.
-     * @param xCoordinate   The x coordinate, important if the game ended in a draw
-     * @param winner        The winner of the game.
-     * @return              The rgb color of the player that won the game.
+     *
+     * @param xCoordinate The x coordinate, important if the game ended in a draw.
+     * @param winner      The winner of the game.
+     * @return The rgb color of the player that won the game.
      */
     private int getEndScreenRGBCode(int xCoordinate, PlayerID winner) {
         final int rgbCode;
@@ -111,10 +115,11 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Updates everything on the ui.
-     * @param board     the current board.
-     * @param game      the current game.
-     * @param player1   the current player1.
-     * @param player2   the current player2.
+     *
+     * @param board   the current board.
+     * @param game    the current game.
+     * @param player1 the current player1.
+     * @param player2 the current player2.
      */
     private void updateRegularGame(Board board, Game game, Player player1, Player player2) {
         updateMenu(board, player1, player2);
@@ -124,10 +129,11 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Updates the color of specified field.
-     * @param board         the current board.
-     * @param game          the current game.
-     * @param xCoordinate   the x Coordinate of the field
-     * @param yCoordinate   the y Coordinate of the field
+     *
+     * @param board       the current board.
+     * @param game        the current game.
+     * @param xCoordinate the x Coordinate of the field.
+     * @param yCoordinate the y Coordinate of the field.
      */
     private void updateField(Board board, Game game, int xCoordinate, int yCoordinate) {
         final Optional<Field> selectedFieldOptional = board.getFields().stream()
@@ -147,10 +153,11 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Gives the rgb color of the currently active player.
-     * @param player        the currently active player
-     * @param isHighlighted signals if something is highlighted
-     * @param game          the current game
-     * @return              the rgb color of the player
+     *
+     * @param player        The currently active player.
+     * @param isHighlighted Signals if something is highlighted.
+     * @param game          The current game.
+     * @return The rgb color of the player.
      */
     private int getRegularGameRGBCode(PlayerID player, boolean isHighlighted, Game game) {
         final int playerHighlightColor = game.getActivePlayer() == PlayerID.PLAYER_1 ?
@@ -162,6 +169,14 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
         return getColorForPlayer(player, isHighlighted, highlightColor);
     }
 
+    /**
+     * Calculate the color for the provided player.
+     *
+     * @param player         Which player to calculate the color for.
+     * @param isHighlighted  Whether the color should be highlighted.
+     * @param highlightColor The color of the highlight.
+     * @return The calculated color.
+     */
     private int getColorForPlayer(PlayerID player, boolean isHighlighted, int highlightColor) {
         final int color;
         if (player == PlayerID.PLAYER_1)
@@ -176,9 +191,10 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Updates the colors of every button on the menu menu.
-     * @param board     the current board.
-     * @param player1   the current player1
-     * @param player2   the current player2
+     *
+     * @param board   The current board.
+     * @param player1 The current player1.
+     * @param player2 The current player2.
      */
     private void updateMenu(Board board, Player player1, Player player2) {
         final Optional<Field> menuHighlightOptional = board.getHighlight().stream()
@@ -207,9 +223,10 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Checks if the field is highlighted.
-     * @param fieldXCoordinate      the currently selected x Coordinate of the field
-     * @param highlightXCoordinate  the currently selected x Coordinate of the highlight
-     * @return if the field is highlighted
+     *
+     * @param fieldXCoordinate     The currently selected x Coordinate of the field.
+     * @param highlightXCoordinate The currently selected x Coordinate of the highlight.
+     * @return If the field is highlighted.
      */
     private boolean getIsHighlighted(int fieldXCoordinate, int highlightXCoordinate) {
         return fieldXCoordinate == highlightXCoordinate;
@@ -217,13 +234,21 @@ public record ConnectFourPixelGridView(UI userInterface, Game game) implements V
 
     /**
      * Lets the player select screen appear on the ui.
-     * @param game the current game
+     *
+     * @param game The current game.
      */
     private void updatePlayerSelect(Game game) {
         IntStream.range(LEFT_BORDER, RIGHT_BORDER).forEach(xIndex -> IntStream.range(LEFT_BORDER, RIGHT_BORDER)
                 .forEach(yIndex -> userInterface().set(xIndex, yIndex, getPlayerSelectRGBCode(xIndex, game.getPLayerCount()))));
     }
 
+    /**
+     * Calculate the rgb code of the provided column in the player select screen.
+     *
+     * @param xCoordinate Which column to calculate for.
+     * @param playerCount The amount of players currently selected.
+     * @return The color of the column.
+     */
     private int getPlayerSelectRGBCode(int xCoordinate, int playerCount) {
         final int rgbCode;
         final int partingLine = 4;
