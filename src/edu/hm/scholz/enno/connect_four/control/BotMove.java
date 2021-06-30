@@ -12,6 +12,9 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.IntStream;
 
+/**
+ * An enum of moves that a bot can perform. Weighted for random selection.
+ */
 public enum BotMove {
     BOT_COLUMN_0(4),
     BOT_COLUMN_1(9),
@@ -26,10 +29,15 @@ public enum BotMove {
     INVALID(42);
 
     /**
-     * The integer value of the move the bot makes.
+     * The maximum value that a random number may have to select this move.
      */
     private final int selectValue;
 
+    /**
+     * Constructor for the enum. Needed because selectValue is required for weighting.
+     *
+     * @param selectValue The maximum value that a random number may have to select this move.
+     */
     BotMove(int selectValue) {
         this.selectValue = selectValue;
     }
@@ -54,7 +62,7 @@ public enum BotMove {
      * @return List of moves necessary to get to the desired location of the bot.
      */
     public static List<Move> translate(BotMove destination, Game game, PlayerID player) {
-        final int targetCordX = getCoordinates(destination, player);
+        final int targetCordX = getXCoordinateForDestination(destination, player);
         final int currentXCord = game.getBoard().getHighlight().get(0).xCoordinate();
 
         final List<Move> result = new ArrayList<>();
@@ -73,11 +81,18 @@ public enum BotMove {
         result.add(Move.CONFIRM);
 
         if (isJokerMove(destination))
-            result.addAll(appendDeleteJokerMoves());
+            result.addAll(generateRandomJokerMoves());
 
         return result;
     }
 
+    /**
+     * Determines whether an up- or downwards move is required to reach destination.
+     *
+     * @param destination The target field to reach.
+     * @param game        A game object. Needed to obtain information about the highlight.
+     * @return A move if needed or null.
+     */
     private static Move getMoveYCoordinate(BotMove destination, Game game) {
         final int targetCordY;
         final Move result;
@@ -86,26 +101,31 @@ public enum BotMove {
         if (destination == BotMove.BOT_BOMB_JOKER || destination == BotMove.BOT_DELETE_JOKER) {
             //Go to Menu (0)
             targetCordY = 0;
-            if (targetCordY == currentYCord) {
+            if (targetCordY == currentYCord)
                 result = null;
-            } else {
+            else
                 result = Move.UP;
-            }
 
         } else {
             //Go to Matrix (1-7)
             targetCordY = 1;
-            if (targetCordY > currentYCord) {
+            if (targetCordY > currentYCord)
                 result = Move.DOWN;
-            } else {
+            else
                 result = null;
-            }
         }
 
         return result;
     }
 
-    private static int getCoordinates(BotMove destination, PlayerID player) {
+    /**
+     * Calculates the target x coordinate for the provided destination.
+     *
+     * @param destination BotMove of which the x coordinate is needed.
+     * @param player      PlayerID of the bot. Needed to differentiate between jokers.
+     * @return x coordinate of the destination.
+     */
+    private static int getXCoordinateForDestination(BotMove destination, PlayerID player) {
         final int targetCordX;
 
         final Map<BotMove, Integer> player1JokerMap = Map.of(BOT_BOMB_JOKER, 0, BOT_DELETE_JOKER, 1);
@@ -117,16 +137,18 @@ public enum BotMove {
             else
                 targetCordX = player2JokerMap.get(destination);
         } else
-            targetCordX = getMatrixXCoordinate(destination);
+            targetCordX = Arrays.asList(BotMove.values()).indexOf(destination);
 
         return targetCordX;
     }
 
-    private static int getMatrixXCoordinate(BotMove destination) {
-        return Arrays.asList(BotMove.values()).indexOf(destination);
-    }
 
-    private static List<Move> appendDeleteJokerMoves() {
+    /**
+     * Generates a list of random moves until confirm is in the list.
+     *
+     * @return A list of random moves ending in confirm.
+     */
+    private static List<Move> generateRandomJokerMoves() {
         final List<Move> result = new ArrayList<>();
 
         Move randomMove = null;
@@ -138,6 +160,12 @@ public enum BotMove {
         return result;
     }
 
+    /**
+     * Determines whether the provided move is a joker or not.
+     *
+     * @param move The move to check.
+     * @return True if provided move is a joker, otherwise false.
+     */
     private static boolean isJokerMove(BotMove move) {
         return move == BotMove.BOT_BOMB_JOKER || move == BotMove.BOT_DELETE_JOKER;
     }
