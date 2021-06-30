@@ -70,11 +70,6 @@ public class JoystickController implements Control {
         this.isRunning = true;
     }
 
-    private void isNotNull(Object object){
-        if(object == null)
-            throw new IllegalArgumentException("IllegalArgument for JoystickController");
-    }
-
     @Override
     public boolean running() {
         return isRunning;
@@ -105,5 +100,15 @@ public class JoystickController implements Control {
         final int moveCode = userInterface.event(true);
         final Move move = MOVE_CHAR_MAP.get(moveCode);
         return manager.executeMove(move);
+    }
+
+    /**
+     * Checks whether the provided object is null and throws an exception if it is.
+     *
+     * @param object Object to check.
+     */
+    private void isNotNull(Object object){
+        if(object == null)
+            throw new IllegalArgumentException("IllegalArgument for JoystickController");
     }
 }

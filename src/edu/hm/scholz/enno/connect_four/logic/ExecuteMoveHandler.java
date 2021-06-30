@@ -332,6 +332,13 @@ class ExecuteMoveHandler {
                 updateBombedFields(2, lowestFreeField, board);
             }
 
+            /**
+             * Update fields that are in bomb radius and above to fall down if needed.
+             *
+             * @param radius     Distance form the bomb to update fields in.
+             * @param bombCenter Field where the bomb was placed.
+             * @param board      The board where the bomb was executed.
+             */
             private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
                 //Get every stone which is in the radius and needs to be updated
                 final List<Field> stonesToUpdate;
