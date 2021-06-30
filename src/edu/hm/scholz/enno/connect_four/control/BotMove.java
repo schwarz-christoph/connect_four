@@ -14,6 +14,11 @@ import java.util.stream.IntStream;
 
 /**
  * An enum of moves that a bot can perform. Weighted for random selection.
+ *
+ * @author Christoph Schwarz (schwarz4@hm.edu)
+ * @author Georg Lang (glang@hm.edu)
+ * @author Enno Scholz (enno.scholz@hm.edu)
+ * @version 30-06-2021
  */
 public enum BotMove {
     BOT_COLUMN_0(4),
