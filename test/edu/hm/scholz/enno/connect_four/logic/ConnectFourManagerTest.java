@@ -16,6 +16,7 @@ import org.junit.runners.Suite;
         GetMovesRegularTest.class,
         HighlightTest.class,
         MenuTest.class,
-        MoveTest.class})
+        MoveTest.class,
+        RestartEndTest.class})
 public class ConnectFourManagerTest {
 }

@@ -10,6 +10,7 @@ import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullGame;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullPlayer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,12 +27,12 @@ public class ConnectFourManager implements GameManager {
     /**
      * the board.
      */
-    private FullBoard board;
+    private final FullBoard board;
 
     /**
      * the game.
      */
-    private FullGame game;
+    private final FullGame game;
 
     /**
      * the player1.
@@ -92,25 +93,16 @@ public class ConnectFourManager implements GameManager {
     }
 
     @Override
-    public boolean executeMove(Move move) {
-        final boolean result;
+    public PlayerID executeMove(Move move) {
         if (game.isStarted()) {
-            if (game.getActivePlayer() == PlayerID.NONE) {
-                if (move == Move.CONFIRM) {
-                    //Restarts the game in the End screen
-                    restart();
-                    result = true;
-                } else
-                    result = false;
-            } else {
-                result = executeMoveInActiveGame(move);
-            }
+            if (game.getActivePlayer() != PlayerID.NONE)
+                executeMoveInActiveGame(move);
         } else
-            result = executePlayerSelectScreen(move);
+            executePlayerSelectScreen(move);
 
         game.notifyObservers(board, game, player1, player2);
 
-        return result;
+        return game.getActivePlayer();
     }
 
     /**
@@ -162,16 +154,17 @@ public class ConnectFourManager implements GameManager {
     }
 
     /**
-     * Restarts the game.
+     * Resets the board, the players and the game state.
      */
     private void restart() {
-        final FullGame oldGame = this.game;
-
         final FullPlayer player1 = Factory.makePlayer(PlayerID.PLAYER_1);
         final FullPlayer player2 = Factory.makePlayer(PlayerID.PLAYER_2);
 
-        this.board = Factory.makeBoard();
-        this.game = Factory.makeGame(oldGame.getActivePlayer(), board);
+        new ArrayList<>(board.getFields()).forEach(board::removeStone);
+        board.setHighlight(List.of(Factory.makeField(2, 0, PlayerID.NONE)));
+        game.setActivePlayer(PlayerID.PLAYER_1);
+        game.setWinner(PlayerID.NONE);
+
         this.player1 = player1;
         this.player2 = player2;
     }
@@ -214,6 +207,7 @@ public class ConnectFourManager implements GameManager {
 
     /**
      * The Active FullPlayer of the game.
+     *
      * @return The active player as a FullPlayer.
      */
     private FullPlayer getActiveFullPLayer() {

@@ -1,5 +1,6 @@
 package edu.hm.scholz.enno.connect_four.logic;
 
+import edu.hm.scholz.enno.connect_four.datastore.Field;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -10,11 +11,6 @@ import org.junit.Test;
 import java.util.List;
 
 public class RestartEndTest {
-
-    @Test
-    public void endTest(){
-
-    }
 
     @Test
     public void RestartTestIsStarted(){
@@ -34,7 +30,7 @@ public class RestartEndTest {
         manager.executeMove(Move.CONFIRM);
 
         //act, assert
-        assertFalse(game.isStarted());
+        assertTrue(game.isStarted());
     }
 
     @Test
@@ -106,7 +102,7 @@ public class RestartEndTest {
         board.setHighlight(List.of(Factory.makeField(4, 0, PlayerID.NONE)));
         manager.executeMove(Move.CONFIRM);
 
-        int want = 1;
+        int want = 2;
 
         //act
         int actual = game.getPLayerCount();
@@ -134,7 +130,8 @@ public class RestartEndTest {
 
 
         //assert
-        assertTrue(board.getHighlight().isEmpty());
+        List<Field> wantHighlight = List.of(Factory.makeField(2, 0, PlayerID.NONE));
+        assertEquals(wantHighlight, board.getHighlight());
     }
     @Test
     public void RestartTestFields(){

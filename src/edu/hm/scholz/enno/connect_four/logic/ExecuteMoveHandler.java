@@ -301,7 +301,7 @@ class ExecuteMoveHandler {
                         executeBombJoker(game, targetField, board);
                         activePlayer.useBombJoker();
                         changePlayer(game);
-                        board.setHighlight(List.of(targetField));
+                        createHighlight(targetField.xCoordinate(), board);
                         game.setActiveJoker(PlayerActiveJoker.NONE);
                     } else if (move == Move.LEFT)
                         createBombJokerHighlight(fieldOverflowX(-1, targetField.xCoordinate()), board);
@@ -332,6 +332,13 @@ class ExecuteMoveHandler {
                 updateBombedFields(2, lowestFreeField, board);
             }
 
+            /**
+             * Update fields that are in bomb radius and above to fall down if needed.
+             *
+             * @param radius     Distance form the bomb to update fields in.
+             * @param bombCenter Field where the bomb was placed.
+             * @param board      The board where the bomb was executed.
+             */
             private static void updateBombedFields(int radius, Field bombCenter, FullBoard board) {
                 //Get every stone which is in the radius and needs to be updated
                 final List<Field> stonesToUpdate;
@@ -348,7 +355,7 @@ class ExecuteMoveHandler {
                     lowestToUpdate = stonesToUpdate.stream()
                             .max(Comparator.comparing(Field::yCoordinate)).orElse(null);
 
-                    Field highestOccupied = board.getFields().stream()
+                    final Field highestOccupied = board.getFields().stream()
                             .filter(field -> Math.abs(field.xCoordinate() - bombCenter.xCoordinate()) == radius)
                             .filter(field -> field.yCoordinate() > bombCenter.yCoordinate())
                             .min(Comparator.comparing(Field::yCoordinate)).orElse(null);
@@ -359,7 +366,7 @@ class ExecuteMoveHandler {
                         fallSize = yGround - lowestToUpdate.yCoordinate();
                     } else {
                         //Take highest occupied and move this field one up to receive the next free field
-                        Field lowestFreeField = Factory.makeField(
+                        final Field lowestFreeField = Factory.makeField(
                                 highestOccupied.xCoordinate(), highestOccupied.yCoordinate() - 1, highestOccupied.owner());
 
                         fallSize = lowestFreeField.yCoordinate() - lowestToUpdate.yCoordinate();

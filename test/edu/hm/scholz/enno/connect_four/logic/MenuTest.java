@@ -218,7 +218,7 @@ public class MenuTest{
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        List<Move> want = new ArrayList<>(List.of(Move.CONFIRM ,Move.RIGHT, Move.LEFT)); //Moves from Player select screen
+        List<Move> want = new ArrayList<>(List.of(Move.RIGHT, Move.LEFT, Move.DOWN)); //Moves in regular game
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }

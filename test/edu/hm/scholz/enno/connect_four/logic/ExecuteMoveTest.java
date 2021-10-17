@@ -2,6 +2,7 @@ package edu.hm.scholz.enno.connect_four.logic;
 
 import edu.hm.scholz.enno.connect_four.TestUtility;
 import edu.hm.scholz.enno.connect_four.datastore.Field;
+import edu.hm.scholz.enno.connect_four.datastore.Player;
 import edu.hm.scholz.enno.connect_four.datastore.PlayerID;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.Factory;
 import edu.hm.scholz.enno.connect_four.datastore.mutable.FullBoard;
@@ -18,8 +19,8 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 public class ExecuteMoveTest {
-    @Rule
-    public Timeout globalTimeout = Timeout.millis(1_000);
+//    @Rule
+//    public Timeout globalTimeout = Timeout.millis(1_000);
 
     @Test(expected = UnsupportedOperationException.class)
     public void createExecuteMoveHandlerExceptionTest() {
@@ -59,8 +60,9 @@ public class ExecuteMoveTest {
         int xBefore = 1;
 
         //arrange
+        PlayerID want = PlayerID.PLAYER_1;
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(want, board);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         board.setHighlight(List.of(Factory.makeField(xBefore, 1, PlayerID.NONE),
@@ -72,36 +74,44 @@ public class ExecuteMoveTest {
                 Factory.makeField(xBefore, 7, PlayerID.NONE)));
 
         //act
-        manager.executeMove(Move.CONFIRM);
+        PlayerID have = manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertFalse(manager.executeMove(Move.CONFIRM));
+        assertEquals(want, have);
     }
 
     @Test
     public void executeMoveNotAllowedMoveTest() {
         //arrange
+        PlayerID want = PlayerID.PLAYER_1;
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(want, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
-        //act, assert
-        assertFalse(manager.executeMove(Move.DOWN));
+        //act
+        PlayerID have = manager.executeMove(Move.DOWN);
+
+        //assert
+        assertEquals(want, have);
     }
 
     @Test
     public void executeMoveAllowedMoveTest() {
         //arrange
+        PlayerID want = PlayerID.PLAYER_2;
         FullBoard board = Factory.makeBoard();
         FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         board.setHighlight(new ArrayList<>(List.of(Factory.makeField(3, 1, PlayerID.PLAYER_1))));
 
+        //act
+        PlayerID have = manager.executeMove(Move.CONFIRM);
+
         //assert
-        assertTrue(manager.executeMove(Move.CONFIRM));
+        assertEquals(want, have);
     }
 
     @Test
@@ -112,12 +122,13 @@ public class ExecuteMoveTest {
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setActivePlayer(PlayerID.NONE); //Restart if no Player won the Game
+        PlayerID want = PlayerID.NONE;
 
         //act
-        final boolean result = manager.executeMove(Move.DOWN);
+        final PlayerID have = manager.executeMove(Move.DOWN);
 
         //assert
-        assertFalse(result);
+        assertEquals(want, have);
     }
 
     @Test
@@ -134,7 +145,7 @@ public class ExecuteMoveTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT); //Moves in Player select screen
+        List<Move> want = List.of(Move.CONFIRM); //Moves in regular game
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
@@ -142,17 +153,18 @@ public class ExecuteMoveTest {
     @Test
     public void playerInEndScreenPlayerWonTest() {
         //arrange
+        PlayerID want = PlayerID.PLAYER_1;
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(want, board);
         game.setIsStarted(true);
         GameManager manager = LogicFactory.makeGameManager(board, game);
         game.setWinner(PlayerID.PLAYER_1); //Restart if one Player won the Game
 
         //act
-        final boolean result = manager.executeMove(Move.DOWN);
+        PlayerID have = manager.executeMove(Move.DOWN);
 
         //assert
-        assertFalse(result);
+        assertEquals(want, have);
     }
 
     @Test
@@ -169,7 +181,7 @@ public class ExecuteMoveTest {
         manager.executeMove(Move.CONFIRM);
 
         //assert
-        List<Move> want = List.of(Move.CONFIRM, Move.RIGHT, Move.LEFT); //Moves in Player select screen
+        List<Move> want = List.of(Move.CONFIRM); //Moves in regular game
         List<Move> have = manager.getMoves(PlayerID.PLAYER_1);
         assertEquals(want, have);
     }
@@ -266,36 +278,39 @@ public class ExecuteMoveTest {
     @Test
     public void canExecuteMove() {
         //arrange
+        PlayerID want = PlayerID.PLAYER_1;
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(want, board);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
-        boolean have = manager.executeMove(Move.CONFIRM);
+        PlayerID have = manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertTrue(have);
+        assertEquals(want, have);
     }
 
     @Test
     public void playerSelectFalseMoveTest() {
         //arrange
+        PlayerID want = PlayerID.PLAYER_2;
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(want, board);
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
-        boolean result = manager.executeMove(Move.UP);
+        PlayerID have = manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertFalse(result);
+        assertEquals(want, have);
     }
 
     @Test
     public void falseMoveInMatrixTest() {
         //arrange
         FullBoard board = Factory.makeBoard();
-        FullGame game = Factory.makeGame(PlayerID.PLAYER_1, board);
+        FullGame game = Factory.makeGame(PlayerID.PLAYER_2, board);
+        PlayerID want = PlayerID.PLAYER_1;
 
         game.setIsStarted(true);
         board.setHighlight(List.of(Factory.makeField(0, 1, PlayerID.NONE),
@@ -309,10 +324,10 @@ public class ExecuteMoveTest {
         GameManager manager = LogicFactory.makeGameManager(board, game);
 
         //act
-        boolean result = manager.executeMove(Move.DOWN);
+        PlayerID have = manager.executeMove(Move.CONFIRM);
 
         //assert
-        assertFalse(result);
+        assertEquals(want, have);
     }
 
     @Test
